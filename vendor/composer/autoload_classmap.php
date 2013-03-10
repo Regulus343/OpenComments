@@ -6,4 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Regulus\\OpenComments\\Comment' => $baseDir . '/src/models/Comment.php',
 );
