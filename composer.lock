@@ -1,5 +1,5 @@
 {
-    "hash": "0d4d68679f17bb0ff728838109e8314d",
+    "hash": "380b798e2b4cac0672f72370cfa87c80",
     "packages": [
         {
             "name": "illuminate/support",
@@ -8,12 +8,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "dfa68cb87ae5ebf7ebc006ca2d0ff549a5b15f59"
+                "reference": "b46d591dd8fe100603777ea84ace34a5314c48a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/dfa68cb87ae5ebf7ebc006ca2d0ff549a5b15f59",
-                "reference": "dfa68cb87ae5ebf7ebc006ca2d0ff549a5b15f59",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/b46d591dd8fe100603777ea84ace34a5314c48a3",
+                "reference": "b46d591dd8fe100603777ea84ace34a5314c48a3",
                 "shasum": ""
             },
             "require": {
@@ -23,7 +23,7 @@
                 "mockery/mockery": "0.7.2",
                 "patchwork/utf8": "1.0.*"
             },
-            "time": "2013-03-09 04:26:45",
+            "time": "2013-03-15 03:55:30",
             "type": "library",
             "extra": {
                 "branch-alias": {

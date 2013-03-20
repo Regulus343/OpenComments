@@ -11,7 +11,7 @@ class Comment extends Eloquent {
 	 */
 	protected $table = 'comments';
 
-	public function addToContent()
+	public function content()
 	{
 		return $this->morphTo();
 	}

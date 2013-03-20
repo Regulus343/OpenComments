@@ -10,10 +10,13 @@
 	],
 	"require": {
 		"php": ">=5.3.0",
-		"illuminate/support": "4.0.x"
+		"illuminate/support": "4.0.x",
+		"regulus/solid-site": "dev-master",
+		"nick4fake/htmlpurifier": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
+			"src/controllers",
 			"src/migrations",
 			"src/models"
 		],
