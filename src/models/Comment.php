@@ -25,7 +25,7 @@ class Comment extends Eloquent {
 						'message' => 'Something went wrong with your attempt to add/update a comment. Please try again.',
 						'comment' => array());
 
-		if (Auth::guest()) return $result;
+		if (!OpenComments::auth()) return $result;
 
 		if ($id) {
 			$event = SocialEvent::find($id);
