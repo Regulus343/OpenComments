@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Regulus\\OpenComments\\Comment' => $baseDir . '/src/models/Comment.php',
-    'Regulus\\OpenComments\\CoreController' => $baseDir . '/src/controllers/CoreController.php',
+    'Regulus\\OpenComments\\CommentsController' => $baseDir . '/src/controllers/CommentsController.php',
 );

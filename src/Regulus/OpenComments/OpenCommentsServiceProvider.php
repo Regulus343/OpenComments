@@ -19,6 +19,9 @@ class OpenCommentsServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('regulus/open-comments');
+
+		include __DIR__.'/../../routes.php';
+		include __DIR__.'/../../filters.php';
 	}
 
 	/**

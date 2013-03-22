@@ -1,31 +1,31 @@
-@if (!Auth::guest())
+<?php
+$contentType  = Session::get('contentType');
 
-	<?php
-	$contentType  = Session::get('contentType');
+$commentID    = Session::get('commentID');
+$commentText  = Session::get('commentText');
+$parentID     = Session::get('commentParentID');
+$commentReply = Session::get('commentReply');
 
-	$commentID    = Session::get('commentID');
-	$commentText  = Session::get('commentText');
-	$parentID     = Session::get('commentParentID');
-	$commentReply = Session::get('commentReply');
-
-	$class = "";
-	if ($commentReply) {
-		$divId = "reply-comment".$parentID;
-		$class = "reply-comment";
-		$label = "Add Reply";
+$class = "";
+if ($commentReply) {
+	$divId = "reply-comment".$parentID;
+	$class = "reply-comment";
+	$label = "Add Reply";
+} else {
+	if ($commentID) {
+		$divId = "edit-comment".$commentID;
+		$class = "edit-comment";
+		$label = "Edit Comment";
 	} else {
-		if ($commentID) {
-			$divId = "edit-comment".$commentID;
-			$class = "edit-comment";
-			$label = "Edit Comment";
-		} else {
-			$divId = "add-comment";
-			$label = "Add Comment";
-		}
+		$divId = "add-comment";
+		$label = "Add Comment";
 	}
+}
 
-	$hideCommentArea = false;
-	if ($commentID && $class != "reply-comment") $hideCommentArea = true; ?>
+$hideCommentArea = false;
+if ($commentID && $class != "reply-comment") $hideCommentArea = true; ?>
+
+@if (!Auth::guest())
 
 	<?php /*if (Session::get('commentIdActioned') == $commentId
 	&& (Session::get('replyIdActioned') == $parentId OR Session::get('messageSuccess') != "")) {
@@ -49,10 +49,9 @@
 	}*/ ?>
 	<div class="clear"></div>
 	<div class="add-comment{{ HTML::dynamicArea($class != "", $class) }} {{ HTML::hiddenArea($hideCommentArea) }}" id="{{ $divId }}">
-		<form action="{{ URL::to('comments/create') }}" method="post" class="comment-form">
+		<form action="{{ URL::to('comments/create') }}" method="post" class="form-comment">
 			<label for="comment{{ $commentID }}">{{ $label }}:</label>
-			<textarea name="comment" id="comment{{ $commentID }}" class="wysiwyg"
-			style="width: {{ $parentID ? 544 : 640 }}px; height: 160px;">{{ $commentText }}</textarea>
+			<textarea name="comment" id="comment{{ $commentID }}" class="wysiwyg" placeholder="Add a comment...">{{ $commentText }}</textarea>
 
 			<input type="hidden" name="content_type" class="content-type" value="{{ $contentType }}" />
 			<input type="hidden" name="content_id" class="content-id" value="{{ $id }}" />
@@ -66,9 +65,9 @@
 		</form>
 	</div><!--/add-comment-->
 @else
-	<?php /*if ($displayLoginMessage) { ?>
+	@if (!$parentID)
 		<div class="add-comment">
-			<p><a href="{{{ URL::to('login') }}}">Log in</a> to comment.</p>
+			<p class="login"><a href="{{{ URL::to('login') }}}">Log in</a> to add a comment.</p>
 		</div><!--/add-comment-->
-	<?php }*/ ?>
+	@endif
 @endif

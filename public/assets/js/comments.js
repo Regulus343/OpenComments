@@ -228,11 +228,12 @@ $(document).ready(function(){
 	//loadComments();
 
 	/* Event Actions */
-	$('.comment-form').submit(function(e){
+	$('.form-comment').submit(function(e){
 		e.preventDefault();
 		var url = $(this).attr('action');
 		$.ajax({
 			url: url,
+			type: 'post',
 			dataType: 'json',
 			success: function(data){
 
@@ -240,6 +241,21 @@ $(document).ready(function(){
 			error: function(data){
 				console.log('Add Comment Failed');
 			}
+		});
+	});
+
+	/* Load WYSIHTML5 */
+	$('.wysiwyg').each(function(){
+		$(this).wysihtml5({
+			'stylesheets': baseURL + "assets/css/styles.css",
+			'parserRules': wysihtml5ParserRules,
+
+			'font-styles': false,
+			'emphasis'   : true,
+			'lists'      : true,
+			'html'       : false,
+			'link'       : true,
+			'image'      : true
 		});
 	});
 

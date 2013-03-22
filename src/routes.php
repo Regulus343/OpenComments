@@ -14,11 +14,6 @@
 use Illuminate\Support\Facades\Route;
 
 //map entire controller
-Route::controller('comments', 'Regulus\OpenComments\CoreController');
+Route::controller('comments', 'Regulus\OpenComments\CommentsController');
 
-Route::controller('ajax/comments', 'Regulus\OpenComments\AjaxController');
-
-Route::when('ajax/comments/*',  'ajax');
-
-Route::when('comments', 'comments');
-Route::when('comments/*', 'comments');
+Route::when('comments/*',  'ajax');
