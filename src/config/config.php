@@ -66,4 +66,40 @@ return array(
 	|
 	*/
 	'allowedContentTypes'  => false,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Comment Edit Limit (in minutes)
+	|--------------------------------------------------------------------------
+	|
+	| The comment editing limit in minutes. By default, users may edit or
+	| delete their comment for 10 minutes.
+	|
+	*/
+	'commentEditLimit'    => 10,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Comment Minimum Length
+	|--------------------------------------------------------------------------
+	|
+	| The minimum length of characters for a comment. Set to false if for no
+	| minimum. The default is 24 characters to prevent pointless "First!"
+	| comments and other short, useless comments.
+	|
+	*/
+	'commentMinLength'    => 24,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Comment Wait Time
+	|--------------------------------------------------------------------------
+	|
+	| The minimum length of time in seconds that must pass between comments
+	| for a particular user. The default is 90 seconds. This can prevent a
+	| user from flooding your website.
+	|
+	*/
+	'commentWaitTime'    => 90,
+
 );

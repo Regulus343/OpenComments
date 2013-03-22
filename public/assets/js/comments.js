@@ -230,10 +230,14 @@ $(document).ready(function(){
 	/* Event Actions */
 	$('.form-comment').submit(function(e){
 		e.preventDefault();
-		var url = $(this).attr('action');
+
+		var url  = $(this).attr('action');
+		var data = $(this).serialize();
+
 		$.ajax({
 			url: url,
 			type: 'post',
+			data: data,
 			dataType: 'json',
 			success: function(data){
 
