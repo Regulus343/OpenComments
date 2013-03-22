@@ -51,4 +51,19 @@ return array(
 	|
 	*/
 	'authMethodAdminCheck'  => false,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Allowed Content Types and Corresponding Tables
+	|--------------------------------------------------------------------------
+	|
+	| It is recommended that you declare a list of allowed content types with
+	| their corresponding tables to prevent users from getting invalid
+	| comments in your database. In the below example, "Blog Entry" is the
+	| content type and "blog_entries" is the database table:
+	|
+	|     array('Blog Entry' => 'blog_entries')
+	|
+	*/
+	'allowedContentTypes'  => false,
 );

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
+use Illuminate\Support\Facades\Config;
 use Regulus\Identify\Identify as Auth;
 
 class Comment extends Eloquent {
@@ -20,12 +21,12 @@ class Comment extends Eloquent {
 
 	public static function createUpdate($id = 0)
 	{
-		$result = array('result'  => 'Error',
+		$results = array('result'  => 'Error',
 						'action'  => 'Added',
 						'message' => 'Something went wrong with your attempt to add/update a comment. Please try again.',
 						'comment' => array());
 
-		if (!OpenComments::auth()) return $result;
+		if (!OpenComments::auth()) return $results;
 
 		if ($id) {
 			$event = SocialEvent::find($id);
@@ -40,6 +41,22 @@ class Comment extends Eloquent {
 		$id          = trim(Input::get('comment_id'));
 		$parentID    = trim(Input::get('parent_id'));
 		$editLimit   = date('Y-m-d H:i:s', strtotime('-12 minutes'));
+
+		//if allowedContentTypes config is set, require the content type to be specified and the item to exist in the database
+		$allowedContentTypes = Config::get('open-comments::allowedContentTypes');
+		if ($allowedContentTypes && is_array($allowedContentTypes)) {
+
+			//content type is not allowed; return error results
+			if (!isset($allowedContentTypes[$contentType])) return $results;
+
+			//item does not exist in specified table; return error results
+			$item = DB::table($allowedContentTypes[$contentType])->find($contentID);
+			if (empty($item)) return $results;
+
+			//item is deleted; return error results
+			$item = $item->toArray();
+			if (isset($item['deleted']) && $item['deleted']) return $results;
+		}
 
 		//if type does not exist, do not create comment
 		if (!in_array($contentType, array('Event', 'Materials Item', 'Bill', 'Candidate'))) return $result;

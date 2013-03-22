@@ -11,11 +11,6 @@ use Regulus\SolidSite\SolidSite as Site;
 
 class CommentsController extends BaseController {
 
-	public function getCreate()
-	{
-		echo 'Z: '.Format::purifyHTML('<div style="color: #700;">Testing!</div>');
-	}
-
 	public function postCreate()
 	{
 		$results = array(
