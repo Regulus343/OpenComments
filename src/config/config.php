@@ -12,7 +12,7 @@ return array(
 	| directory of your own for full view customization.
 	|
 	*/
-	'viewsLocation'         => 'open-comments::',
+	'viewsLocation' => 'open-comments::',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return array(
 	| native authorization class.
 	|
 	*/
-	'authClass'             => '\Illuminate\Support\Facades\Auth',
+	'authClass' => '\Illuminate\Support\Facades\Auth',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -50,7 +50,17 @@ return array(
 	| identifying an admin.
 	|
 	*/
-	'authMethodAdminCheck'  => false,
+	'authMethodAdminCheck' => false,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Authorization Method - User ID
+	|--------------------------------------------------------------------------
+	|
+	| The method for getting the active user ID.
+	|
+	*/
+	'authMethodActiveUserID' => 'userID()',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -65,7 +75,7 @@ return array(
 	|     array('Blog Entry' => 'blog_entries')
 	|
 	*/
-	'allowedContentTypes'  => false,
+	'allowedContentTypes' => false,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -76,7 +86,7 @@ return array(
 	| delete their comment for 10 minutes.
 	|
 	*/
-	'commentEditLimit'    => 10,
+	'commentEditLimit' => 10,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -88,7 +98,7 @@ return array(
 	| comments and other short, useless comments.
 	|
 	*/
-	'commentMinLength'    => 24,
+	'commentMinLength' => 24,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -100,6 +110,6 @@ return array(
 	| user from flooding your website.
 	|
 	*/
-	'commentWaitTime'    => 90,
+	'commentWaitTime' => 90,
 
 );

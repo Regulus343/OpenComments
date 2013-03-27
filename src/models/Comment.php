@@ -3,10 +3,12 @@
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
-use Regulus\Identify\Identify as Auth;
+
+use Regulus\TetraText\TetraText as Format;
 
 class Comment extends Eloquent {
 
@@ -30,21 +32,22 @@ class Comment extends Eloquent {
 	public static function createUpdate($id = 0)
 	{
 		$results = array(
-			'result'  => 'Error',
-			'action'  => 'Create',
-			'comment' => '',
-			'message' => Lang::get('open-comments::messages.errorGeneral'),
+			'resultType' => 'Error',
+			'action'     => 'Create',
+			'comment'    => '',
+			'message'    => Lang::get('open-comments::messages.errorGeneral'),
 		);
 
 		//ensure user is logged in
 		if (!OpenComments::auth()) return $results;
 
-		$userID      = Auth::userID();
+		$userID      = OpenComments::userID();
 		$contentID   = trim(Input::get('content_id'));
 		$contentType = trim(Input::get('content_type'));
 		$id          = trim(Input::get('comment_id'));
 		$parentID    = trim(Input::get('parent_id'));
 		$editLimit   = date('Y-m-d H:i:s', strtotime('-'.Config::get('open-comments::editLimit').' minutes'));
+		$commentText = trim(Input::get('comment'));
 
 		//if allowedContentTypes config is set, require the content type to be specified and the item to exist in the database
 		$allowedContentTypes = Config::get('open-comments::allowedContentTypes');
@@ -74,11 +77,11 @@ class Comment extends Eloquent {
 		}
 
 		//purify HTML
-		$commentText = $this->purify_html($this->input->post('comment'));
+		$commentText = Format::purifyHTML($commentText);
 
 		//require minimum length
 		if (Config::get('open-comments::commentMinLength') && strlen($commentText) < Config::get('open-comments::commentMinLength')) {
-			$results['message'] = Lang::get('open-comments::messages.errorMinLength');
+			$results['message'] = sprintf(Lang::get('open-comments::messages.errorMinLength'), Config::get('open-comments::commentMinLength'));
 			return $results;
 		}
 
@@ -127,10 +130,11 @@ class Comment extends Eloquent {
 		$comment->content_id   = $contentID;
 		$comment->content_type = $contentType;
 		$comment->parent_id    = $parentID;
+		$comment->comment      = $commentText;
 		$comment->save();
 
-		$results['result'] = "Success";
-		if ($action == "Create") {
+		$results['resultType'] = "Success";
+		if ($results['action'] == "Create") {
 			$results['message'] = Lang::get('open-comments::messages.successCreated');
 		} else {
 			$results['message'] = Lang::get('open-comments::messages.successUpdated');

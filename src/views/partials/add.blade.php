@@ -8,16 +8,16 @@ $commentReply = Session::get('commentReply');
 
 $class = "";
 if ($commentReply) {
-	$divId = "reply-comment".$parentID;
+	$divID = "reply-comment".$parentID;
 	$class = "reply-comment";
 	$label = "Add Reply";
 } else {
 	if ($commentID) {
-		$divId = "edit-comment".$commentID;
+		$divID = "edit-comment".$commentID;
 		$class = "edit-comment";
 		$label = "Edit Comment";
 	} else {
-		$divId = "add-comment";
+		$divID = "add-comment";
 		$label = "Add Comment";
 	}
 }
@@ -27,31 +27,31 @@ if ($commentID && $class != "reply-comment") $hideCommentArea = true; ?>
 
 @if (!Auth::guest())
 
-	<?php /*if (Session::get('commentIdActioned') == $commentId
-	&& (Session::get('replyIdActioned') == $parentId OR Session::get('messageSuccess') != "")) {
-
-
-		<?php if (Session::get('messageSuccess') != "") { ?>
-			<div class="clear" id="comment" style="margin-bottom: 18px;"></div>
-			<div class="message success">
-				<div><?=$this->session->flashdata('success')?></div>
-			</div>
-		<?php }
-
-		//error message
-		if ($this->session->flashdata('error') != "") {
-			$hideCommentArea = false; ?>
-			<div class="clear" id="comment" style="margin-bottom: 18px;"></div>
-			<div class="message error">
-				<div><?=$this->session->flashdata('error')?></div>
-			</div>
-		<?php }
-	}*/ ?>
 	<div class="clear"></div>
-	<div class="add-comment{{ HTML::dynamicArea($class != "", $class) }} {{ HTML::hiddenArea($hideCommentArea) }}" id="{{ $divId }}">
-		<form action="{{ URL::to('comments/create') }}" method="post" class="form-comment">
+	<div class="add-comment{{ HTML::dynamicArea($class != "", $class) }} {{ HTML::hiddenArea($hideCommentArea) }}" id="{{ $divID }}">
+
+		{{-- Success Message --}}
+		<div class="message success hidden">
+			<div class="main"></div>
+			<div class="sub"></div>
+		</div>
+
+		{{-- Error Message --}}
+		<div class="message error hidden">
+			<div class="main"></div>
+			<div class="sub"></div>
+		</div>
+
+		{{-- General Info Message --}}
+		<div class="message info hidden">
+			<div class="main"></div>
+			<div class="sub"></div>
+		</div>
+
+		{{-- Add/Edit Comment Form --}}
+		{{ Form::open('comments/create', 'post', array('class' => 'form-comment')) }}
 			<label for="comment{{ $commentID }}">{{ $label }}:</label>
-			<textarea name="comment" id="comment{{ $commentID }}" class="wysiwyg" placeholder="Add a comment...">{{ $commentText }}</textarea>
+			<textarea name="comment" class="field-comment" id="comment{{ $commentID }}" class="wysiwyg" placeholder="Add a comment...">{{ $commentText }}</textarea>
 
 			<input type="hidden" name="content_type" class="content-type" value="{{ $contentType }}" />
 			<input type="hidden" name="content_id" class="content-id" value="{{ $id }}" />
@@ -62,7 +62,7 @@ if ($commentID && $class != "reply-comment") $hideCommentArea = true; ?>
 				<input type="submit" name="add_comment" class="left" value="{{ $label }}" />
 				<div class="clear"></div>
 			</div>
-		</form>
+		{{ Form::close() }}
 	</div><!--/add-comment-->
 @else
 	@if (!$parentID)

@@ -45,6 +45,21 @@ class OpenComments {
 	}
 
 	/**
+	 * Gets the userID of the currently logged in user.
+	 *
+	 * @return boolean
+	 */
+	public static function userID()
+	{
+		$auth = static::configAuth();
+		if ($auth->methodActiveUserID != false) {
+			$function = static::separateFunction($auth->methodActiveUserID);
+			return static::callFunction($function);
+		}
+		return false;
+	}
+
+	/**
 	 * Prepare authorization configuration.
 	 *
 	 * @return array
@@ -53,9 +68,10 @@ class OpenComments {
 	{
 		if (is_null(static::$auth)) {
 			static::$auth = (object) array(
-				'class'             => Config::get('open-forum::authClass'),
-				'methodActiveCheck' => Config::get('open-forum::authMethodActiveCheck'),
-				'methodAdminCheck'  => Config::get('open-forum::authMethodAdminCheck'),
+				'class'              => Config::get('open-forum::authClass'),
+				'methodActiveCheck'  => Config::get('open-forum::authMethodActiveCheck'),
+				'methodAdminCheck'   => Config::get('open-forum::authMethodAdminCheck'),
+				'methodActiveUserID' => Config::get('open-forum::authMethodActiveUserID'),
 			);
 		}
 		return static::$auth;

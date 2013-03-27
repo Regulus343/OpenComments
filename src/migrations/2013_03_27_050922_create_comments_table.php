@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCommentsTable extends Migration {
+
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('comments', function($table)
+		{
+			$table->increments('id');
+			$table->integer('user_id');
+			$table->integer('content_id');
+			$table->string('content_type', 64);
+			$table->integer('parent_id');
+
+			$table->text('comment');
+
+			$table->boolean('deleted');
+			$table->dateTime('deleted_at');
+
+			$table->string('ip_address', 36);
+
+			$table->timestamps();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::drop('comments');
+	}
+
+}

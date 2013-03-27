@@ -231,18 +231,23 @@ $(document).ready(function(){
 	$('.form-comment').submit(function(e){
 		e.preventDefault();
 
-		var url  = $(this).attr('action');
-		var data = $(this).serialize();
+		var url         = $(this).attr('action');
+		var data        = $(this).serialize();
+		var containerID = "#add-comment";
 
 		$.ajax({
 			url: url,
 			type: 'post',
 			data: data,
 			dataType: 'json',
-			success: function(data){
-
+			success: function(results) {
+				if (results.resultType == "Success") {
+					showCommentMessage(containerID, 'success', results.message);
+				} else {
+					showCommentMessage(containerID, 'error', results.message);
+				}
 			},
-			error: function(data){
+			error: function(){
 				console.log('Add Comment Failed');
 			}
 		});
@@ -264,3 +269,9 @@ $(document).ready(function(){
 	});
 
 });
+
+var commentMessageTimeout;
+
+function showCommentMessage(elementID, type, message) {
+	$(elementID+' .message.'+type).html(message).removeClass('hidden');
+}
