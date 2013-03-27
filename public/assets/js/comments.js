@@ -222,6 +222,9 @@ function eventAttendanceStatus(id) {
 	);
 }*/
 
+var commentMessageTimeLimit = 6000;
+var commentMessageTimeout;
+
 $(document).ready(function(){
 
 	/* Load Initial Events */
@@ -243,6 +246,7 @@ $(document).ready(function(){
 			success: function(results) {
 				if (results.resultType == "Success") {
 					showCommentMessage(containerID, 'success', results.message);
+					$(containerID+' .field-comment').val('');
 				} else {
 					showCommentMessage(containerID, 'error', results.message);
 				}
@@ -270,8 +274,10 @@ $(document).ready(function(){
 
 });
 
-var commentMessageTimeout;
-
 function showCommentMessage(elementID, type, message) {
+	clearTimeout(commentMessageTimeout);
+
 	$(elementID+' .message.'+type).html(message).removeClass('hidden');
+console.log("$('"+elementID+" .message."+type+"').html('"+message+"').addClass('hidden');");
+	commentMessageTimeout = setTimeout("$('"+elementID+" .message."+type+"').html('"+message+"').addClass('hidden');", commentMessageTimeLimit);
 }
