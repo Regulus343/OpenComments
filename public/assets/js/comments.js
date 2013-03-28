@@ -227,10 +227,10 @@ var commentMessageTimeout;
 
 $(document).ready(function(){
 
-	/* Load Initial Events */
+	/* Load Initial Comments */
 	//loadComments();
 
-	/* Event Actions */
+	/* Comment Actions */
 	$('.form-comment').submit(function(e){
 		e.preventDefault();
 
@@ -262,7 +262,6 @@ $(document).ready(function(){
 		$(this).wysihtml5({
 			'stylesheets': baseURL + "assets/css/styles.css",
 			'parserRules': wysihtml5ParserRules,
-
 			'font-styles': false,
 			'emphasis'   : true,
 			'lists'      : true,
@@ -278,6 +277,6 @@ function showCommentMessage(elementID, type, message) {
 	clearTimeout(commentMessageTimeout);
 
 	$(elementID+' .message.'+type).html(message).removeClass('hidden');
-console.log("$('"+elementID+" .message."+type+"').html('"+message+"').addClass('hidden');");
+
 	commentMessageTimeout = setTimeout("$('"+elementID+" .message."+type+"').html('"+message+"').addClass('hidden');", commentMessageTimeLimit);
 }

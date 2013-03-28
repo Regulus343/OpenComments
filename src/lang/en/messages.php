@@ -10,4 +10,13 @@ return array(
 	'successCreated'  => 'You have successfully added a comment.',
 	'successUpdated'  => 'You have successfully edited a comment.',
 
+	'addComment'      => 'Add Comment',
+	'editComment'     => 'Edit Comment',
+	'addReply'        => 'Add Reply',
+
+	'edit'            => 'Edit',
+	'delete'          => 'Delete',
+	'reply'           => 'Reply',
+	'replyToParent'   => 'Reply to Parent',
+
 );

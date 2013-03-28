@@ -54,13 +54,24 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Authorization Method - User
+	|--------------------------------------------------------------------------
+	|
+	| The method for getting the active user.
+	|
+	*/
+	'authMethodActiveUser' => 'user()',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Authorization Method - User ID
 	|--------------------------------------------------------------------------
 	|
-	| The method for getting the active user ID.
+	| The method for getting the active user ID which is used in conjunction
+	| with the user method about. By default, they get "user()->id" together.
 	|
 	*/
-	'authMethodActiveUserID' => 'userID()',
+	'authMethodActiveUserID' => 'id',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -1,3 +1,7 @@
+.hidden { display: none !important; }
+
+input.grey, textarea.grey, select.grey { color: #777; }
+
 ul#comments li div.info, ul#posts li div.info {
 	position: absolute;
 	top: 12px; left: 8px;

@@ -5,7 +5,7 @@
 		A light, effective user comments composer package that is easy to configure and implement.
 
 		created by Cody Jassman
-		last updated on March 26, 2013
+		last updated on March 27, 2013
 ----------------------------------------------------------------------------------------------------------*/
 
 use Illuminate\Support\Facades\Config;
@@ -45,17 +45,33 @@ class OpenComments {
 	}
 
 	/**
-	 * Gets the userID of the currently logged in user.
+	 * Gets the active user.
+	 *
+	 * @return boolean
+	 */
+	public static function user()
+	{
+		$auth = static::configAuth();
+		if ($auth->methodActiveUser != false) {
+			$function = static::separateFunction($auth->methodActiveUser);
+			return static::callFunction($function);
+		}
+		return false;
+	}
+
+	/**
+	 * Gets the active user ID.
 	 *
 	 * @return boolean
 	 */
 	public static function userID()
 	{
 		$auth = static::configAuth();
-		if ($auth->methodActiveUserID != false) {
-			$function = static::separateFunction($auth->methodActiveUserID);
-			return static::callFunction($function);
-		}
+		$user = static::user();
+
+		if (isset($user->{$auth->methodActiveUserID}))
+			return $user->{$auth->methodActiveUserID};
+
 		return false;
 	}
 
@@ -68,10 +84,11 @@ class OpenComments {
 	{
 		if (is_null(static::$auth)) {
 			static::$auth = (object) array(
-				'class'              => Config::get('open-forum::authClass'),
-				'methodActiveCheck'  => Config::get('open-forum::authMethodActiveCheck'),
-				'methodAdminCheck'   => Config::get('open-forum::authMethodAdminCheck'),
-				'methodActiveUserID' => Config::get('open-forum::authMethodActiveUserID'),
+				'class'              => Config::get('open-comments::authClass'),
+				'methodActiveCheck'  => Config::get('open-comments::authMethodActiveCheck'),
+				'methodAdminCheck'   => Config::get('open-comments::authMethodAdminCheck'),
+				'methodActiveUser'   => Config::get('open-comments::authMethodActiveUser'),
+				'methodActiveUserID' => Config::get('open-comments::authMethodActiveUserID'),
 			);
 		}
 		return static::$auth;
