@@ -94,10 +94,10 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	| The comment editing limit in minutes. By default, users may edit or
-	| delete their comment for 10 minutes.
+	| delete their comment for 5 minutes.
 	|
 	*/
-	'commentEditLimit' => 10,
+	'commentEditLimit' => 5,
 
 	/*
 	|--------------------------------------------------------------------------

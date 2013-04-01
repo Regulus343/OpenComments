@@ -20,7 +20,7 @@
 			</div>
 
 			<div class="comment">
-				<?=$comment->comment?>
+				{{comment}}
 
 				<div class="date-posted">
 					{{created_at}}
@@ -146,7 +146,6 @@
 			<!-- Reply Area -->
 			<li id="reply{{id}}" class="reply sub">
 				<div class="info">
-					<?php $user = $this->users->user(); ?>
 					<h1><a href="javascript:void(0);">{{active_user_name}}</a></h1>
 					<ul class="info">
 						<li><label>Role:</label> <span>{{active_role_name}}</span></li>

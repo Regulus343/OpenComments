@@ -1,4 +1,4 @@
-@if (!Auth::guest())
+@if (Regulus\OpenComments\OpenComments::auth())
 
 	<div class="clear"></div>
 	<div class="add-comment" id="add-comment">
@@ -39,9 +39,7 @@
 
 	</div><!-- /add-comment -->
 @else
-	@if (!$parentID)
-		<div class="add-comment">
-			<p class="login"><a href="{{{ URL::to('login') }}}">Log in</a> to add a comment.</p>
-		</div><!-- /add-comment -->
-	@endif
+	<div class="add-comment">
+		<p class="login"><a href="{{{ URL::to('login') }}}">Log in</a> to add a comment.</p>
+	</div><!-- /add-comment -->
 @endif

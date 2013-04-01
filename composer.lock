@@ -1,5 +1,5 @@
 {
-    "hash": "380b798e2b4cac0672f72370cfa87c80",
+    "hash": "ca05b47eb6bfad6eaf652cedbfa4053d",
     "packages": [
         {
             "name": "illuminate/support",
@@ -8,12 +8,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "b46d591dd8fe100603777ea84ace34a5314c48a3"
+                "reference": "f30bce49f7dc8e57684ac079f94cea70f3eb47f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/b46d591dd8fe100603777ea84ace34a5314c48a3",
-                "reference": "b46d591dd8fe100603777ea84ace34a5314c48a3",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/f30bce49f7dc8e57684ac079f94cea70f3eb47f5",
+                "reference": "f30bce49f7dc8e57684ac079f94cea70f3eb47f5",
                 "shasum": ""
             },
             "require": {
@@ -21,9 +21,9 @@
             },
             "require-dev": {
                 "mockery/mockery": "0.7.2",
-                "patchwork/utf8": "1.0.*"
+                "patchwork/utf8": "1.0.*",
+                "phpunit/phpunit": "3.7.*"
             },
-            "time": "2013-03-15 03:55:30",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -45,15 +45,97 @@
                     "email": "taylorotwell@gmail.com"
                 }
             ],
-            "description": "Various utilities and support functions."
+            "description": "Various utilities and support functions.",
+            "time": "2013-03-29 21:32:25"
+        },
+        {
+            "name": "nick4fake/htmlpurifier",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nick4fake/htmlpurifier.git",
+                "reference": "a33ac67e68c7aa241a3d2aa27174ba88df48b1e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nick4fake/htmlpurifier/zipball/a33ac67e68c7aa241a3d2aa27174ba88df48b1e8",
+                "reference": "a33ac67e68c7aa241a3d2aa27174ba88df48b1e8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "HTMLPurifier": "",
+                    "HTMLPurifier_": "HTMLPurifier/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0"
+            ],
+            "description": "HTML Purifier is a standards-compliant HTML filter library written in PHP.",
+            "homepage": "http://htmlpurifier.org/",
+            "time": "2012-09-19 09:37:36"
+        },
+        {
+            "name": "regulus/solid-site",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Regulus343/SolidSite.git",
+                "reference": "16ba53c485a67a4b0cf6bdc9c6a8029e400653d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Regulus343/SolidSite/zipball/16ba53c485a67a4b0cf6bdc9c6a8029e400653d4",
+                "reference": "16ba53c485a67a4b0cf6bdc9c6a8029e400653d4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "4.0.x",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/migrations"
+                ],
+                "psr-0": {
+                    "Regulus\\SolidSite": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cody Jassman",
+                    "email": "me@codyjassman.com"
+                }
+            ],
+            "description": "A composer package that assigns section names & titles to pages and simplifies creation of breadcrumb trails and is useful for other components that require page identifying information such as menus that highlight the current location.",
+            "time": "2013-04-01 21:41:55"
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+
+    ],
     "aliases": [
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": [
+    "stability-flags": {
+        "regulus/solid-site": 20,
+        "nick4fake/htmlpurifier": 20
+    },
+    "platform": {
+        "php": ">=5.3.0"
+    },
+    "platform-dev": [
 
     ]
 }

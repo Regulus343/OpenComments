@@ -1,18 +1,37 @@
-/*function loadEvents() {
-	if (events != undefined && events.length > 0) {
-		var source   = $("#events-template").html();
-		var template = Handlebars.compile(source);
-		var context  = {events: events};
-		var html     = template(context);
+var comments;
 
-		$('#loading-events').hide();
-		$('#events').html(html).slideDown('fast');
-	} else {
-		$('#loading-events').fadeOut('fast');
-	}
+function loadComments() {
+	$.ajax({
+		url: baseURL + 'comments/list',
+		type: 'post',
+		data: { 'content_id': contentID, 'content_type': contentType },
+		dataType: 'json',
+		success: function(result){
+			showCommentMessage('#message-comments', 'info', result.message, false);
+
+			comments = result.comments;
+			if (comments != undefined && comments.length > 0) {
+				var source   = $('#comments-template').html();
+				var template = Handlebars.compile(source);
+				var context  = { comments: comments };
+				var html     = template(context);
+
+				$('#loading-comments').hide();
+				$('#comments').html(html).slideDown('fast');
+			} else {
+				$('#loading-comments').fadeOut('fast');
+			}
+
+		},
+		error: function(){
+			console.log('error...');
+			showCommentMessage('#message-comments', 'info', messageNoComments, false);
+			$('#loading-comments').fadeOut('fast');
+		}
+	});
 }
 
-function searchEvents() {
+/*function searchEvents() {
 	var data = getFormDataForPost('#form-search');
 
 	$('#events').hide();
@@ -228,7 +247,7 @@ var commentMessageTimeout;
 $(document).ready(function(){
 
 	/* Load Initial Comments */
-	//loadComments();
+	loadComments();
 
 	/* Comment Actions */
 	$('.form-comment').submit(function(e){
@@ -245,10 +264,10 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(results) {
 				if (results.resultType == "Success") {
-					showCommentMessage(containerID, 'success', results.message);
-					$(containerID+' .field-comment').val('');
+					showCommentMessage(containerID, 'success', results.message, true);
+					$(containerID+' .field-comment').val('sdfsfsadfasd');
 				} else {
-					showCommentMessage(containerID, 'error', results.message);
+					showCommentMessage(containerID, 'error', results.message, true);
 				}
 			},
 			error: function(){
@@ -273,10 +292,12 @@ $(document).ready(function(){
 
 });
 
-function showCommentMessage(elementID, type, message) {
+function showCommentMessage(elementID, type, message, timeLimit) {
 	clearTimeout(commentMessageTimeout);
 
 	$(elementID+' .message.'+type).html(message).removeClass('hidden');
 
-	commentMessageTimeout = setTimeout("$('"+elementID+" .message."+type+"').html('"+message+"').addClass('hidden');", commentMessageTimeLimit);
+	if (timeLimit) {
+		commentMessageTimeout = setTimeout("$('"+elementID+" .message."+type+"').html('"+message+"').addClass('hidden');", commentMessageTimeLimit);
+	}
 }

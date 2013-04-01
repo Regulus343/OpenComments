@@ -3,7 +3,9 @@
 
 {{-- Comments JS --}}
 <script type="text/javascript">
-	if (baseURL == undefined) var baseURL = '{{ URL::to('') }}';
+	if (baseURL == undefined) var baseURL = "{{ URL::to('') }}";
+
+	if (messageNoComments == undefined) var messageNoComments = "{{ Lang::get('open-comments::messages.noComments') }}";
 
 	@if (!is_null(Site::get('contentID')) && !is_null(Site::get('contentType')))
 		var contentID   = "{{ Site::get('contentID') }}";
@@ -22,6 +24,14 @@
 {{-- Add Comment Form --}}
 @include(Config::get('open-comments::viewsLocation').'partials.add')
 
+{{-- Message --}}
+<div id="message-comments">
+	<div class="message info hidden"></div>
+</div>
+
 {{-- Comments List --}}
-<div class="message info hidden" id="message-comments"></li>
+<div class="loading" id="loading-comments" title="Loading comments..."></div>
 <ul id="comments" class="hidden"></ul>
+
+{{-- JS Template for Comments --}}
+@include(Config::get('open-comments::viewsLocation').'templates.list')

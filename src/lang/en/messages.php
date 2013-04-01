@@ -10,6 +10,10 @@ return array(
 	'successCreated'  => 'You have successfully added a comment.',
 	'successUpdated'  => 'You have successfully edited a comment.',
 
+	'noComments'      => 'There are currently no comments.',
+	'numberComments'  => 'Displaying <strong>%s</strong> %s.',
+	'comment'         => 'comment',
+
 	'addComment'      => 'Add Comment',
 	'editComment'     => 'Edit Comment',
 	'addReply'        => 'Add Reply',

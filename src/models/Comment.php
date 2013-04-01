@@ -24,6 +24,16 @@ class Comment extends Eloquent {
 		return $this->morphTo();
 	}
 
+	public function comments()
+    {
+        return $this->hasMany('Comment', 'parent_id');
+    }
+
+    public function comment()
+    {
+        return $this->belongsTo('Comment');
+    }
+
 	/**
 	 * Creates or updates a comment.
 	 *
@@ -146,6 +156,53 @@ class Comment extends Eloquent {
 		//Activity::log(ucwords($data['content_type']).' - Comment Updated', '', $data['content_id']);
 
 		return $results;
+	}
+
+	public static function compileList($contentID, $contentType)
+	{
+		return static::where('content_id', '=', $contentID)
+			->where('content_type', '=', $contentType)
+			//->with('Comment')
+			->orderBy('id')
+			->get();
+	}
+
+	public static function format($comments)
+	{
+		$commentsFormatted = array();
+		foreach ($comments as $comment) {
+			$commentArray = $comment->toArray();
+
+			$commentArray['logged_in'] = OpenComments::auth();
+			$commentArray['creator'] = $comment->creator->getName();
+			$commentArray['image'] = $comment->creator->getImage();
+
+			$commentArray['created_at'] = date('F j, Y', strtotime($commentArray['created_at']));
+			$commentArray['updated_at'] = date('F j, Y', strtotime($commentArray['updated_at']));
+			if (substr($commentArray['created_at'], 0, 10) != substr($commentArray['updated_at'], 0, 10)) {
+				$commentArray['updated'] = true;
+			} else {
+				$commentArray['updated'] = false;
+			}
+
+			/*if (Auth::is('admin') OR $event->id == Auth::userID()) {
+				$eventArray['actions'] = true;
+			} else {
+				$eventArray['actions'] = false;
+			}
+
+			$eventArray['action_edit'] = false;
+			$eventArray['action_cancel'] = false;
+			if (!$event->getDatePast() && !$event->cancelled) {
+				$eventArray['action_edit'] = true;
+
+				if ($event->active)
+					$eventArray['action_cancel'] = true;
+			}*/
+
+			$commentsFormatted[] = $commentArray;
+		}
+		return $commentsFormatted;
 	}
 
 }
