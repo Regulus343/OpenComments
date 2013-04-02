@@ -19,20 +19,22 @@ class Comment extends Eloquent {
 	 */
 	protected $table = 'comments';
 
+	/**
+	 * The attributes that cannot be updated.
+	 *
+	 * @var array
+	 */
+	protected $guarded = array('id');
+
 	public function content()
 	{
 		return $this->morphTo();
 	}
 
-	public function comments()
-    {
-        return $this->hasMany('Comment', 'parent_id');
-    }
-
-    public function comment()
-    {
-        return $this->belongsTo('Comment');
-    }
+	public function creator()
+	{
+		return $this->belongsTo(Config::get('auth.model'), 'user_id');
+	}
 
 	/**
 	 * Creates or updates a comment.
@@ -44,6 +46,7 @@ class Comment extends Eloquent {
 		$results = array(
 			'resultType' => 'Error',
 			'action'     => 'Create',
+			'commentID'  => false,
 			'comment'    => '',
 			'message'    => Lang::get('open-comments::messages.errorGeneral'),
 		);
@@ -143,6 +146,18 @@ class Comment extends Eloquent {
 		$comment->comment      = $commentText;
 		$comment->save();
 
+		$results['commentID'] = $comment->id;
+
+		//add order ID for easy comment ordering for queries
+		if ($results['action'] == "Create") {
+			if ($parentID) {
+				$comment->order_id = $parentID;
+			} else {
+				$comment->order_id = $comment->id;
+			}
+			$comment->save();
+		}
+
 		$results['resultType'] = "Success";
 		if ($results['action'] == "Create") {
 			$results['message'] = Lang::get('open-comments::messages.successCreated');
@@ -162,27 +177,54 @@ class Comment extends Eloquent {
 	{
 		return static::where('content_id', '=', $contentID)
 			->where('content_type', '=', $contentType)
-			//->with('Comment')
-			->orderBy('id')
+			->orderBy('order_id', 'desc')
+			->orderBy('id', 'desc')
 			->get();
 	}
 
 	public static function format($comments)
 	{
 		$commentsFormatted = array();
+
+		if (OpenComments::auth()) {
+			$user = OpenComments::user();
+			$activeUser = array(
+				'name'         => $user->getName(),
+				'role'         => $user->roles[0]->name,
+				'member_since' => date('F Y', strtotime($user->activated_at)),
+			);
+		} else {
+			$activeUser = array(
+				'name'         => '',
+				'role'         => '',
+				'member_since' => '',
+			);
+		}
+
 		foreach ($comments as $comment) {
 			$commentArray = $comment->toArray();
 
 			$commentArray['logged_in'] = OpenComments::auth();
-			$commentArray['creator'] = $comment->creator->getName();
-			$commentArray['image'] = $comment->creator->getImage();
 
-			$commentArray['created_at'] = date('F j, Y', strtotime($commentArray['created_at']));
-			$commentArray['updated_at'] = date('F j, Y', strtotime($commentArray['updated_at']));
-			if (substr($commentArray['created_at'], 0, 10) != substr($commentArray['updated_at'], 0, 10)) {
+			$creator                       = $comment->creator;
+			$commentArray['user']          = $creator->getName();
+			$commentArray['user_role']     = $creator->roles[0]->name;
+			$commentArray['user_comments'] = 0;
+			$commentArray['user_since']    = date('F Y', strtotime($creator->activated_at));
+			$commentArray['user_image']    = $comment->creator->getPicture();
+
+			$commentArray['created_at'] = date('F j, Y \a\t g:i:sa', strtotime($commentArray['created_at']));
+			$commentArray['updated_at'] = date('F j, Y \a\t g:i:sa', strtotime($commentArray['updated_at']));
+			if (substr($commentArray['created_at'], 0, 13) != substr($commentArray['updated_at'], 0, 13)) {
 				$commentArray['updated'] = true;
 			} else {
 				$commentArray['updated'] = false;
+			}
+
+			if ($commentArray['logged_in'] && !$commentArray['parent_id']) {
+				$commentArray['reply'] = true;
+			} else {
+				$commentArray['reply'] = false;
 			}
 
 			/*if (Auth::is('admin') OR $event->id == Auth::userID()) {
@@ -199,6 +241,10 @@ class Comment extends Eloquent {
 				if ($event->active)
 					$eventArray['action_cancel'] = true;
 			}*/
+
+			$commentArray['active_user_name']         = $activeUser['name'];
+			$commentArray['active_user_role']         = $activeUser['role'];
+			$commentArray['active_user_member_since'] = $activeUser['member_since'];
 
 			$commentsFormatted[] = $commentArray;
 		}

@@ -8,19 +8,20 @@
 		<li id="comment{{id}}" class="{{classes}}">
 
 			<div class="info">
-				<h1><a href="" class="profile-popup" rel="u{{user_id}}">{{user}}</a></h1>
+				<h1><a href="" class="profile-popup" rel="{{user_id}}">{{user}}</a></h1>
 				<ul class="info">
 					<li><label>Role:</label> <span>{{user_role}}</span></li>
 					<li><label>Comments:</label> <span>{{user_comments}}</span></li>
-					<li><label>Member Since:</label> <span>{{member_since}}</span></li>
+					<li><label>Member Since:</label> <span>{{user_since}}</span></li>
 				</ul>
-				<div class="clear"></div>
 
 				<a href="" class="display-pic profile-popup" rel="u{{user_id}}"><img src="{{user_image}}" alt="" /></a>
+
+				<div class="clear"></div>
 			</div>
 
 			<div class="comment">
-				{{comment}}
+				{{{comment}}}
 
 				<div class="date-posted">
 					{{created_at}}
@@ -150,7 +151,7 @@
 					<ul class="info">
 						<li><label>Role:</label> <span>{{active_role_name}}</span></li>
 						<li><label>Comments:</label> <span>{{comments_with_reply}}</span></li>
-						<li><label>Member Since:</label> <span>{{active_member_since}}}}</span></li>
+						<li><label>Member Since:</label> <span>{{active_member_since}}</span></li>
 					</ul>
 					<div class="clear"></div>
 
@@ -170,6 +171,8 @@
 					<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::messages.addReply') ?>" />
 
 				<?php echo Form::close(); ?>
+
+				<div class="clear"></div>
 			</li>
 
 		{{/if}}

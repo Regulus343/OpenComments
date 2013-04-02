@@ -18,7 +18,7 @@ class CreateCommentsTable extends Migration {
 			$table->integer('content_id');
 			$table->string('content_type', 64);
 			$table->integer('parent_id');
-			$table->decimal('order', 8, 3);
+			$table->integer('order_id');
 
 			$table->text('comment');
 

@@ -1,36 +1,3 @@
-var comments;
-
-function loadComments() {
-	$.ajax({
-		url: baseURL + 'comments/list',
-		type: 'post',
-		data: { 'content_id': contentID, 'content_type': contentType },
-		dataType: 'json',
-		success: function(result){
-			showCommentMessage('#message-comments', 'info', result.message, false);
-
-			comments = result.comments;
-			if (comments != undefined && comments.length > 0) {
-				var source   = $('#comments-template').html();
-				var template = Handlebars.compile(source);
-				var context  = { comments: comments };
-				var html     = template(context);
-
-				$('#loading-comments').hide();
-				$('#comments').html(html).slideDown('fast');
-			} else {
-				$('#loading-comments').fadeOut('fast');
-			}
-
-		},
-		error: function(){
-			console.log('error...');
-			showCommentMessage('#message-comments', 'info', messageNoComments, false);
-			$('#loading-comments').fadeOut('fast');
-		}
-	});
-}
-
 /*function searchEvents() {
 	var data = getFormDataForPost('#form-search');
 
@@ -241,8 +208,85 @@ function eventAttendanceStatus(id) {
 	);
 }*/
 
+var comments;
 var commentMessageTimeLimit = 6000;
 var commentMessageTimeout;
+var commentScroll = false;
+
+function scrollToElement(element) {
+	console.log(element);
+	$(element).animate({ scrollTop: $(element).offset().top })
+}
+
+function loadComments() {
+	$('#loading-comments').fadeIn('fast');
+	$('#comments').fadeOut('fast');
+
+	$.ajax({
+		url: baseURL + 'comments/list',
+		type: 'post',
+		data: { 'content_id': contentID, 'content_type': contentType },
+		dataType: 'json',
+		success: function(result){
+			showCommentMessage('#message-comments', 'info', result.message, false);
+
+			comments = result.comments;
+			if (comments != undefined && comments.length > 0) {
+				var source   = $('#comments-template').html();
+				var template = Handlebars.compile(source);
+				var context  = { comments: comments };
+				var html     = template(context);
+
+				$('#loading-comments').hide();
+				$('#comments').html(html).removeClass('hidden').slideDown('fast');
+			} else {
+				$('#loading-comments').fadeOut('fast');
+			}
+
+			/* Load WYSIHTML5 */
+			setupWysiwygEditors();
+
+			/* Scroll to Comment */
+			if (commentScroll) {
+				setTimeout("scrollToElement('#comment"+commentScroll+"');", 2000);
+				commentScroll = false;
+			}
+		},
+		error: function(){
+			showCommentMessage('#message-comments', 'info', messageNoComments, false);
+			$('#loading-comments').fadeOut('fast');
+			console.log('Load Comments Error');
+		}
+	});
+}
+
+function showCommentMessage(elementID, type, message, timeLimit) {
+	clearTimeout(commentMessageTimeout);
+
+	$(elementID+' .message.'+type).html(message).removeClass('hidden');
+
+	if (timeLimit) {
+		commentMessageTimeout = setTimeout("$('"+elementID+" .message."+type+"').html('"+message+"').addClass('hidden');", commentMessageTimeLimit);
+	}
+}
+
+function setupWysiwygEditors() {
+	$('.wysihtml5-toolbar').remove();
+	$('iframe.wysihtml5-sandbox').remove();
+	$('textarea.wysiwyg').val('').show();
+	$('textarea.wysiwyg').each(function(){
+		$(this).wysihtml5({
+			'stylesheets': baseURL + "assets/css/styles.css",
+			'parserRules': wysihtml5ParserRules,
+			'font-styles': false,
+			'emphasis'   : true,
+			'lists'      : true,
+			'html'       : false,
+			'link'       : true,
+			'image'      : true
+		});
+	});
+}
 
 $(document).ready(function(){
 
@@ -269,6 +313,9 @@ $(document).ready(function(){
 				} else {
 					showCommentMessage(containerID, 'error', results.message, true);
 				}
+
+				commentScroll = results.commentID;
+				loadComments();
 			},
 			error: function(){
 				console.log('Add Comment Failed');
@@ -276,28 +323,4 @@ $(document).ready(function(){
 		});
 	});
 
-	/* Load WYSIHTML5 */
-	$('.wysiwyg').each(function(){
-		$(this).wysihtml5({
-			'stylesheets': baseURL + "assets/css/styles.css",
-			'parserRules': wysihtml5ParserRules,
-			'font-styles': false,
-			'emphasis'   : true,
-			'lists'      : true,
-			'html'       : false,
-			'link'       : true,
-			'image'      : true
-		});
-	});
-
 });
-
-function showCommentMessage(elementID, type, message, timeLimit) {
-	clearTimeout(commentMessageTimeout);
-
-	$(elementID+' .message.'+type).html(message).removeClass('hidden');
-
-	if (timeLimit) {
-		commentMessageTimeout = setTimeout("$('"+elementID+" .message."+type+"').html('"+message+"').addClass('hidden');", commentMessageTimeLimit);
-	}
-}
