@@ -9,7 +9,7 @@ ul#comments li, ul#posts li {
 	clear: both;
 	margin: 0 0 12px 0;
 	padding: 8px;
-	min-height: 194px;
+	min-height: 180px;
 
 	background-color: #222;
 
@@ -110,7 +110,7 @@ ul#comments li a.display-pic, ul#posts li a.display-pic {
 }
 
 ul#comments li a.display-pic img, ul#posts li a.display-pic img {
-	width: 96px;
+	width: 84px;
 	border: 1px solid #666;
 	-moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px;
 }
@@ -165,11 +165,11 @@ ul#comments li.reply div.add-comment, ul#posts li.reply div.add-post { margin-to
 ul.wysihtml5-toolbar { clear: both; }
 
 ul#comments li ul.wysihtml5-toolbar > li, ul#posts li ul.wysihtml5-toolbar > li {
-    display: list-item;
-    clear: none;
-    float: left;
-    list-style: none outside none;
-    margin: 0 5px 10px 0;
+	display: list-item;
+	clear: none;
+	float: left;
+	list-style: none outside none;
+	margin: 0 5px 10px 0;
 }
 
 ul#comments li .message, ul#posts li .message { clear: both; margin: 12px 0 12px 190px; }
