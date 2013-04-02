@@ -209,6 +209,7 @@ function eventAttendanceStatus(id) {
 }*/
 
 var comments;
+var commentMessage;
 var commentMessageTimeLimit = 6000;
 var commentMessageTimeout;
 var commentScroll = false;
@@ -252,11 +253,14 @@ function loadComments() {
 			/* Scroll to Comment */
 			if (commentScroll) {
 				scrollToElement('#comment'+commentScroll);
-				commentScroll = false;
+
+				showCommentMessage('#comment'+commentScroll, 'success', commentMessage, true);
+				commentScroll  = false;
+				commentMessage = "";
 			}
 		},
 		error: function(){
-			showCommentMessage('#message-comments', 'info', messageNoComments, false);
+			showCommentMessage('#message-comments', 'info', messageNoComments, true);
 			$('#loading-comments').fadeOut('fast');
 			console.log('Load Comments Error');
 		}
@@ -266,10 +270,10 @@ function loadComments() {
 function showCommentMessage(elementID, type, message, timeLimit) {
 	clearTimeout(commentMessageTimeout);
 
-	$(elementID+' .message.'+type).html(message).removeClass('hidden');
+	$(elementID+' .message.'+type).html(message).hide().removeClass('hidden').fadeIn('fast');
 
 	if (timeLimit) {
-		commentMessageTimeout = setTimeout("$('"+elementID+" .message."+type+"').html('"+message+"').addClass('hidden');", commentMessageTimeLimit);
+		commentMessageTimeout = setTimeout("$('"+elementID+" .message."+type+"').html('"+message+"').fadeOut();", commentMessageTimeLimit);
 	}
 }
 
@@ -311,10 +315,10 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(results) {
 				if (results.resultType == "Success") {
-					showCommentMessage('#comment'+results.commentID, 'success', results.message, false);
 					$(containerID+' .field-comment').val('sdfsfsadfasd');
 
-					commentScroll = results.commentID;
+					commentScroll  = results.commentID;
+					commentMessage = results.message;
 					loadComments();
 				} else {
 					showCommentMessage(containerID, 'error', results.message, true);

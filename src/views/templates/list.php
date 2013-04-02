@@ -148,7 +148,7 @@
 		{{#if reply}}
 
 			<!-- Reply Area -->
-			<li id="reply{{id}}" class="reply sub">
+			<li id="reply{{id}}" class="reply sub active-user">
 				<div class="info">
 					<h1><a href="javascript:void(0);">{{active_user_name}}</a></h1>
 					<ul class="info">
