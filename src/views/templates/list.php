@@ -5,7 +5,10 @@
 		if ($comment->user_id == $this->session->userdata('user_id'))	$classes[] = "current-user";
 		if ($comment->parent_id)										$classes[] = "sub";*/ ?>
 
-		<li id="comment{{id}}" class="{{classes}}">
+		<li id="comment{{id}}"{{#if active_user_post}} class="active-user"{{/if}}>
+
+			<!-- Message -->
+			<div class="message success hidden"></div>
 
 			<div class="info">
 				<h1><a href="" class="profile-popup" rel="{{user_id}}">{{user}}</a></h1>

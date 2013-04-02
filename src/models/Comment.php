@@ -189,12 +189,14 @@ class Comment extends Eloquent {
 		if (OpenComments::auth()) {
 			$user = OpenComments::user();
 			$activeUser = array(
+				'id'           => $user->id,
 				'name'         => $user->getName(),
 				'role'         => $user->roles[0]->name,
 				'member_since' => date('F Y', strtotime($user->activated_at)),
 			);
 		} else {
 			$activeUser = array(
+				'id'           => 0,
 				'name'         => '',
 				'role'         => '',
 				'member_since' => '',
@@ -241,6 +243,12 @@ class Comment extends Eloquent {
 				if ($event->active)
 					$eventArray['action_cancel'] = true;
 			}*/
+
+			if ($commentArray['user_id'] == $activeUser['id']) {
+				$commentArray['active_user_post'] = true;
+			} else {
+				$commentArray['active_user_post'] = false;
+			}
 
 			$commentArray['active_user_name']         = $activeUser['name'];
 			$commentArray['active_user_role']         = $activeUser['role'];

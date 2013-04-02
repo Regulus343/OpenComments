@@ -212,10 +212,11 @@ var comments;
 var commentMessageTimeLimit = 6000;
 var commentMessageTimeout;
 var commentScroll = false;
+var commentScrollTime = 750;
 
 function scrollToElement(element) {
 	console.log(element);
-	$(element).animate({ scrollTop: $(element).offset().top })
+	$('html, body').animate({ scrollTop: $(element).offset().top }, commentScrollTime);
 }
 
 function loadComments() {
@@ -232,6 +233,8 @@ function loadComments() {
 
 			comments = result.comments;
 			if (comments != undefined && comments.length > 0) {
+				$('.comments-number').text(comments.length);
+
 				var source   = $('#comments-template').html();
 				var template = Handlebars.compile(source);
 				var context  = { comments: comments };
@@ -248,7 +251,7 @@ function loadComments() {
 
 			/* Scroll to Comment */
 			if (commentScroll) {
-				setTimeout("scrollToElement('#comment"+commentScroll+"');", 2000);
+				scrollToElement('#comment'+commentScroll);
 				commentScroll = false;
 			}
 		},
@@ -294,7 +297,7 @@ $(document).ready(function(){
 	loadComments();
 
 	/* Comment Actions */
-	$('.form-comment').submit(function(e){
+	$('.form-comment').on('submit', function(e){
 		e.preventDefault();
 
 		var url         = $(this).attr('action');
@@ -308,14 +311,14 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(results) {
 				if (results.resultType == "Success") {
-					showCommentMessage(containerID, 'success', results.message, true);
+					showCommentMessage('#comment'+results.commentID, 'success', results.message, false);
 					$(containerID+' .field-comment').val('sdfsfsadfasd');
+
+					commentScroll = results.commentID;
+					loadComments();
 				} else {
 					showCommentMessage(containerID, 'error', results.message, true);
 				}
-
-				commentScroll = results.commentID;
-				loadComments();
 			},
 			error: function(){
 				console.log('Add Comment Failed');
