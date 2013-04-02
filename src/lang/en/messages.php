@@ -13,6 +13,7 @@ return array(
 	'noComments'      => 'There are currently no comments.',
 	'numberComments'  => 'Displaying <strong>%s</strong> %s.',
 	'comment'         => 'comment',
+	'postingComment'  => 'Posting your comment... Please wait a moment.',
 
 	'addComment'      => 'Add Comment',
 	'editComment'     => 'Edit Comment',

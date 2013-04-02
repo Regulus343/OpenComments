@@ -7,6 +7,8 @@
 
 	if (messageNoComments == undefined) var messageNoComments = "{{ Lang::get('open-comments::messages.noComments') }}";
 
+	if (messagePostingComment == undefined) var messagePostingComment = "{{ Lang::get('open-comments::messages.postingComment') }}";
+
 	@if (!is_null(Site::get('contentID')) && !is_null(Site::get('contentType')))
 		var contentID   = "{{ Site::get('contentID') }}";
 		var contentType = "{{ Site::get('contentType') }}";
