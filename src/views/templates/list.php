@@ -36,7 +36,7 @@
 			</div>
 
 			<!-- Actions -->
-			{{#if actions}}
+			{{#if logged_in}}
 
 				<ul class="actions">
 					{{#if edit}}

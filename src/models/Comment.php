@@ -245,20 +245,11 @@ class Comment extends Eloquent {
 				$commentArray['reply'] = false;
 			}
 
-			/*if (Auth::is('admin') OR $event->id == Auth::userID()) {
-				$eventArray['actions'] = true;
+			if (time() - $commentArray['created_at'] >= strtotime('-'+Config::get('open-comments::commentEditLimit').' minutes')) {
+				$commentArray['edit'] = true;
 			} else {
-				$eventArray['actions'] = false;
+				$commentArray['edit'] = false;
 			}
-
-			$eventArray['action_edit'] = false;
-			$eventArray['action_cancel'] = false;
-			if (!$event->getDatePast() && !$event->cancelled) {
-				$eventArray['action_edit'] = true;
-
-				if ($event->active)
-					$eventArray['action_cancel'] = true;
-			}*/
 
 			if ($commentArray['user_id'] == $activeUser['id']) {
 				$commentArray['active_user_post'] = true;
