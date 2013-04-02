@@ -26,6 +26,14 @@ class Comment extends Eloquent {
 	 */
 	protected $guarded = array('id');
 
+	/**
+	 * The default order of the comments, "asc" being oldest to newest and
+	 * "desc" being newest to oldest.
+	 *
+	 * @var string
+	 */
+	public static $commentOrder = false;
+
 	public function content()
 	{
 		return $this->morphTo();
@@ -175,10 +183,18 @@ class Comment extends Eloquent {
 
 	public static function compileList($contentID, $contentType)
 	{
+		if (!static::$commentOrder) {
+			if (!is_null(Session::get('commentOrder'))) {
+				static::$commentOrder = Session::get('commentOrder');
+			} else {
+				static::$commentOrder = Config::get('open-comments::commentOrder');
+			}
+		}
+
 		return static::where('content_id', '=', $contentID)
 			->where('content_type', '=', $contentType)
-			->orderBy('order_id', 'desc')
-			->orderBy('id', 'desc')
+			->orderBy('order_id', static::$commentOrder)
+			->orderBy('id', static::$commentOrder)
 			->get();
 	}
 

@@ -123,4 +123,26 @@ return array(
 	*/
 	'commentWaitTime' => 90,
 
+	/*
+	|--------------------------------------------------------------------------
+	| Comment Order
+	|--------------------------------------------------------------------------
+	|
+	| The order that the comments appear in, "asc" being oldest to newest and
+	| "desc" being newest to oldest.
+	|
+	*/
+	'commentOrder' => 'desc',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Comments Per Page
+	|--------------------------------------------------------------------------
+	|
+	| The number of comments per page. Pagination buttons exist in the comments
+	| area to allow the user to page through all comments.
+	|
+	*/
+	'commentsPerPage' => 15,
+
 );
