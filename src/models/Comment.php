@@ -65,8 +65,8 @@ class Comment extends Eloquent {
 		$userID      = OpenComments::userID();
 		$contentID   = trim(Input::get('content_id'));
 		$contentType = trim(Input::get('content_type'));
-		$id          = trim(Input::get('comment_id'));
-		$parentID    = trim(Input::get('parent_id'));
+		$id          = (int) trim(Input::get('comment_id'));
+		$parentID    = (int) trim(Input::get('parent_id'));
 		$editLimit   = date('Y-m-d H:i:s', strtotime('-'.Config::get('open-comments::editLimit').' minutes'));
 		$commentText = trim(Input::get('comment'));
 
@@ -87,7 +87,7 @@ class Comment extends Eloquent {
 		}
 
 		//if parent ID is set, make sure it exists for content item
-		if ($parentID != "") {
+		if ($parentID) {
 			$exists = Comment::where('id', '=', $parentID)
 								->where('parent_id', '=', 0)
 								->where('content_id', '=', $contentID)
@@ -106,7 +106,7 @@ class Comment extends Eloquent {
 			return $results;
 		}
 
-		if ($id && $id != "") {
+		if ($id) {
 			$results['action'] = "Update";
 
 			//if editing, ensure user has sufficient privileges to edit
@@ -131,8 +131,8 @@ class Comment extends Eloquent {
 
 		} else {
 
-			//ensure user has not posted a comment to soon after another one
-			if (!OpenComments::admin()) {
+			//ensure user has not posted a comment too soon after another one
+			if (! OpenComments::admin()) {
 				$commentWaitTime = Config::get('open-comments::commentWaitTime');
 				if ($commentWaitTime) {
 					$lastComment = Cookie::get('lastComment');
@@ -146,6 +146,11 @@ class Comment extends Eloquent {
 			$comment = new Comment;
 
 			$comment->user_id = $userID;
+
+			if (Config::get('open-comments::commentAutoApproval')) {
+				$comment->approved    = true;
+				$comment->approved_at = date('Y-m-d H:i:s');
+			}
 		}
 
 		$comment->content_id   = $contentID;
@@ -191,11 +196,22 @@ class Comment extends Eloquent {
 			}
 		}
 
-		return static::where('content_id', '=', $contentID)
-			->where('content_type', '=', $contentType)
+		$comments = static::where('content_id', '=', $contentID)
+			->where('content_type', '=', $contentType);
+
+		if (! OpenComments::admin()) {
+			$comments = $comments
+				->where('approved', '=', 1)
+				->where('deleted', '=', 0);
+		}
+
+		$comments = $comments
 			->orderBy('order_id', static::$commentOrder)
+			->orderBy('parent_id')
 			->orderBy('id', static::$commentOrder)
 			->get();
+
+		return $comments;
 	}
 
 	public static function format($comments)
@@ -258,6 +274,7 @@ class Comment extends Eloquent {
 			}
 
 			$commentArray['parent_id'] = (int) $commentArray['parent_id'];
+			$commentArray['parent']    = ! $commentArray['parent_id'] ? true : false;
 
 			$commentArray['active_user_name']         = $activeUser['name'];
 			$commentArray['active_user_role']         = $activeUser['role'];

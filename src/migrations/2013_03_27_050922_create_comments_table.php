@@ -22,6 +22,9 @@ class CreateCommentsTable extends Migration {
 
 			$table->text('comment');
 
+			$table->boolean('approved');
+			$table->dateTime('approved_at');
+
 			$table->boolean('deleted');
 			$table->dateTime('deleted_at');
 

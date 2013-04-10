@@ -135,6 +135,15 @@ ul#comments li div.comment, ul#posts li div.content {
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 }
+
+ul#comments li div.comment li {
+	display: block;
+	margin-bottom: 2px;
+	background: none;
+	border: none;
+	box-shadow: none;
+}
+
 ul#comments li.sub div.comment { width: 592px; }
 ul#comments li div.date-posted, ul#posts li div.date-posted {
 	position: absolute; right: 12px; bottom: -10px; color: #777; font-size: 11px; text-shadow: 0 1px 3px #000;
@@ -147,12 +156,12 @@ ul#comments li li, ul#posts li li, ul#comments li li:hover, ul#posts li li:hover
 	border: none;
 }
 
-
 ul#comments li div.comment ul, ul#comments li div.comment ol, ul#posts li div.content ul, ul#posts li div.content ol { margin-left: 24px; }
 ul#comments li div.comment ul, ul#posts li div.content ul { list-style-type: disc; }
 
-ul#comments li ul.actions, ul#posts li ul.actions { margin: 24px 0 0 0; float: right; max-width: 600px; }
+ul#comments li ul.actions, ul#posts li ul.actions { margin: 0; float: right; max-width: 600px; }
 ul#comments li ul.actions li, ul#posts li ul.actions li {
+	margin: 0 !important;
 	box-shadow: none;
 }
 ul#comments li ul.actions a.button, ul#posts li ul.actions a.button {

@@ -301,6 +301,7 @@ function setupWysiwygEditors() {
 }
 
 function setupCommentForm() {
+	$('.form-comment').off('submit');
 	$('.form-comment').on('submit', function(e){
 		e.preventDefault();
 
@@ -345,7 +346,7 @@ function setupCommentActions() {
 			$(this).text(commentLabels.reply);
 			$('#reply'+commentID).slideUp(commentSlideTime);
 		} else if (label == commentLabels.reply || label == commentLabels.replyToParent) {
-			$('.reply').slideUp(commentSlideTime);
+			$('.add-reply').slideUp(commentSlideTime);
 
 			resetReplyButtonText();
 

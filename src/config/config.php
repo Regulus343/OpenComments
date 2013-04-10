@@ -80,10 +80,10 @@ return array(
 	|
 	| It is recommended that you declare a list of allowed content types with
 	| their corresponding tables to prevent users from getting invalid
-	| comments in your database. In the below example, "Blog Entry" is the
+	| comments in your database. In the below example, "BlogArticle" is the
 	| content type and "blog_entries" is the database table:
 	|
-	|     array('Blog Entry' => 'blog_entries')
+	|     array('BlogArticle' => 'blog_articles')
 	|
 	*/
 	'allowedContentTypes' => false,
@@ -144,5 +144,17 @@ return array(
 	|
 	*/
 	'commentsPerPage' => 15,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Comment Auto-Approval
+	|--------------------------------------------------------------------------
+	|
+	| Determines whether the comments should be auto-approved and show up
+	| immediately or whether they are subject to approval by the administrator
+	| first. Auto-approval is turned on by default.
+	|
+	*/
+	'commentAutoApproval' => true,
 
 );

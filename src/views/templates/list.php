@@ -5,7 +5,7 @@
 		if ($comment->user_id == $this->session->userdata('user_id'))	$classes[] = "current-user";
 		if ($comment->parent_id)										$classes[] = "sub";*/ ?>
 
-		<li id="comment{{id}}"{{#if active_user_post}} class="active-user"{{/if}}>
+		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}">
 
 			<!-- Message -->
 			<div class="message success hidden"></div>
@@ -34,10 +34,12 @@
 				</div>
 			</div>
 
-			<div class="edit-countdown">90</div>
-
 			<!-- Actions -->
 			{{#if logged_in}}
+
+				{{#if edit}}
+					<div class="edit-countdown">You may edit or delete your comment for <strong>90</strong> more seconds</div>
+				{{/if}}
 
 				<ul class="actions">
 					{{#if edit}}
@@ -55,16 +57,16 @@
 					{{#if parent}}
 
 						<li class="action-reply">
-							<a href="" class="button button-reply button-reply-comment reply-to-parent" rel="{{parent_id}}">
-								<?php echo Lang::get('open-comments::labels.replyToParent') ?>
+							<a href="" class="button button-reply button-reply-comment" rel="{{id}}">
+								<?php echo Lang::get('open-comments::labels.reply') ?>
 							</a>
 						</li>
 
 					{{else}}
 
 						<li class="action-reply">
-							<a href="" class="button button-reply button-reply-comment" rel="{{id}}">
-								<?php echo Lang::get('open-comments::labels.reply') ?>
+							<a href="" class="button button-reply button-reply-comment reply-to-parent" rel="{{parent_id}}">
+								<?php echo Lang::get('open-comments::labels.replyToParent') ?>
 							</a>
 						</li>
 
@@ -141,7 +143,7 @@
 		{{#if reply}}
 
 			<!-- Reply Area -->
-			<li id="reply{{id}}" class="reply sub active-user hidden">
+			<li id="reply{{id}}" class="add-reply sub active-user hidden">
 				<div class="info">
 					<h1><a href="javascript:void(0);">{{active_user_name}}</a></h1>
 					<ul class="info">
