@@ -9,10 +9,7 @@ ul#comments li, ul#posts li {
 	clear: both;
 	margin: 0 0 12px 0;
 	padding: 8px;
-	min-height: 170px;
-
-	max-height: 760px;
-	overflow-y: hidden;
+	min-height: 154px;
 
 	background-color: #222;
 
@@ -51,16 +48,16 @@ ul#comments li:hover, ul#posts li:hover {
 }
 
 ul#comments li.active-user, ul#posts li.active-user {
-	background-color: #111;
+	background-color: #333;
 
-	background-image: -ms-linear-gradient(top, #111 0, #222 160px); /* IE */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#222, endColorstr=#222);
+	background-image: -ms-linear-gradient(top, #333 0, #111 160px); /* IE */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#111, endColorstr=#111);
 
-	background-image: -moz-linear-gradient(top, #111 0%, #222 160px); /* Firefox */
-	background-image: -o-linear-gradient(top, #111 0, #222 160px); /* Opera */
-	background-image: -webkit-gradient(linear, left top, 0 160px, from(#111), to(#222)); /* Webkit (Safari/Chrome 10) */
-	background-image: -webkit-linear-gradient(top, #111 0, #222 160px); /* Webkit (Chrome 11+) */
-	background-image: linear-gradient(top, #111 0, #222 160px); /* Proposed W3C Markup */
+	background-image: -moz-linear-gradient(top, #333 0%, #111 160px); /* Firefox */
+	background-image: -o-linear-gradient(top, #333 0, #111 160px); /* Opera */
+	background-image: -webkit-gradient(linear, left top, 0 160px, from(#333), to(#111)); /* Webkit (Safari/Chrome 10) */
+	background-image: -webkit-linear-gradient(top, #333 0, #111 160px); /* Webkit (Chrome 11+) */
+	background-image: linear-gradient(top, #333 0, #111 160px); /* Proposed W3C Markup */
 
 	border-color: #999;
 
@@ -78,7 +75,7 @@ ul#comments li div.info, ul#posts li div.info {
 }
 
 ul#comments li div.info ul.info, ul#posts li div.info ul.info {
-	margin: 0 3px 5px 0;
+	margin: 0 3px 7px 0;
 	padding: 4px 0 4px 4px;
 	width: 170px;
 	background: transparent;
@@ -113,7 +110,7 @@ ul#comments li a.display-pic, ul#posts li a.display-pic {
 }
 
 ul#comments li a.display-pic img, ul#posts li a.display-pic img {
-	width: 92px;
+	width: 80px;
 	border: 1px solid #666;
 	-moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px;
 }
@@ -125,10 +122,13 @@ ul#comments li a.display-pic:hover img, ul#posts li a.display-pic:hover img {
 ul#comments li div.comment, ul#posts li div.content {
 	position: relative;
 	float: left;
-	margin: 0 0 6px 190px;
+	margin: 0 0 18px 190px;
 	padding: 16px 12px;
 	width: 688px;
-	min-height: 90px;
+	min-height: 80px;
+
+	max-height: 760px;
+
 	background-color: #111;
 
 	-moz-border-radius: 8px;
@@ -159,12 +159,13 @@ ul#comments li li, ul#posts li li, ul#comments li li:hover, ul#posts li li:hover
 ul#comments li div.comment ul, ul#comments li div.comment ol, ul#posts li div.content ul, ul#posts li div.content ol { margin-left: 24px; }
 ul#comments li div.comment ul, ul#posts li div.content ul { list-style-type: disc; }
 
-ul#comments li ul.actions, ul#posts li ul.actions { margin: 0; float: right; max-width: 600px; }
+ul#comments li ul.actions, ul#posts li ul.actions { margin: 0; float: right; max-width: 600px; list-style: none; }
 ul#comments li ul.actions li, ul#posts li ul.actions li {
 	margin: 0 !important;
 	box-shadow: none;
 }
 ul#comments li ul.actions a.button, ul#posts li ul.actions a.button {
+	padding: 2px 7px;
 	max-width: 600px;
 	font-size: 12px;
 }
@@ -191,3 +192,5 @@ ul#comments li ul.wysihtml5-toolbar > li, ul#posts li ul.wysihtml5-toolbar > li 
 }
 
 ul#comments li .message, ul#posts li .message { clear: both; margin: 12px 0 12px 190px; }
+
+ul#comments li div.edit-countdown { clear: left; padding: 6px; font-size: 16px; text-align: right; }
