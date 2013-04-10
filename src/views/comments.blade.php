@@ -5,9 +5,8 @@
 <script type="text/javascript">
 	if (baseURL == undefined) var baseURL = "{{ URL::to('') }}";
 
-	if (messageNoComments == undefined) var messageNoComments = "{{ Lang::get('open-comments::messages.noComments') }}";
-
-	if (messagePostingComment == undefined) var messagePostingComment = "{{ Lang::get('open-comments::messages.postingComment') }}";
+	var commentLabels   = {{ json_encode(Lang::get('open-comments::labels')) }};
+	var commentMessages = {{ json_encode(Lang::get('open-comments::messages')) }};
 
 	@if (!is_null(Site::get('contentID')) && !is_null(Site::get('contentType')))
 		var contentID   = "{{ Site::get('contentID') }}";

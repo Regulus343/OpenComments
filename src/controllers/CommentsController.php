@@ -30,7 +30,7 @@ class CommentsController extends BaseController {
 		if (count($comments) > 0) {
 			$commentStr = Lang::get('open-comments::messages.comment');
 			if (count($comments) != 1) $commentStr = Str::plural($commentStr);
-			$message = sprintf(Lang::get('open-comments::messages.numberComments'), count($comments), $commentStr);
+			$message = Lang::get('open-comments::messages.numberComments', array('number' => count($comments), 'item' => $commentStr));
 		}
 
 		return json_encode(array('comments' => Comment::format($comments), 'message' => $message));

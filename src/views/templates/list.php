@@ -14,11 +14,10 @@
 				<h1><a href="" class="profile-popup" rel="{{user_id}}">{{user}}</a></h1>
 				<ul class="info">
 					<li><label>Role:</label> <span>{{user_role}}</span></li>
-					<li><label>Comments:</label> <span>{{user_comments}}</span></li>
 					<li><label>Member Since:</label> <span>{{user_since}}</span></li>
 				</ul>
 
-				<a href="" class="display-pic profile-popup" rel="u{{user_id}}"><img src="{{user_image}}" alt="" /></a>
+				<a href="" class="display-pic profile-popup" rel="{{user_id}}"><img src="{{user_image}}" alt="" /></a>
 
 				<div class="clear"></div>
 			</div>
@@ -35,6 +34,8 @@
 				</div>
 			</div>
 
+			<div class="edit-countdown">90</div>
+
 			<!-- Actions -->
 			{{#if logged_in}}
 
@@ -42,28 +43,28 @@
 					{{#if edit}}
 
 						<li class="action-delete">
-							<?php echo Lang::get('open-comments::messages.delete') ?>
+							<?php echo Lang::get('open-comments::labels.delete') ?>
 						</li>
 
 						<li class="action-edit">
-							<?php echo Lang::get('open-comments::messages.edit') ?>
+							<?php echo Lang::get('open-comments::labels.edit') ?>
 						</li>
 
 					{{/if}}
 
-					{{#if parent_id}}
+					{{#if parent}}
 
 						<li class="action-reply">
-							<a href="" class="button button-reply" class="button button-reply-comment" rel="{{parent_id}}">
-								<?php echo Lang::get('open-comments::messages.replyToParent') ?>
+							<a href="" class="button button-reply button-reply-comment reply-to-parent" rel="{{parent_id}}">
+								<?php echo Lang::get('open-comments::labels.replyToParent') ?>
 							</a>
 						</li>
 
 					{{else}}
 
 						<li class="action-reply">
-							<a href="" class="button button-reply" class="button button-reply-comment" rel="{{id}}">
-								<?php echo Lang::get('open-comments::messages.reply') ?>
+							<a href="" class="button button-reply button-reply-comment" rel="{{id}}">
+								<?php echo Lang::get('open-comments::labels.reply') ?>
 							</a>
 						</li>
 
@@ -118,27 +119,19 @@
 
 					<!-- Comment Form - Edit -->
 					<?php echo Form::open('comments/create', 'post', array('class' => 'form-comment')); ?>
-						<label for="comment-edit{{id}}"><?php echo Lang::get('open-comments::messages.editComment') ?>:</label>
+						<label for="comment-edit{{id}}"><?php echo Lang::get('open-comments::labels.editComment') ?>:</label>
 						<textarea name="comment" class="field-comment wysiwyg" id="comment-edit{{id}}">{{comment}}</textarea>
 
 						<input type="hidden" name="content_type" class="content-type" value="{{content_type}}" />
 						<input type="hidden" name="content_id" class="content-id" value="{{content_id}}" />
 						<input type="hidden" name="comment_id" class="comment-id" value="{{id}}" />
-						<input type="hidden" name="parent_id" class="parent-id" value="{{parent_id}}" />
+						<input type="hidden" name="parent_id" class="parent-id" value="" />
 
-						<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::messages.editComment') ?>" />
+						<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::labels.editComment') ?>" />
 
 					<?php echo Form::close(); ?>
 
 				</div><!-- /add-comment -->
-
-			{{else}}
-
-				{{#if parent_id}}
-					<div class="add-comment">
-						<p class="login"><a href="<?php echo URL::to('login'); ?>">Log in</a> to add a comment.</p>
-					</div><!-- /add-comment -->
-				{{/if}}
 
 			{{/if}}
 
@@ -148,30 +141,30 @@
 		{{#if reply}}
 
 			<!-- Reply Area -->
-			<li id="reply{{id}}" class="reply sub active-user">
+			<li id="reply{{id}}" class="reply sub active-user hidden">
 				<div class="info">
 					<h1><a href="javascript:void(0);">{{active_user_name}}</a></h1>
 					<ul class="info">
 						<li><label>Role:</label> <span>{{active_role_name}}</span></li>
-						<li><label>Comments:</label> <span>{{comments_with_reply}}</span></li>
 						<li><label>Member Since:</label> <span>{{active_member_since}}</span></li>
 					</ul>
-					<div class="clear"></div>
 
 					<a href="" class="display-pic profile-popup" rel="u{{user_id}}"><img src="{{active_user_image}}" alt="" /></a>
+
+					<div class="clear"></div>
 				</div>
 
 				<!-- Comment Form - Reply -->
 				<?php echo Form::open('comments/create', 'post', array('class' => 'form-comment')); ?>
-					<label for="comment{{id}}"><?php echo Lang::get('open-comments::messages.addReply') ?>:</label>
+					<label for="comment{{id}}"><?php echo Lang::get('open-comments::labels.addReply') ?>:</label>
 					<textarea name="comment" class="field-comment wysiwyg" id="comment{{id}}" placeholder="Add a reply..."></textarea>
 
 					<input type="hidden" name="content_type" class="content-type" value="{{content_type}}" />
 					<input type="hidden" name="content_id" class="content-id" value="{{content_id}}" />
-					<input type="hidden" name="comment_id" class="comment-id" value="{{id}}" />
-					<input type="hidden" name="parent_id" class="parent-id" value="{{parent_id}}" />
+					<input type="hidden" name="comment_id" class="comment-id" value="" />
+					<input type="hidden" name="parent_id" class="parent-id" value="{{id}}" />
 
-					<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::messages.addReply') ?>" />
+					<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::labels.addReply') ?>" />
 
 				<?php echo Form::close(); ?>
 

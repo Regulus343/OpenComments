@@ -212,12 +212,13 @@ var comments;
 var commentMessage;
 var commentMessageTimeLimit = 6000;
 var commentMessageTimeout;
-var commentScroll = false;
-var commentScrollTime = 750;
+var commentScroll = 0;
+var commentScrollTime = 500;
+
+var commentSlideTime = 250;
 
 function scrollToElement(element) {
-	console.log(element);
-	$('html, body').animate({ scrollTop: $(element).offset().top }, commentScrollTime);
+	$('html, body').animate({ scrollTop: $(element).offset().top - 7 }, commentScrollTime);
 }
 
 function loadComments() {
@@ -250,17 +251,23 @@ function loadComments() {
 			/* Load WYSIHTML5 */
 			setupWysiwygEditors();
 
-			/* Scroll to Comment */
-			if (commentScroll) {
-				scrollToElement('#comment'+commentScroll);
+			/* Load Comment Actions */
+			setupCommentForm();
 
-				showCommentMessage('#comment'+commentScroll, 'success', commentMessage, true);
+			/* Load Comment Actions */
+			setupCommentActions();
+
+			/* Scroll to Comment */
+			if (commentScroll > 0) {
+				setTimeout("scrollToElement('#comment"+commentScroll+"');", 250);
+
+				setTimeout("showCommentMessage('#comment"+commentScroll+"', 'success', '"+commentMessage+"', true);", 1250);
 				commentScroll  = false;
 				commentMessage = "";
 			}
 		},
 		error: function(){
-			showCommentMessage('#message-comments', 'info', messageNoComments, true);
+			showCommentMessage('#message-comments', 'info', commentMessages.noComments, true);
 			$('#loading-comments').fadeOut('fast');
 			console.log('Load Comments Error');
 		}
@@ -268,8 +275,6 @@ function loadComments() {
 }
 
 function showCommentMessage(elementID, type, message, timeLimit) {
-	clearTimeout(commentMessageTimeout);
-
 	$(elementID+' .message.'+type).html(message).hide().removeClass('hidden').fadeIn('fast');
 
 	if (timeLimit) {
@@ -295,12 +300,7 @@ function setupWysiwygEditors() {
 	});
 }
 
-$(document).ready(function(){
-
-	/* Load Initial Comments */
-	loadComments();
-
-	/* Comment Actions */
+function setupCommentForm() {
 	$('.form-comment').on('submit', function(e){
 		e.preventDefault();
 
@@ -315,6 +315,8 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(results) {
 				if (results.resultType == "Success") {
+					showCommentMessage(containerID, 'success', commentMessages.postingComment, true);
+
 					$(containerID+' .field-comment').val('sdfsfsadfasd');
 
 					commentScroll  = results.commentID;
@@ -329,5 +331,51 @@ $(document).ready(function(){
 			}
 		});
 	});
+}
+
+function setupCommentActions() {
+
+	$('#comments .button-reply').on('click', function(e){
+		e.preventDefault();
+
+		var commentID = $(this).attr('rel');
+		var label = $(this).text().trim();
+
+		if (label == commentLabels.cancelReply && ! $(this).hasClass('reply-to-parent')) {
+			$(this).text(commentLabels.reply);
+			$('#reply'+commentID).slideUp(commentSlideTime);
+		} else if (label == commentLabels.reply || label == commentLabels.replyToParent) {
+			$('.reply').slideUp(commentSlideTime);
+
+			resetReplyButtonText();
+
+			if (label == commentLabels.reply) {
+				$(this).text(commentLabels.cancelReply);
+			} else {
+				$('#comment'+commentID+' .button-reply').text(commentLabels.cancelReply);
+			}
+
+			setTimeout("scrollToElement('#comment"+ commentID +"');", 250);
+			$('#reply'+commentID).hide().removeClass('hidden').css('min-height', 0).slideDown(commentSlideTime);
+		}
+	});
+
+}
+
+function resetReplyButtonText() {
+	$('#comments .button-reply').each(function(){
+		if ($(this).text().trim() == commentLabels.cancelReply) {
+			$(this).text(commentLabels.reply);
+		}
+	});
+}
+
+$(document).ready(function(){
+
+	/* Load Initial Comments */
+	loadComments();
+
+	/* Load Comment Actions */
+	setupCommentForm();
 
 });

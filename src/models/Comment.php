@@ -102,7 +102,7 @@ class Comment extends Eloquent {
 
 		//require minimum length
 		if (Config::get('open-comments::commentMinLength') && strlen($commentText) < Config::get('open-comments::commentMinLength')) {
-			$results['message'] = sprintf(Lang::get('open-comments::messages.errorMinLength'), Config::get('open-comments::commentMinLength'));
+			$results['message'] = Lang::get('open-comments::messages.errorMinLength', array('number' => Config::get('open-comments::commentMinLength')));
 			return $results;
 		}
 
@@ -137,7 +137,7 @@ class Comment extends Eloquent {
 				if ($commentWaitTime) {
 					$lastComment = Cookie::get('lastComment');
 					if ($lastComment != "" && (time() - $lastComment) > $commentWaitTime) {
-						$results['message'] = Lang::get('open-comments::messages.errorWaitTime');
+						$results['message'] = Lang::get('open-comments::messages.errorWaitTime', array('number' => Config::get('open-comments::commentWaitTime')));
 						return $results;
 					}
 				}
@@ -256,6 +256,8 @@ class Comment extends Eloquent {
 			} else {
 				$commentArray['active_user_post'] = false;
 			}
+
+			$commentArray['parent_id'] = (int) $commentArray['parent_id'];
 
 			$commentArray['active_user_name']         = $activeUser['name'];
 			$commentArray['active_user_role']         = $activeUser['role'];

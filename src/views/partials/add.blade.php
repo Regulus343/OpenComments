@@ -23,7 +23,7 @@
 
 		{{-- Add/Edit Comment Form --}}
 		{{ Form::open('comments/create', 'post', array('class' => 'form-comment')) }}
-			<label for="comment-new"><?php echo Lang::get('open-comments::messages.addComment') ?>:</label>
+			<label for="comment-new"><?php echo Lang::get('open-comments::labels.addComment') ?>:</label>
 			<textarea name="comment" class="field-comment wysiwyg" id="comment-new" placeholder="Add a comment..."></textarea>
 
 			<input type="hidden" name="content_type" class="content-type" value="{{ Site::get('contentType') }}" />
@@ -32,7 +32,7 @@
 			<input type="hidden" name="parent_id" class="parent-id" value="" />
 
 			<div>
-				<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::messages.addComment') ?>" />
+				<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::labels.addComment') ?>" />
 				<div class="clear"></div>
 			</div>
 		{{ Form::close() }}
