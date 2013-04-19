@@ -23,7 +23,7 @@
 			</div>
 
 			<div class="comment">
-				{{{comment}}}
+				<div class="text">{{{comment}}}</div>
 
 				<div class="date-posted">
 					{{created_at}}
@@ -45,11 +45,15 @@
 					{{#if edit}}
 
 						<li class="action-delete">
-							<?php echo Lang::get('open-comments::labels.delete') ?>
+							<a href="" class="button button-delete button-delete-comment" rel="{{id}}">
+								<?php echo Lang::get('open-comments::labels.delete'); ?>
+							</a>
 						</li>
 
 						<li class="action-edit">
-							<?php echo Lang::get('open-comments::labels.edit') ?>
+							<a href="" class="button button-edit button-edit-comment" rel="{{id}}">
+								<?php echo Lang::get('open-comments::labels.edit'); ?>
+							</a>
 						</li>
 
 					{{/if}}
@@ -58,7 +62,7 @@
 
 						<li class="action-reply">
 							<a href="" class="button button-reply button-reply-comment" rel="{{id}}">
-								<?php echo Lang::get('open-comments::labels.reply') ?>
+								<?php echo Lang::get('open-comments::labels.reply'); ?>
 							</a>
 						</li>
 
@@ -66,7 +70,7 @@
 
 						<li class="action-reply">
 							<a href="" class="button button-reply button-reply-comment reply-to-parent" rel="{{parent_id}}">
-								<?php echo Lang::get('open-comments::labels.replyToParent') ?>
+								<?php echo Lang::get('open-comments::labels.replyToParent'); ?>
 							</a>
 						</li>
 
@@ -75,7 +79,7 @@
 
 			{{/if}}
 
-			{{#if edit_comment}}
+			{{#if edit}}
 
 				</php /*$commentID    = Session::get('commentID');
 				$commentText  = Session::get('commentText');
@@ -99,25 +103,16 @@
 				}*/ ?>
 
 				<div class="clear"></div>
-				<div class="add-comment" id="">
+				<div class="add-comment edit-comment hidden" id="">
 
 					<!-- Success Message -->
-					<div class="message success hidden">
-						<div class="main"></div>
-						<div class="sub"></div>
-					</div>
+					<div class="message success hidden"></div>
 
 					<!-- Error Message -->
-					<div class="message error hidden">
-						<div class="main"></div>
-						<div class="sub"></div>
-					</div>
+					<div class="message error hidden"></div>
 
 					<!-- General Info Message -->
-					<div class="message info hidden">
-						<div class="main"></div>
-						<div class="sub"></div>
-					</div>
+					<div class="message info hidden"></div>
 
 					<!-- Comment Form - Edit -->
 					<?php echo Form::open('comments/create', 'post', array('class' => 'form-comment')); ?>

@@ -314,17 +314,17 @@ function setupCommentForm() {
 			type: 'post',
 			data: data,
 			dataType: 'json',
-			success: function(results) {
-				if (results.resultType == "Success") {
+			success: function(result) {
+				if (result.resultType == "Success") {
 					showCommentMessage(containerID, 'success', commentMessages.postingComment, true);
 
 					$(containerID+' .field-comment').val('sdfsfsadfasd');
 
-					commentScroll  = results.commentID;
-					commentMessage = results.message;
+					commentScroll  = result.commentID;
+					commentMessage = result.message;
 					loadComments();
 				} else {
-					showCommentMessage(containerID, 'error', results.message, true);
+					showCommentMessage(containerID, 'error', result.message, true);
 				}
 			},
 			error: function(){
@@ -358,6 +358,24 @@ function setupCommentActions() {
 
 			setTimeout("scrollToElement('#comment"+ commentID +"');", 250);
 			$('#reply'+commentID).hide().removeClass('hidden').css('min-height', 0).slideDown(commentSlideTime);
+		}
+	});
+
+	$('#comments .button-edit').on('click', function(e){
+		e.preventDefault();
+		var commentID = $(this).attr('rel');
+		var label = $(this).text().trim();
+		if (label == commentLabels.cancelEdit) {
+			$(this).text(commentLabels.edit);
+
+			$('#comment'+commentID+' .edit-comment').slideUp(commentSlideTime);
+		} else {
+			$(this).text(commentLabels.cancelEdit);
+
+			console.log($('#comment'+commentID+' .comment .text').text());
+			$('#comment-edit'+commentID).val($('#comment'+commentID+' .comment .text').text());
+
+			$('#comment'+commentID+' .edit-comment').hide().removeClass('hidden').css('min-height', 0).slideDown(commentSlideTime);
 		}
 	});
 

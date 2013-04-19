@@ -59,9 +59,13 @@ ul#comments li.active-user, ul#posts li.active-user {
 	background-image: -webkit-linear-gradient(top, #333 0, #111 160px); /* Webkit (Chrome 11+) */
 	background-image: linear-gradient(top, #333 0, #111 160px); /* Proposed W3C Markup */
 
-	border-color: #999;
+	border-color: #eee;
 
 	box-shadow: -3px 0 8px #000;
+}
+
+ul#comments li.editable, ul#posts li.editable {
+	border-color: #f5eb11;
 }
 
 ul#comments li div.info, ul#posts li div.info {
@@ -122,7 +126,7 @@ ul#comments li a.display-pic:hover img, ul#posts li a.display-pic:hover img {
 ul#comments li div.comment, ul#posts li div.content {
 	position: relative;
 	float: left;
-	margin: 0 0 18px 190px;
+	margin: 0 0 8px 190px;
 	padding: 16px 12px;
 	width: 688px;
 	min-height: 80px;
@@ -161,7 +165,9 @@ ul#comments li div.comment ul, ul#posts li div.content ul { list-style-type: dis
 
 ul#comments li ul.actions, ul#posts li ul.actions { margin: 0; float: right; max-width: 600px; list-style: none; }
 ul#comments li ul.actions li, ul#posts li ul.actions li {
+	display: inline-block;
 	margin: 0 !important;
+	padding: 0 0 0 2px;
 	box-shadow: none;
 }
 ul#comments li ul.actions a.button, ul#posts li ul.actions a.button {
@@ -193,4 +199,4 @@ ul#comments li ul.wysihtml5-toolbar > li, ul#posts li ul.wysihtml5-toolbar > li 
 
 ul#comments li .message, ul#posts li .message { clear: both; margin: 12px 0 12px 190px; }
 
-ul#comments li div.edit-countdown { clear: left; padding: 6px; font-size: 16px; text-align: right; }
+ul#comments li div.edit-countdown { clear: left; padding: 10px 2px; font-size: 14px; color: #f5eb11; text-align: right; }
