@@ -251,11 +251,14 @@ function loadComments() {
 			/* Load WYSIHTML5 */
 			setupWysiwygEditors();
 
-			/* Load Comment Actions */
+			/* Setup Comment Form */
 			setupCommentForm();
 
-			/* Load Comment Actions */
+			/* Setup Comment Actions */
 			setupCommentActions();
+
+			/* Setup Comment Edit Countdown */
+			setupEditCountdown();
 
 			/* Scroll to Comment */
 			if (commentScroll > 0) {
@@ -370,15 +373,44 @@ function setupCommentActions() {
 
 			$('#comment'+commentID+' .edit-comment').slideUp(commentSlideTime);
 		} else {
+			$('#comments .button-edit').text(commentLabels.edit);
+			$('#comments .edit-comment').slideUp(commentSlideTime);
+
 			$(this).text(commentLabels.cancelEdit);
 
-			console.log($('#comment'+commentID+' .comment .text').text());
-			$('#comment-edit'+commentID).val($('#comment'+commentID+' .comment .text').text());
+			//set edit comment text field to comment text
+			var text = $('#comment'+commentID+' .comment .text').html();
+			$('#comment-edit'+commentID).val(text);
+			$('#comment'+commentID).find('iframe').contents().find('.wysihtml5-editor').html(text);
 
 			$('#comment'+commentID+' .edit-comment').hide().removeClass('hidden').css('min-height', 0).slideDown(commentSlideTime);
+
+			setTimeout("scrollToElement('#comment"+ commentID +"');", 250);
 		}
 	});
 
+}
+
+var editCommentCountdown;
+function setupEditCountdown() {
+	$('#comments .edit-countdown span.number').each(function(){
+		setTimeout("commentCountdown('#"+$(this).parents('li').attr('id')+" .edit-countdown span')", 1000);
+	});
+}
+
+function commentCountdown(element) {
+	var newCount = parseInt($(element).text()) - 1;
+	console.log(newCount);
+	if (newCount <= 0) {
+		clearInterval(editCommentCountdown);
+		$(element).parents('.edit-countdown').fadeOut();
+		$(element).parents('li').children('ul.actions').children('li.action-edit').fadeOut('fast');
+		$(element).parents('li').children('ul.actions').children('li.action-delete').fadeOut('fast');
+		$(element).parents('li').children('div.edit-comment').slideUp();
+	} else {
+		$(element).text(newCount);
+		setTimeout("commentCountdown('"+element+"')", 1000);
+	}
 }
 
 function resetReplyButtonText() {

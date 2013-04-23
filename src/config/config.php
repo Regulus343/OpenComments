@@ -90,14 +90,14 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| Comment Edit Limit (in minutes)
+	| Comment Edit Limit (in seconds)
 	|--------------------------------------------------------------------------
 	|
-	| The comment editing limit in minutes. By default, users may edit or
-	| delete their comment for 3 minutes.
+	| The comment editing limit in secionds. By default, users may edit or
+	| delete their comment for 180 seconds after initial post.
 	|
 	*/
-	'commentEditLimit' => 3,
+	'commentEditLimit' => 180,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -113,7 +113,7 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| Comment Wait Time
+	| Comment Wait Time (in seconds)
 	|--------------------------------------------------------------------------
 	|
 	| The minimum length of time in seconds that must pass between comments

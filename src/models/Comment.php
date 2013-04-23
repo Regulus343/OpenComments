@@ -261,6 +261,7 @@ class Comment extends Eloquent {
 				$commentArray['reply'] = false;
 			}
 
+			$commentArray['edit_time'] = Config::get('open-comments::commentEditLimit');
 			if (strtotime($comment->created_at) >= strtotime('-'+Config::get('open-comments::commentEditLimit').' minutes') || isset($creator)) {
 				$commentArray['edit'] = true;
 			} else {

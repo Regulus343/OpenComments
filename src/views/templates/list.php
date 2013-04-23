@@ -38,7 +38,7 @@
 			{{#if logged_in}}
 
 				{{#if edit}}
-					<div class="edit-countdown">You may edit or delete your comment for <strong>90</strong> more seconds</div>
+					<div class="edit-countdown">You may edit or delete your comment for <span class="number">{{edit_time}}</span> more seconds</div>
 				{{/if}}
 
 				<ul class="actions">
