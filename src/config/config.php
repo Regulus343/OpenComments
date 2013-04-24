@@ -157,4 +157,17 @@ return array(
 	*/
 	'commentAutoApproval' => true,
 
+	/*
+	|--------------------------------------------------------------------------
+	| Load Bootstrap
+	|--------------------------------------------------------------------------
+	|
+	| Whether or not to have Open Comments automatically load Twitter Bootsrap.
+	| If set to false, Open Comments will assume you are already loading
+	| Bootstrap CSS and JS files. If true, Open Comments will attempt to load
+	| "bootstrap.css" and "bootstrap.min.js".
+	|
+	*/
+	'loadBootstrap' => true,
+
 );

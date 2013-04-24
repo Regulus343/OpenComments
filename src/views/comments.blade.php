@@ -1,3 +1,11 @@
+{{-- Load Bootstrap CSS & JS --}}
+@if (Config::get('open-comments::loadBootstrap'))
+
+	<link type="text/css" rel="stylesheet" href="{{ Site::css('bootstrap', 'regulus/open-comments') }}" />
+	<script type="text/javascript" src="{{ Site::js('bootstrap.min', 'regulus/open-comments') }}"></script>
+
+@endif
+
 {{-- Comments CSS --}}
 <link type="text/css" rel="stylesheet" href="{{ Site::css('comments', 'regulus/open-comments') }}" />
 

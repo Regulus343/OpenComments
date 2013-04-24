@@ -5,7 +5,7 @@
 		if ($comment->user_id == $this->session->userdata('user_id'))	$classes[] = "current-user";
 		if ($comment->parent_id)										$classes[] = "sub";*/ ?>
 
-		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}">
+		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}{{#if edit_time}} editable{{/if}}">
 
 			<!-- Message -->
 			<div class="message success hidden"></div>
@@ -23,8 +23,10 @@
 			</div>
 
 			<div class="comment">
+				<!-- Comment Text -->
 				<div class="text">{{{comment}}}</div>
 
+				<!-- Date Posted -->
 				<div class="date-posted">
 					{{created_at}}
 
@@ -37,7 +39,7 @@
 			<!-- Actions -->
 			{{#if logged_in}}
 
-				{{#if edit}}
+				{{#if edit_time}}
 					<div class="edit-countdown">You may edit or delete your comment for <span class="number">{{edit_time}}</span> more seconds</div>
 				{{/if}}
 

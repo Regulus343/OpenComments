@@ -169,6 +169,8 @@ class Comment extends Eloquent {
 				$comment->order_id = $comment->id;
 			}
 			$comment->save();
+
+			Session::set('lastComment', $comment->id);
 		}
 
 		$results['resultType'] = "Success";
@@ -177,8 +179,6 @@ class Comment extends Eloquent {
 		} else {
 			$results['message'] = Lang::get('open-comments::messages.successUpdated');
 		}
-
-		Cookie::make('lastComment', time());
 
 		//log activity
 		//Activity::log(ucwords($data['content_type']).' - Comment Updated', '', $data['content_id']);
@@ -238,6 +238,8 @@ class Comment extends Eloquent {
 		foreach ($comments as $comment) {
 			$commentArray = $comment->toArray();
 
+			$admin = OpenComments::admin();
+
 			$commentArray['logged_in'] = OpenComments::auth();
 
 			$creator                       = $comment->creator;
@@ -261,8 +263,16 @@ class Comment extends Eloquent {
 				$commentArray['reply'] = false;
 			}
 
-			$commentArray['edit_time'] = Config::get('open-comments::commentEditLimit');
-			if (strtotime($comment->created_at) >= strtotime('-'+Config::get('open-comments::commentEditLimit').' minutes') || isset($creator)) {
+			$commentArray['edit_time'] = strtotime($comment->created_at) - strtotime('-'.Config::get('open-comments::commentEditLimit').' seconds');
+			/*if ($commentArray['edit_time'] < 0 OR Session::get('lastComment') != $commentArray['id'] OR $admin)
+				$commentArray['edit_time'] = 0;*/
+			if ($commentArray['edit_time'] < 0)
+				$commentArray['edit_time'] = 0;
+
+			if ($commentArray['edit_time'] > 0 && Session::get('lastComment') != $commentArray['id'])
+				$commentArray['edit_time'] = 0;
+
+			if ($commentArray['edit_time'] OR $admin) {
 				$commentArray['edit'] = true;
 			} else {
 				$commentArray['edit'] = false;
