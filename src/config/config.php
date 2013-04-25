@@ -67,8 +67,8 @@ return array(
 	| Authorization Method - User ID
 	|--------------------------------------------------------------------------
 	|
-	| The method for getting the active user ID which is used in conjunction
-	| with the user method about. By default, they get "user()->id" together.
+	| The attribute for getting the active user ID which is used in conjunction
+	| with the user method above. By default, they get "user()->id" together.
 	|
 	*/
 	'authMethodActiveUserID' => 'id',
@@ -105,11 +105,11 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	| The minimum length of characters for a comment. Set to false if for no
-	| minimum. The default is 24 characters to prevent pointless "First!"
+	| minimum. The default is 16 characters to prevent pointless "First!"
 	| comments and other short, useless comments.
 	|
 	*/
-	'commentMinLength' => 24,
+	'commentMinLength' => 16,
 
 	/*
 	|--------------------------------------------------------------------------

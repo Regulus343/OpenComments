@@ -153,6 +153,15 @@
 					<div class="clear"></div>
 				</div>
 
+				<!-- Success Message -->
+				<div class="message success hidden"></div>
+
+				<!-- Error Message -->
+				<div class="message error hidden"></div>
+
+				<!-- General Info Message -->
+				<div class="message info hidden"></div>
+
 				<!-- Comment Form - Reply -->
 				<?php echo Form::open('comments/create', 'post', array('class' => 'form-comment')); ?>
 					<label for="comment{{id}}"><?php echo Lang::get('open-comments::labels.addReply') ?>:</label>

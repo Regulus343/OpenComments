@@ -400,10 +400,10 @@ function setupEditCountdown() {
 
 function commentCountdown(element) {
 	var newCount = parseInt($(element).text()) - 1;
-	console.log(newCount);
 	if (newCount <= 0) {
 		clearInterval(editCommentCountdown);
 		$(element).parents('.edit-countdown').fadeOut();
+		$(element).parents('li').removeClass('editable');
 		$(element).parents('li').children('ul.actions').children('li.action-edit').fadeOut('fast');
 		$(element).parents('li').children('ul.actions').children('li.action-delete').fadeOut('fast');
 		$(element).parents('li').children('div.edit-comment').slideUp();

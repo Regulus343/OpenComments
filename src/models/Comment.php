@@ -112,7 +112,7 @@ class Comment extends Eloquent {
 			//if editing, ensure user has sufficient privileges to edit
 			if (!OpenComments::admin()) {
 				$commentEditable = Comment::where('id', '=', $id)
-											->where('user_id', '=', Session::get('user_id'))
+											->where('user_id', '=', OpenComments::userID())
 											->where('created_at', '>=', $editLimit)
 											->count();
 				if (!$commentEditable) {
@@ -122,9 +122,9 @@ class Comment extends Eloquent {
 			}
 
 			if (OpenComments::admin()) {
-				$comment = Comment::find($id);
+				$comment = static::find($id);
 			} else {
-				$comment = Comment::where('id', '=', $id)->where('user_id', '=', $userID);
+				$comment = static::where('id', '=', $id)->where('user_id', '=', $userID)->first();
 			}
 
 			if (empty($comment)) return $results;
@@ -143,7 +143,7 @@ class Comment extends Eloquent {
 				}
 			}
 
-			$comment = new Comment;
+			$comment = new static;
 
 			$comment->user_id = $userID;
 
@@ -153,10 +153,12 @@ class Comment extends Eloquent {
 			}
 		}
 
-		$comment->content_id   = $contentID;
-		$comment->content_type = $contentType;
-		$comment->parent_id    = $parentID;
-		$comment->comment      = $commentText;
+		if ($results['action'] == "Create") {
+			$comment->content_id   = $contentID;
+			$comment->content_type = $contentType;
+			$comment->parent_id    = $parentID;
+		}
+		$comment->comment = $commentText;
 		$comment->save();
 
 		$results['commentID'] = $comment->id;
