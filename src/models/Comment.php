@@ -201,7 +201,15 @@ class Comment extends Eloquent {
 		$comments = static::where('content_id', '=', $contentID)
 			->where('content_type', '=', $contentType);
 
-		if (! OpenComments::admin()) {
+		$admin = false;
+		if (OpenComments::auth()) {
+			$user = OpenComments::user();
+			if (Config::get('open-comments::authMethodAdminCheck')) {
+				if ($user->roles[0]->role == Config::get('open-comments::authMethodAdminRole'))
+					$admin = true;
+			}
+		}
+		if (!$admin) {
 			$comments = $comments
 				->where('approved', '=', 1)
 				->where('deleted', '=', 0);
@@ -220,27 +228,35 @@ class Comment extends Eloquent {
 	{
 		$commentsFormatted = array();
 
+		$admin = false;
 		if (OpenComments::auth()) {
 			$user = OpenComments::user();
 			$activeUser = array(
 				'id'           => $user->id,
 				'name'         => $user->getName(),
-				'role'         => $user->roles[0]->name,
+				'role'         => 'User',
 				'member_since' => date('F Y', strtotime($user->activated_at)),
+				'image'        => $user->getPicture(),
 			);
+
+			if (Config::get('open-comments::authMethodAdminCheck')) {
+				$activeUser['role'] = $user->roles[0]->name;
+
+				if ($user->roles[0]->role == Config::get('open-comments::authMethodAdminRole'))
+					$admin = true;
+			}
 		} else {
 			$activeUser = array(
 				'id'           => 0,
 				'name'         => '',
 				'role'         => '',
 				'member_since' => '',
+				'image'        => '',
 			);
 		}
 
 		foreach ($comments as $comment) {
 			$commentArray = $comment->toArray();
-
-			$admin = OpenComments::admin();
 
 			$commentArray['logged_in'] = OpenComments::auth();
 
@@ -266,12 +282,11 @@ class Comment extends Eloquent {
 			}
 
 			$commentArray['edit_time'] = strtotime($comment->created_at) - strtotime('-'.Config::get('open-comments::commentEditLimit').' seconds');
-			/*if ($commentArray['edit_time'] < 0 OR Session::get('lastComment') != $commentArray['id'] OR $admin)
-				$commentArray['edit_time'] = 0;*/
+
 			if ($commentArray['edit_time'] < 0)
 				$commentArray['edit_time'] = 0;
 
-			if ($commentArray['edit_time'] > 0 && Session::get('lastComment') != $commentArray['id'])
+			if (Session::get('lastComment') != $commentArray['id'] || $admin)
 				$commentArray['edit_time'] = 0;
 
 			if ($commentArray['edit_time'] OR $admin) {
@@ -289,9 +304,10 @@ class Comment extends Eloquent {
 			$commentArray['parent_id'] = (int) $commentArray['parent_id'];
 			$commentArray['parent']    = ! $commentArray['parent_id'] ? true : false;
 
-			$commentArray['active_user_name']         = $activeUser['name'];
-			$commentArray['active_user_role']         = $activeUser['role'];
-			$commentArray['active_user_member_since'] = $activeUser['member_since'];
+			$commentArray['active_user_name']  = $activeUser['name'];
+			$commentArray['active_user_role']  = $activeUser['role'];
+			$commentArray['active_user_since'] = $activeUser['member_since'];
+			$commentArray['active_user_image'] = $activeUser['image'];
 
 			$commentsFormatted[] = $commentArray;
 		}

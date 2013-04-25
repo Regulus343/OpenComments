@@ -7,8 +7,17 @@
 
 		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}{{#if edit_time}} editable{{/if}}">
 
-			<!-- Message -->
-			<div class="message success hidden"></div>
+			<!-- Messages -->
+			<div class="top-messages">
+				<!-- Success Message -->
+				<div class="message success hidden"></div>
+
+				<!-- Error Message -->
+				<div class="message error hidden"></div>
+
+				<!-- General Info Message -->
+				<div class="message info hidden"></div>
+			</div>
 
 			<div class="info">
 				<h1><a href="" class="profile-popup" rel="{{user_id}}">{{user}}</a></h1>
@@ -105,7 +114,7 @@
 				}*/ ?>
 
 				<div class="clear"></div>
-				<div class="add-comment edit-comment hidden" id="">
+				<div id="edit-comment{{id}}" class="add-comment edit-comment hidden" id="">
 
 					<!-- Success Message -->
 					<div class="message success hidden"></div>
@@ -144,8 +153,8 @@
 				<div class="info">
 					<h1><a href="javascript:void(0);">{{active_user_name}}</a></h1>
 					<ul class="info">
-						<li><label>Role:</label> <span>{{active_role_name}}</span></li>
-						<li><label>Member Since:</label> <span>{{active_member_since}}</span></li>
+						<li><label>Role:</label> <span>{{active_user_role}}</span></li>
+						<li><label>Member Since:</label> <span>{{active_user_since}}</span></li>
 					</ul>
 
 					<a href="" class="display-pic profile-popup" rel="u{{user_id}}"><img src="{{active_user_image}}" alt="" /></a>
@@ -165,7 +174,7 @@
 				<!-- Comment Form - Reply -->
 				<?php echo Form::open('comments/create', 'post', array('class' => 'form-comment')); ?>
 					<label for="comment{{id}}"><?php echo Lang::get('open-comments::labels.addReply') ?>:</label>
-					<textarea name="comment" class="field-comment wysiwyg" id="comment{{id}}" placeholder="Add a reply..."></textarea>
+					<textarea name="comment" class="field-comment wysiwyg" id="comment{{id}}"></textarea>
 
 					<input type="hidden" name="content_type" class="content-type" value="{{content_type}}" />
 					<input type="hidden" name="content_id" class="content-id" value="{{content_id}}" />

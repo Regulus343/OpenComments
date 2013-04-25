@@ -2,16 +2,18 @@
 
 return array(
 
-	'addComment'      => 'Add Comment',
-	'editComment'     => 'Edit Comment',
-	'addReply'        => 'Add Reply',
+	'addComment'            => 'Add Comment',
+	'editComment'           => 'Edit Comment',
+	'addReply'              => 'Add Reply',
 
-	'edit'            => 'Edit',
-	'delete'          => 'Delete',
-	'reply'           => 'Reply',
-	'replyToParent'   => 'Reply to Parent',
+	'addCommentPlaceholder' => 'Add a comment...',
 
-	'cancelEdit'      => 'Cancel Edit',
-	'cancelReply'     => 'Cancel Reply',
+	'edit'                  => 'Edit',
+	'delete'                => 'Delete',
+	'reply'                 => 'Reply',
+	'replyToParent'         => 'Reply to Parent',
+
+	'cancelEdit'            => 'Cancel Edit',
+	'cancelReply'           => 'Cancel Reply',
 
 );

@@ -225,6 +225,8 @@ function loadComments() {
 	$('#loading-comments').fadeIn('fast');
 	$('#comments').fadeOut('fast');
 
+	clearTimeout(editCommentCountdown);
+
 	$.ajax({
 		url: baseURL + 'comments/list',
 		type: 'post',
@@ -264,7 +266,7 @@ function loadComments() {
 			if (commentScroll > 0) {
 				setTimeout("scrollToElement('#comment"+commentScroll+"');", 250);
 
-				setTimeout("showCommentMessage('#comment"+commentScroll+"', 'success', '"+commentMessage+"', true);", 1250);
+				setTimeout("showCommentMessage('#comment"+commentScroll+" .top-message', 'success', '"+commentMessage+"', true);", 1250);
 				commentScroll  = false;
 				commentMessage = "";
 			}
@@ -310,7 +312,13 @@ function setupCommentForm() {
 
 		var url         = $(this).attr('action');
 		var data        = $(this).serialize();
-		var containerID = "#add-comment";
+		if ($(this).parents('li').hasClass('add-reply')) {
+			var containerID = "#"+$(this).parents('li').attr('id');
+		} else if ($(this).parents('div').hasClass('edit-comment')) {
+			var containerID = "#"+$(this).parents('div').attr('id');
+		} else {
+			var containerID = "#add-comment";
+		}
 
 		$.ajax({
 			url: url,
@@ -321,8 +329,6 @@ function setupCommentForm() {
 				if (result.resultType == "Success") {
 					showCommentMessage(containerID, 'success', commentMessages.postingComment, true);
 
-					$(containerID+' .field-comment').val('sdfsfsadfasd');
-
 					commentScroll  = result.commentID;
 					commentMessage = result.message;
 					loadComments();
@@ -331,7 +337,7 @@ function setupCommentForm() {
 				}
 			},
 			error: function(){
-				console.log('Add Comment Failed');
+				console.log('Add/Edit Comment Failed');
 			}
 		});
 	});
@@ -361,6 +367,7 @@ function setupCommentActions() {
 
 			setTimeout("scrollToElement('#comment"+ commentID +"');", 250);
 			$('#reply'+commentID).hide().removeClass('hidden').css('min-height', 0).slideDown(commentSlideTime);
+			$('#reply'+commentID).find('iframe').contents().find('.wysihtml5-editor').focus();
 		}
 	});
 
@@ -394,14 +401,14 @@ function setupCommentActions() {
 var editCommentCountdown;
 function setupEditCountdown() {
 	$('#comments .edit-countdown span.number').each(function(){
-		setTimeout("commentCountdown('#"+$(this).parents('li').attr('id')+" .edit-countdown span')", 1000);
+		editCommentCountdown = setTimeout("commentCountdown('#"+$(this).parents('li').attr('id')+" .edit-countdown span')", 1000);
 	});
 }
 
 function commentCountdown(element) {
 	var newCount = parseInt($(element).text()) - 1;
 	if (newCount <= 0) {
-		clearInterval(editCommentCountdown);
+		clearTimeout(editCommentCountdown);
 		$(element).parents('.edit-countdown').fadeOut();
 		$(element).parents('li').removeClass('editable');
 		$(element).parents('li').children('ul.actions').children('li.action-edit').fadeOut('fast');
@@ -409,7 +416,7 @@ function commentCountdown(element) {
 		$(element).parents('li').children('div.edit-comment').slideUp();
 	} else {
 		$(element).text(newCount);
-		setTimeout("commentCountdown('"+element+"')", 1000);
+		editCommentCountdown = setTimeout("commentCountdown('"+element+"')", 1000);
 	}
 }
 

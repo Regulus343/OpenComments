@@ -30,21 +30,6 @@ class OpenComments {
 	}
 
 	/**
-	 * Authenticates admin for the default OpenForum views while remaining authorization class-agnostic.
-	 *
-	 * @return boolean
-	 */
-	public static function admin()
-	{
-		$auth = static::configAuth();
-		if ($auth->methodAdminCheck) {
-			$function = static::separateFunction($auth->methodAdminCheck);
-			return static::callFunction($function);
-		}
-		return false;
-	}
-
-	/**
 	 * Gets the active user.
 	 *
 	 * @return boolean

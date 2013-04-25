@@ -42,18 +42,6 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| Authorization Method - Admin Check
-	|--------------------------------------------------------------------------
-	|
-	| The method in your authorization class that checks if the logged in user
-	| is an administrator. Set this to false if you do not have a method of
-	| identifying an admin.
-	|
-	*/
-	'authMethodAdminCheck' => false,
-
-	/*
-	|--------------------------------------------------------------------------
 	| Authorization Method - User
 	|--------------------------------------------------------------------------
 	|
@@ -72,6 +60,26 @@ return array(
 	|
 	*/
 	'authMethodActiveUserID' => 'id',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Authorization - Roles
+	|--------------------------------------------------------------------------
+	|
+	| Whether user model has roles available.
+	|
+	*/
+	'authMethodAdminCheck' => false,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Authorization - Admin Role
+	|--------------------------------------------------------------------------
+	|
+	| The name of the admin role if admin check is enabled.
+	|
+	*/
+	'authMethodAdminRole' => 'admin',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -159,6 +167,17 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Load jQuery
+	|--------------------------------------------------------------------------
+	|
+	| Whether or not to have Open Comments automatically load jQuery.
+	| Turn this off if your website already loads jQuery.
+	|
+	*/
+	'loadJquery' => true,
+
+	/*
+	|--------------------------------------------------------------------------
 	| Load Bootstrap
 	|--------------------------------------------------------------------------
 	|
@@ -169,5 +188,17 @@ return array(
 	|
 	*/
 	'loadBootstrap' => true,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Load Boxy
+	|--------------------------------------------------------------------------
+	|
+	| By default, Open Comments makes use of the lightweight javascript
+	| library Boxy for modal windows like comment deleting confirmation.
+	| You may turn off Boxy if you intend to use another modal window script.
+	|
+	*/
+	'loadBoxy' => true,
 
 );

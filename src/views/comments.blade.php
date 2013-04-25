@@ -1,8 +1,23 @@
+{{-- Load jQuery --}}
+@if (Config::get('open-comments::loadJquery'))
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+@endif
+
 {{-- Load Bootstrap CSS & JS --}}
 @if (Config::get('open-comments::loadBootstrap'))
 
 	<link type="text/css" rel="stylesheet" href="{{ Site::css('bootstrap', 'regulus/open-comments') }}" />
 	<script type="text/javascript" src="{{ Site::js('bootstrap.min', 'regulus/open-comments') }}"></script>
+
+@endif
+
+{{-- Load Boxy --}}
+@if (Config::get('open-comments::loadBoxy'))
+
+	<link type="text/css" rel="stylesheet" href="{{ Site::css('boxy', 'regulus/open-comments') }}" />
+	<script type="text/javascript" src="{{ Site::js('jquery.boxy', 'regulus/open-comments') }}"></script>
 
 @endif
 
@@ -39,7 +54,7 @@
 </div>
 
 {{-- Comments List --}}
-<div class="loading" id="loading-comments" title="Loading comments..."></div>
+<div class="loading" id="loading-comments"></div>
 <ul id="comments" class="hidden"></ul>
 
 {{-- JS Template for Comments --}}
