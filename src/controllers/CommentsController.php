@@ -19,6 +19,10 @@ class CommentsController extends BaseController {
 		return json_encode(Comment::createUpdate());
 	}
 
+	public function getDelete($id) {
+		return OpenComments::delete($id);
+	}
+
 	public function postList()
 	{
 		$contentID   = Input::get('content_id');

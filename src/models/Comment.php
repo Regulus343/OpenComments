@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 
 use Regulus\TetraText\TetraText as Format;
@@ -34,11 +35,21 @@ class Comment extends Eloquent {
 	 */
 	public static $commentOrder = false;
 
+	/**
+	 * Can be used to fetch the content that the comments are attached to.
+	 *
+	 * @return object
+	 */
 	public function content()
 	{
 		return $this->morphTo();
 	}
 
+	/**
+	 * Gets the creator of the comment.
+	 *
+	 * @return object
+	 */
 	public function creator()
 	{
 		return $this->belongsTo(Config::get('auth.model'), 'user_id');
@@ -47,6 +58,7 @@ class Comment extends Eloquent {
 	/**
 	 * Creates or updates a comment.
 	 *
+	 * @param  integer  $id
 	 * @return mixed
 	 */
 	public static function createUpdate($id = 0)
@@ -157,6 +169,7 @@ class Comment extends Eloquent {
 			$comment->content_id   = $contentID;
 			$comment->content_type = $contentType;
 			$comment->parent_id    = $parentID;
+			$comment->ip_address   = Request::getClientIp();
 		}
 		$comment->comment = $commentText;
 		$comment->save();
@@ -188,6 +201,13 @@ class Comment extends Eloquent {
 		return $results;
 	}
 
+	/**
+	 * Compiles a list of comments based on the content ID and content type.
+	 *
+	 * @param  integer  $contentID
+	 * @param  string   $contentType
+	 * @return mixed
+	 */
 	public static function compileList($contentID, $contentType)
 	{
 		if (!static::$commentOrder) {
@@ -201,14 +221,7 @@ class Comment extends Eloquent {
 		$comments = static::where('content_id', '=', $contentID)
 			->where('content_type', '=', $contentType);
 
-		$admin = false;
-		if (OpenComments::auth()) {
-			$user = OpenComments::user();
-			if (Config::get('open-comments::authMethodAdminCheck')) {
-				if ($user->roles[0]->role == Config::get('open-comments::authMethodAdminRole'))
-					$admin = true;
-			}
-		}
+		$admin = OpenComments::admin();
 		if (!$admin) {
 			$comments = $comments
 				->where('approved', '=', 1)
@@ -224,11 +237,17 @@ class Comment extends Eloquent {
 		return $comments;
 	}
 
+	/**
+	 * Formats the comments for Handlebars JS.
+	 *
+	 * @param  object   $comments
+	 * @return mixed
+	 */
 	public static function format($comments)
 	{
 		$commentsFormatted = array();
 
-		$admin = false;
+		$admin = OpenComments::admin();
 		if (OpenComments::auth()) {
 			$user = OpenComments::user();
 			$activeUser = array(
@@ -238,13 +257,6 @@ class Comment extends Eloquent {
 				'member_since' => date('F Y', strtotime($user->activated_at)),
 				'image'        => $user->getPicture(),
 			);
-
-			if (Config::get('open-comments::authMethodAdminCheck')) {
-				$activeUser['role'] = $user->roles[0]->name;
-
-				if ($user->roles[0]->role == Config::get('open-comments::authMethodAdminRole'))
-					$admin = true;
-			}
 		} else {
 			$activeUser = array(
 				'id'           => 0,

@@ -266,7 +266,7 @@ function loadComments() {
 			if (commentScroll > 0) {
 				setTimeout("scrollToElement('#comment"+commentScroll+"');", 250);
 
-				setTimeout("showCommentMessage('#comment"+commentScroll+" .top-message', 'success', '"+commentMessage+"', true);", 1250);
+				setTimeout("showCommentMessage('#comment"+commentScroll+" .top-messages', 'success', '"+commentMessage+"', true);", 1000);
 				commentScroll  = false;
 				commentMessage = "";
 			}
@@ -396,6 +396,31 @@ function setupCommentActions() {
 		}
 	});
 
+	$('#comments .button-delete').on('click', function(e){
+		e.preventDefault();
+		var commentID = $(this).attr('rel');
+
+		Boxy.confirm('Are you sure you want to delete this comment? This action cannot be undone.', function(){
+			$.ajax({
+				url: baseURL + 'comments/delete/' + commentID,
+				success: function(result){
+					if (result.resultType == "Success") {
+						$('#comment'+id).slideUp(commentSlideTime);
+						setTimeout("$('#comment"+id+"').remove();", 1000);
+						$('#reply'+id).remove();
+					} else {
+						showCommentMessage('#comment'+commentID+' .top-messages', 'error', result.message, true);
+					}
+				},
+				error: function(result){
+					showCommentMessage('#comment'+commentID+' .top-messages', 'error', result.message, true);
+					console.log('Delete Comment Failed');
+				}
+			});
+		},
+		{title: 'Delete Comment', closeable: true, closeText: 'X'});
+	});
+
 }
 
 var editCommentCountdown;
@@ -415,7 +440,13 @@ function commentCountdown(element) {
 		$(element).parents('li').children('ul.actions').children('li.action-delete').fadeOut('fast');
 		$(element).parents('li').children('div.edit-comment').slideUp();
 	} else {
-		$(element).text(newCount);
+		if (newCount > 1) {
+			$(element).text(newCount);
+		} else {
+			var singularText = $(element).parents('.edit-countdown').html().replace('seconds', 'second').replace((newCount + 1), newCount);
+			console.log(singularText);
+			$(element).parents('.edit-countdown').html(singularText);
+		}
 		editCommentCountdown = setTimeout("commentCountdown('"+element+"')", 1000);
 	}
 }

@@ -30,6 +30,23 @@ class OpenComments {
 	}
 
 	/**
+	 * Authenticates admin for the default OpenForum views while remaining authorization class-agnostic.
+	 *
+	 * @return boolean
+	 */
+	public static function admin()
+	{
+		$auth = static::configAuth();
+		if ($auth->methodAdminCheck) {
+			if (static::auth()) {
+				$user = static::user();
+				if ($user->roles[0]->role == $auth->methodAdminRole) return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Gets the active user.
 	 *
 	 * @return boolean
@@ -71,12 +88,50 @@ class OpenComments {
 			static::$auth = (object) array(
 				'class'              => Config::get('open-comments::authClass'),
 				'methodActiveCheck'  => Config::get('open-comments::authMethodActiveCheck'),
-				'methodAdminCheck'   => Config::get('open-comments::authMethodAdminCheck'),
 				'methodActiveUser'   => Config::get('open-comments::authMethodActiveUser'),
 				'methodActiveUserID' => Config::get('open-comments::authMethodActiveUserID'),
+				'methodAdminCheck'   => Config::get('open-comments::authMethodAdminCheck'),
+				'methodAdminRole'    => Config::get('open-comments::authMethodAdminRole'),
 			);
 		}
 		return static::$auth;
+	}
+
+	/**
+	 * Delete a comment.
+	 *
+	 * @return string
+	 */
+	public static function delete($id)
+	{
+		$comment = Comment::find($id);
+		if (!empty($comment)) {
+			$userID = OpenComments::userID();
+			$admin  = OpenComments::admin();
+
+			if ($admin || ($userID == $comment->user_id && strtotime($comment->created_at) >= strtotime('-'.Config::get('open-comments::commentWaitTime').' seconds'))) {
+				if ($admin) {
+					$comment->delete();
+					Comment::where('parent_id', '=', $id)->get()->delete();
+					return "Success";
+				} else {
+					$repliesExist = Comment::where('parent_id', '=', $id)->where('deleted', '=', 0)->count();
+					if (!$admin && $repliesExist) {
+						return "Error: Replies Exist";
+					}
+
+					$dateDeleted = date('Y-m-d H:i:s');
+					$comment->deleted    = true;
+					$comment->deleted_at = $dateDeleted;
+					$comment->save();
+
+					Comment::where('parent_id', '=', $id)->update(array('deleted' => true, 'deleted_at' => $dateDeleted));
+				}
+			} else {
+				return "Error";
+			}
+		}
+		return "Success";
 	}
 
 	/**
