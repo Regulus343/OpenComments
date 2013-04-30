@@ -53,9 +53,17 @@
 	<div class="message info hidden"></div>
 </div>
 
-{{-- Comments List --}}
+{{-- Ajax Loading Image --}}
 <div class="loading" id="loading-comments"></div>
+
+{{-- Top Pagination --}}
+<ul class="comments-pagination hidden"></ul>
+
+{{-- Comments List --}}
 <ul id="comments" class="hidden"></ul>
 
 {{-- JS Template for Comments --}}
 @include(Config::get('open-comments::viewsLocation').'templates.list')
+
+{{-- Bottom Pagination --}}
+<ul class="comments-pagination hidden"></ul>

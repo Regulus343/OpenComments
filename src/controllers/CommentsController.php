@@ -31,9 +31,20 @@ class CommentsController extends BaseController {
 	{
 		$contentID   = Input::get('content_id');
 		$contentType = Input::get('content_type');
+		$page        = Input::get('page');
 
-		$comments    = Comment::compileList($contentID, $contentType);
+		$comments    = Comment::compileList($contentID, $contentType, 1);
 
+		//get the total number of comments
+		$totalComments = Comment::where('content_id', '=', $contentID)->where('content_type', '=', $contentType);
+		if (!OpenComments::admin()) {
+			$totalComments = $totalComments->where('approved', '=', true)->where('deleted', '=', false);
+		}
+		$totalComments   = $totalComments->count();
+		$commentsPerPage = Config::get('open-comments::commentsPerPage');
+		$totalPages = ceil($totalComments / $commentsPerPage);
+
+		//add a message
 		$message = Lang::get('open-comments::messages.noComments');
 		if (count($comments) > 0) {
 			$commentStr = Lang::get('open-comments::messages.comment');
@@ -41,7 +52,13 @@ class CommentsController extends BaseController {
 			$message = Lang::get('open-comments::messages.numberComments', array('number' => count($comments), 'item' => $commentStr));
 		}
 
-		return json_encode(array('comments' => Comment::format($comments), 'message' => $message));
+		$results = array(
+			'comments'    => Comment::format($comments),
+			'message'     => $message,
+			'currentPage' => $page,
+			'totalPages'  => $totalPages, 
+		);
+		return json_encode($results);
 	}
 
 }

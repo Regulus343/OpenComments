@@ -2,7 +2,7 @@
 
 input.grey, textarea.grey, select.grey { color: #777; }
 
-ul#comments, ul#posts { list-style: none; }
+ul#comments, ul#posts { clear: both; margin: 0; list-style: none; }
 
 ul#comments li, ul#posts li {
 	position: relative;
@@ -218,3 +218,11 @@ ul#comments li .edit-comment .message, ul#posts li .edit-comment .message { marg
 
 ul#comments li div.edit-countdown { clear: left; padding: 0 2px 10px 2px; font-size: 14px; color: #f5eb11; text-align: right; }
 ul#comments li div.edit-countdown span.number { font-weight: bold; }
+
+ul.comments-pagination { float: right; margin: 0 12px 0 0; list-style: none; }
+ul.comments-pagination li { display: inline-block; margin: 0 6px 8px 0; font-size: 16px; }
+ul.comments-pagination li:last-child { margin-right: 0; }
+ul.comments-pagination li a { padding: 2px 5px; color: #aaa; background-color: #000; border: 1px solid #888; }
+ul.comments-pagination li a:hover { border-color: #ddd; text-decoration: none; }
+
+ul.comments-pagination li.selected a { border-color: #f5eb11; color: #fff; }

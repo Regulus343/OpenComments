@@ -235,6 +235,14 @@ function loadComments() {
 		success: function(result){
 			showCommentMessage('#message-comments', 'info', result.message, false);
 
+			if (result.totalPages > 0) {
+
+				var commentsPagination = buildCommentsPagination(result.totalPages, result.currentPage);
+				$('.comments-pagination').html(commentsPagination).removeClass('hidden');
+			} else {
+				$('.comments-pagination').fadeOut();
+			}
+
 			comments = result.comments;
 			if (comments != undefined && comments.length > 0) {
 				$('.comments-number').text(comments.length);
@@ -279,6 +287,41 @@ function loadComments() {
 			console.log('Load Comments Error');
 		}
 	});
+}
+
+function buildCommentsPagination(totalPages, currentPage) {
+	var html = "";
+	if (currentPage == null) currentPage = 1;
+	if (totalPages > 5) {
+		var startPage = p - 5;
+		if (startPage > 1) {
+			html += '<li><a href="" rel="1">&laquo;</a></li>';
+		} else {
+			startPage = 1;
+		}
+
+		for (p = startPage; p <= totalPages; p++) {
+			if (p == currentPage) {
+				html += '<li class="selected">';
+			} else {
+				html += '<li>';
+			}
+			html += '<a href="" rel="'+p+'">'+p+'</a></li>';
+		}
+		if (p + 5 < totalPages) {
+			html += '<li><a href="" rel="'+totalPages+'">&raquo;</a></li>';
+		}
+	} else {
+		for (p=1; p <= totalPages; p++) {
+			if (p == currentPage) {
+				html += '<li class="selected">';
+			} else {
+				html += '<li>';
+			}
+			html += '<a href="" rel="'+p+'">'+p+'</a></li>';
+		}
+	}
+	return html;
 }
 
 function showCommentMessage(elementID, type, message, timeLimit) {

@@ -212,7 +212,7 @@ class Comment extends Eloquent {
 	 * @param  string   $contentType
 	 * @return mixed
 	 */
-	public static function compileList($contentID, $contentType)
+	public static function compileList($contentID, $contentType, $page = false)
 	{
 		if (!static::$commentOrder) {
 			if (!is_null(Session::get('commentOrder'))) {
@@ -228,15 +228,21 @@ class Comment extends Eloquent {
 		$admin = OpenComments::admin();
 		if (!$admin) {
 			$comments = $comments
-				->where('approved', '=', 1)
-				->where('deleted', '=', 0);
+				->where('approved', '=', true)
+				->where('deleted', '=', false);
 		}
 
 		$comments = $comments
 			->orderBy('order_id', static::$commentOrder)
 			->orderBy('parent_id')
-			->orderBy('id', static::$commentOrder)
-			->get();
+			->orderBy('id', static::$commentOrder);
+
+		if ($page) {
+			$commentsPerPage = Config::get('open-comments::commentsPerPage');
+			$commentsToSkip  = ($page - 1) * $commentsPerPage;
+			$comments = $comments->skip($commentsToSkip)->take($commentsPerPage);
+		}
+		$comments = $comments->get();
 
 		return $comments;
 	}
