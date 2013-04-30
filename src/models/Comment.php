@@ -118,11 +118,13 @@ class Comment extends Eloquent {
 			return $results;
 		}
 
+		$admin = OpenComments::admin();
+
 		if ($id) {
 			$results['action'] = "Update";
 
 			//if editing, ensure user has sufficient privileges to edit
-			if (!OpenComments::admin()) {
+			if (!$admin) {
 				$commentEditable = Comment::where('id', '=', $id)
 											->where('user_id', '=', OpenComments::userID())
 											->where('created_at', '>=', $editLimit)
@@ -159,7 +161,8 @@ class Comment extends Eloquent {
 
 			$comment->user_id = $userID;
 
-			if (Config::get('open-comments::commentAutoApproval')) {
+			$autoApproval = Config::get('open-comments::commentAutoApproval');
+			if ($autoApproval || $admin) {
 				$comment->approved    = true;
 				$comment->approved_at = date('Y-m-d H:i:s');
 			}
@@ -191,6 +194,7 @@ class Comment extends Eloquent {
 		$results['resultType'] = "Success";
 		if ($results['action'] == "Create") {
 			$results['message'] = Lang::get('open-comments::messages.successCreated');
+			if (!$autoApproval) $results['message'] .= ' '.Lang::get('open-comments::messages.notYetApproved');
 		} else {
 			$results['message'] = Lang::get('open-comments::messages.successUpdated');
 		}
@@ -247,7 +251,9 @@ class Comment extends Eloquent {
 	{
 		$commentsFormatted = array();
 
-		$admin = OpenComments::admin();
+		$admin        = OpenComments::admin();
+		$autoApproval = Config::get('open-comments::commentAutoApproval');
+
 		if (OpenComments::auth()) {
 			$user = OpenComments::user();
 			$activeUser = array(
@@ -306,6 +312,11 @@ class Comment extends Eloquent {
 			} else {
 				$commentArray['edit'] = false;
 			}
+
+			$commentArray['approve']  = ! $autoApproval;
+			$commentArray['approved'] = (bool) $commentArray['approved'];
+
+			$commentArray['deleted'] = (bool) $commentArray['deleted'];
 
 			if ($commentArray['user_id'] == $activeUser['id']) {
 				$commentArray['active_user_post'] = true;

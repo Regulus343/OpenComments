@@ -12,6 +12,8 @@ return array(
 	'delete'                => 'Delete',
 	'reply'                 => 'Reply',
 	'replyToParent'         => 'Reply to Parent',
+	'approve'               => 'Approve',
+	'unapprove'             => 'Unapprove',
 
 	'cancelEdit'            => 'Cancel Edit',
 	'cancelReply'           => 'Cancel Reply',

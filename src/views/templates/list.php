@@ -5,7 +5,7 @@
 		if ($comment->user_id == $this->session->userdata('user_id'))	$classes[] = "current-user";
 		if ($comment->parent_id)										$classes[] = "sub";*/ ?>
 
-		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}{{#if edit_time}} editable{{/if}}" data-parent-id="{{parent_id}}">
+		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}{{#if edit_time}} editable{{/if}}{{#unless approved}} unapproved{{/unless}}{{#if deleted}} deleted{{/if}}" data-parent-id="{{parent_id}}">
 
 			<!-- Messages -->
 			<div class="top-messages">
@@ -64,6 +64,20 @@
 						<li class="action-edit">
 							<a href="" class="button button-edit button-edit-comment" rel="{{id}}">
 								<?php echo Lang::get('open-comments::labels.edit'); ?>
+							</a>
+						</li>
+
+					{{/if}}
+
+					{{#if approve}}
+
+						<li class="action-approve">
+							<a href="" class="button button-approve button-approve-comment" rel="{{id}}">
+								{{#unless approved}}
+									<?php echo Lang::get('open-comments::labels.approve'); ?>
+								{{else}}
+									<?php echo Lang::get('open-comments::labels.unapprove'); ?>
+								{{/unless}}
 							</a>
 						</li>
 

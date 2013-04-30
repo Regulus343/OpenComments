@@ -12,6 +12,8 @@ return array(
 	'successUpdated'          => 'You have successfully edited a comment.',
 	'successDeleted'          => 'You have successfully deleted a comment.',
 
+	'notYetApproved'          => 'Your comment has not yet been approved. Upon approval, your comment will be visible to other users.',
+
 	'noComments'              => 'There are currently no comments.',
 	'numberComments'          => 'Displaying <strong>:number</strong> :item.',
 	'comment'                 => 'comment',

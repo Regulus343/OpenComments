@@ -403,11 +403,17 @@ function setupCommentActions() {
 		Boxy.confirm('Are you sure you want to delete this comment? This action cannot be undone.', function(){
 			$.ajax({
 				url: baseURL + 'comments/delete/' + commentID,
+				dataType: 'json',
 				success: function(result){
 					if (result.resultType == "Success") {
-						$('#comment'+id).slideUp(commentSlideTime);
-						setTimeout("$('#comment"+id+"').remove();", 1000);
-						$('#reply'+id).remove();
+						showCommentMessage('#comment'+commentID+' .top-messages', 'success', result.message, true);
+						setTimeout("$('#comment"+commentID+"').slideUp("+commentSlideTime+");", 1500);
+						setTimeout("$('#comment"+commentID+"').remove();", 3000);
+						$('#comments li').each(function(){
+							if ($(this).attr('data-parent-id') == commentID) {
+								$('#comment'+$(this).attr('data-parent-id')).remove();
+							}
+						});
 					} else {
 						showCommentMessage('#comment'+commentID+' .top-messages', 'error', result.message, true);
 					}
