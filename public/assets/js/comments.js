@@ -244,6 +244,8 @@ function loadComments() {
 				var context  = { comments: comments };
 				var html     = template(context);
 
+				hideCommentMessage('#add-comment', 'success');
+
 				$('#loading-comments').hide();
 				$('#comments').html(html).removeClass('hidden').slideDown('fast');
 			} else {
@@ -285,6 +287,10 @@ function showCommentMessage(elementID, type, message, timeLimit) {
 	if (timeLimit) {
 		commentMessageTimeout = setTimeout("$('"+elementID+" .message."+type+"').html('"+message+"').fadeOut();", commentMessageTimeLimit);
 	}
+}
+
+function hideCommentMessage(elementID, type, message, timeLimit) {
+	$(elementID+' .message.'+type).html(message).hide().fadeOut();
 }
 
 function setupWysiwygEditors() {
