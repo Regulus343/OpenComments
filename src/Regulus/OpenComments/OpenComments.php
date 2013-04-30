@@ -147,6 +147,43 @@ class OpenComments {
 	}
 
 	/**
+	 * Approves/unapproves a comment.
+	 *
+	 * @return string
+	 */
+	public static function toggleApproval($id)
+	{
+		$results = array(
+			'resultType' => 'Error',
+			'message'    => Lang::get('open-comments::messages.errorGeneral'),
+			'approved'   => false,
+		);
+
+		$admin  = OpenComments::admin();
+		if (!$admin) return $results;
+
+		$comment = Comment::find($id);
+		if (empty($comment)) return $results;
+
+		$results['resultType'] = "Success";
+		if (!$comment->approved) {
+			$comment->approved      = true;
+			$comment->approved_at   = date('Y-m-d H:i:s');
+
+			$results['message'] = Lang::get('open-comments::messages.successApproved');
+			$results['approved'] = true;
+		} else {
+			$comment->approved      = false;
+			$comment->approved_at   = "0000-00-00 00:00:00";
+
+			$results['message'] = Lang::get('open-comments::messages.successUnapproved');
+		}
+		$comment->save();
+
+		return $results;
+	}
+
+	/**
 	 * Separates a function string "function('array')" into the
 	 * function name and the parameters for use with call_user_func.
 	 *

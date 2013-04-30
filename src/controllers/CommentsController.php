@@ -23,6 +23,10 @@ class CommentsController extends BaseController {
 		return json_encode(OpenComments::delete($id));
 	}
 
+	public function getApprove($id = 0) {
+		return json_encode(OpenComments::toggleApproval($id));
+	}
+
 	public function postList()
 	{
 		$contentID   = Input::get('content_id');

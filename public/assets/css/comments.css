@@ -69,7 +69,7 @@ ul#comments li.editable, ul#posts li.editable {
 }
 
 ul#comments li.unapproved, ul#posts li.unapproved {
-	border-color: #000;
+	border: 1px dashed #555;
 }
 
 ul#comments li.deleted, ul#posts li.deleted {

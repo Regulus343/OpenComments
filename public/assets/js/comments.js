@@ -373,8 +373,10 @@ function setupCommentActions() {
 
 	$('#comments .button-edit').on('click', function(e){
 		e.preventDefault();
+
 		var commentID = $(this).attr('rel');
-		var label = $(this).text().trim();
+		var label     = $(this).text().trim();
+
 		if (label == commentLabels.cancelEdit) {
 			$(this).text(commentLabels.edit);
 
@@ -400,7 +402,7 @@ function setupCommentActions() {
 		e.preventDefault();
 		var commentID = $(this).attr('rel');
 
-		Boxy.confirm('Are you sure you want to delete this comment? This action cannot be undone.', function(){
+		Boxy.confirm(commentMessages.confirmDelete, function(){
 			$.ajax({
 				url: baseURL + 'comments/delete/' + commentID,
 				dataType: 'json',
@@ -425,6 +427,47 @@ function setupCommentActions() {
 			});
 		},
 		{title: 'Delete Comment', closeable: true, closeText: 'X'});
+	});
+
+	$('#comments .button-approve').on('click', function(e){
+		e.preventDefault();
+
+		var commentID = $(this).attr('rel');
+		var label     = $(this).text().trim();
+
+		if (label == commentLabels.approve) {
+			var title   = commentMessages.confirmApproveTitle;
+			var message = commentMessages.confirmApprove;
+		} else {
+			var title   = commentMessages.confirmUnapproveTitle;
+			var message = commentMessages.confirmUnapprove;
+		}
+
+		Boxy.confirm(message, function(){
+			$.ajax({
+				url: baseURL + 'comments/approve/' + commentID,
+				dataType: 'json',
+				success: function(result){
+					if (result.resultType == "Success") {
+						if (result.approved) {
+							$('#comment'+commentID).removeClass('unapproved');
+							$('#comment'+commentID+' .button-approve').text(commentLabels.unapprove);
+						} else {
+							$('#comment'+commentID).addClass('unapproved');
+							$('#comment'+commentID+' .button-approve').text(commentLabels.approve);
+						}
+						showCommentMessage('#comment'+commentID+' .top-messages', 'success', result.message, true);
+					} else {
+						showCommentMessage('#comment'+commentID+' .top-messages', 'error', result.message, true);
+					}
+				},
+				error: function(result){
+					showCommentMessage('#comment'+commentID+' .top-messages', 'error', result.message, true);
+					console.log('Approve Comment Failed');
+				}
+			});
+		},
+		{title: title, closeable: true, closeText: 'X'});
 	});
 
 }

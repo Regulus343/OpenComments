@@ -11,8 +11,23 @@ return array(
 	'successCreated'          => 'You have successfully added a comment.',
 	'successUpdated'          => 'You have successfully edited a comment.',
 	'successDeleted'          => 'You have successfully deleted a comment.',
+	'successUndeleted'        => 'You have successfully undeleted a comment.',
+	'successApproved'         => 'You have successfully approved a comment.',
+	'successUnapproved'       => 'You have successfully unapproved a comment.',
 
 	'notYetApproved'          => 'Your comment has not yet been approved. Upon approval, your comment will be visible to other users.',
+
+	'confirmDelete'           => 'Are you sure you want to delete this comment? This action cannot be undone.',
+	'confirmDeleteTitle'      => 'Delete Comment',
+
+	'confirmUndelete'         => 'Are you sure you want to undelete this comment? This action cannot be undone.',
+	'confirmUndeleteTitle'    => 'Undelete Comment',
+
+	'confirmApprove'          => 'Are you sure you want to approve this comment?',
+	'confirmApproveTitle'     => 'Approve Comment',
+
+	'confirmUnapprove'        => 'Are you sure you want to unapprove this comment?',
+	'confirmUnapproveTitle'   => 'Unpprove Comment',
 
 	'noComments'              => 'There are currently no comments.',
 	'numberComments'          => 'Displaying <strong>:number</strong> :item.',
