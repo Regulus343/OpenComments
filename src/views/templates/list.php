@@ -1,10 +1,6 @@
 <script id="comments-template" type="text/x-handlebars-template">
 	{{#each comments}}
 
-		<?php /*$classes = array();
-		if ($comment->user_id == $this->session->userdata('user_id'))	$classes[] = "current-user";
-		if ($comment->parent_id)										$classes[] = "sub";*/ ?>
-
 		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}{{#if edit_time}} editable{{/if}}{{#unless approved}} unapproved{{/unless}}{{#if deleted}} deleted{{/if}}" data-parent-id="{{parent_id}}">
 
 			<!-- Messages -->
@@ -105,27 +101,6 @@
 			{{/if}}
 
 			{{#if edit}}
-
-				</php /*$commentID    = Session::get('commentID');
-				$commentText  = Session::get('commentText');
-				$parentID     = Session::get('commentParentID');
-				$commentReply = Session::get('commentReply');
-
-				$class = "";
-				if ($commentReply) {
-					$divID = "reply-comment".$parentID;
-					$class = "reply-comment";
-					$label = "Add Reply";
-				} else {
-					if ($commentID) {
-						$divID = "edit-comment".$commentID;
-						$class = "edit-comment";
-						$label = "Edit Comment";
-					} else {
-						$divID = "add-comment";
-						$label = "Add Comment";
-					}
-				}*/ ?>
 
 				<div class="clear"></div>
 				<div id="edit-comment{{id}}" class="add-comment edit-comment hidden" id="">
