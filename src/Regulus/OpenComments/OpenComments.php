@@ -9,6 +9,7 @@
 ----------------------------------------------------------------------------------------------------------*/
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Lang;
 
 class OpenComments {
 
@@ -104,6 +105,11 @@ class OpenComments {
 	 */
 	public static function delete($id)
 	{
+		$results = array(
+			'resultType' => 'Error',
+			'message'    => Lang::get('open-comments::messages.errorGeneral'),
+		);
+
 		$comment = Comment::find($id);
 		if (!empty($comment)) {
 			$userID = OpenComments::userID();
@@ -112,12 +118,17 @@ class OpenComments {
 			if ($admin || ($userID == $comment->user_id && strtotime($comment->created_at) >= strtotime('-'.Config::get('open-comments::commentWaitTime').' seconds'))) {
 				if ($admin) {
 					$comment->delete();
-					Comment::where('parent_id', '=', $id)->get()->delete();
-					return "Success";
+					$replies = Comment::where('parent_id', '=', $id)->get();
+					foreach ($replies as $reply) {
+						$reply->delete();
+					}
+					$results['resultType'] = "Success";
+					$results['message']    = Lang::get('open-comments::messages.successDeleted');
+					return $results;
 				} else {
 					$repliesExist = Comment::where('parent_id', '=', $id)->where('deleted', '=', 0)->count();
 					if (!$admin && $repliesExist) {
-						return "Error: Replies Exist";
+						$results['message'] = Lang::get('open-comments::messages.errorDeleteRepliesExist');
 					}
 
 					$dateDeleted = date('Y-m-d H:i:s');
@@ -128,10 +139,11 @@ class OpenComments {
 					Comment::where('parent_id', '=', $id)->update(array('deleted' => true, 'deleted_at' => $dateDeleted));
 				}
 			} else {
-				return "Error";
+				return $results;
 			}
 		}
-		return "Success";
+		$results['message'] = Lang::get('open-comments::messages.successDeleted');
+		return $results;
 	}
 
 	/**

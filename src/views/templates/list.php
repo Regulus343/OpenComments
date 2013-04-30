@@ -5,7 +5,7 @@
 		if ($comment->user_id == $this->session->userdata('user_id'))	$classes[] = "current-user";
 		if ($comment->parent_id)										$classes[] = "sub";*/ ?>
 
-		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}{{#if edit_time}} editable{{/if}}">
+		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}{{#if edit_time}} editable{{/if}}" data-parent-id="{{parent_id}}">
 
 			<!-- Messages -->
 			<div class="top-messages">

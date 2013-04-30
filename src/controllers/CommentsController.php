@@ -19,8 +19,8 @@ class CommentsController extends BaseController {
 		return json_encode(Comment::createUpdate());
 	}
 
-	public function getDelete($id) {
-		return OpenComments::delete($id);
+	public function getDelete($id = 0) {
+		return json_encode(OpenComments::delete($id));
 	}
 
 	public function postList()
