@@ -249,7 +249,7 @@ function loadComments() {
 
 			comments = result.comments;
 			if (comments != undefined && comments.length > 0) {
-				$('.comments-number').text(comments.length);
+				$('.comments-number').text(result.totalComments);
 
 				var source   = $('#comments-template').html();
 				var template = Handlebars.compile(source);

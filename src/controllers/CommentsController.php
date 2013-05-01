@@ -58,10 +58,11 @@ class CommentsController extends BaseController {
 		}
 
 		$results = array(
-			'comments'    => Comment::format($comments),
-			'message'     => $message,
-			'currentPage' => $page,
-			'totalPages'  => $totalPages, 
+			'comments'      => Comment::format($comments),
+			'message'       => $message,
+			'currentPage'   => $page,
+			'totalPages'    => $totalPages,
+			'totalComments' => $totalComments,
 		);
 		return json_encode($results);
 	}
