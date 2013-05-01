@@ -98,6 +98,18 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Set Comments Totals For Objects
+	|--------------------------------------------------------------------------
+	|
+	| If true, this will save the total number of comments to a "comments"
+	| field in the content type / table pairs declared in
+	| Allowed Content Types above.
+	|
+	*/
+	'setCommentTotals' => false,
+
+	/*
+	|--------------------------------------------------------------------------
 	| Comment Edit Limit (in seconds)
 	|--------------------------------------------------------------------------
 	|

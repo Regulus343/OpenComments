@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Lang;
@@ -94,8 +95,8 @@ class Comment extends Eloquent {
 			if (empty($item)) return $results;
 
 			//item is deleted; return error results
-			$item = $item->toArray();
-			if (isset($item['deleted']) && $item['deleted']) return $results;
+			$itemArray = (array) $item;
+			if (isset($itemArray['deleted']) && $itemArray['deleted']) return $results;
 		}
 
 		//if parent ID is set, make sure it exists for content item
@@ -200,6 +201,13 @@ class Comment extends Eloquent {
 			if (!$autoApproval) $results['message'] .= ' '.Lang::get('open-comments::messages.notYetApproved');
 		} else {
 			$results['message'] = Lang::get('open-comments::messages.successUpdated');
+		}
+
+		//set the comment totals for the model declared by the content type if feature is enabled
+		if ($allowedContentTypes && is_array($allowedContentTypes) && Config::get('open-comments::setCommentTotals')) {
+			$totalComments = static::where('content_id', '=', $contentID)->where('content_type', '=', $contentType)->count();
+
+			DB::table($allowedContentTypes[$contentType])->where('id', '=', $contentID)->update(array('comments' => $totalComments));
 		}
 
 		//log activity
