@@ -227,20 +227,24 @@ function loadComments() {
 
 	clearTimeout(editCommentCountdown);
 
+	var page = $('#comments-page').val();
+
 	$.ajax({
 		url: baseURL + 'comments/list',
 		type: 'post',
-		data: { 'content_id': contentID, 'content_type': contentType },
+		data: { 'content_id': contentID, 'content_type': contentType, 'page': page },
 		dataType: 'json',
 		success: function(result){
 			showCommentMessage('#message-comments', 'info', result.message, false);
 
 			if (result.totalPages > 0) {
 
+				/* Create and Set Up Pagination */
 				var commentsPagination = buildCommentsPagination(result.totalPages, result.currentPage);
-				$('.comments-pagination').html(commentsPagination).removeClass('hidden');
+				$('ul.comments-pagination').html(commentsPagination).removeClass('hidden');
+				setupCommentsPagination();
 			} else {
-				$('.comments-pagination').fadeOut();
+				$('ul.comments-pagination').fadeOut();
 			}
 
 			comments = result.comments;
@@ -263,13 +267,13 @@ function loadComments() {
 			/* Load WYSIHTML5 */
 			setupWysiwygEditors();
 
-			/* Setup Comment Form */
+			/* Set Up Comment Form */
 			setupCommentForm();
 
-			/* Setup Comment Actions */
+			/* Set Up Comment Actions */
 			setupCommentActions();
 
-			/* Setup Comment Edit Countdown */
+			/* Set Up Comment Edit Countdown */
 			setupEditCountdown();
 
 			/* Scroll to Comment */
@@ -291,16 +295,20 @@ function loadComments() {
 
 function buildCommentsPagination(totalPages, currentPage) {
 	var html = "";
-	if (currentPage == null) currentPage = 1;
+	if (currentPage == null || currentPage == "") currentPage = 1;
 	if (totalPages > 5) {
-		var startPage = p - 5;
+		var startPage = currentPage - 5;
 		if (startPage > 1) {
-			html += '<li><a href="" rel="1">&laquo;</a></li>';
+			html += '<li><a href="" rel="1">1x</a></li>';
+			html += '<li><a href="" rel="'+Math.round(startPage / 2)+'">...</a></li>';
 		} else {
 			startPage = 1;
 		}
 
-		for (p = startPage; p <= totalPages; p++) {
+		var endPage   = currentPage + 5;
+		if (endPage > totalPages) endPage = totalPages;
+
+		for (p = startPage; p <= endPage; p++) {
 			if (p == currentPage) {
 				html += '<li class="selected">';
 			} else {
@@ -308,8 +316,9 @@ function buildCommentsPagination(totalPages, currentPage) {
 			}
 			html += '<a href="" rel="'+p+'">'+p+'</a></li>';
 		}
-		if (p + 5 < totalPages) {
-			html += '<li><a href="" rel="'+totalPages+'">&raquo;</a></li>';
+		if (endPage < totalPages) {
+			html += '<li><a href="" rel="'+Math.round((totalPages - endPage) / 2)+'">...</a></li>';
+			html += '<li><a href="" rel="'+totalPages+'">'+totalPages+'</a></li>';
 		}
 	} else {
 		for (p=1; p <= totalPages; p++) {
@@ -322,6 +331,19 @@ function buildCommentsPagination(totalPages, currentPage) {
 		}
 	}
 	return html;
+}
+
+function setupCommentsPagination() {
+	$('ul.comments-pagination li a').each(function(){
+		$(this).on('click', function(e){
+			e.preventDefault();
+			$('ul.comments-pagination li').removeClass('selected');
+			$(this).parents('li').addClass('selected');
+			$('#comments-page').val($(this).text().trim());
+
+			loadComments();
+		});
+	});
 }
 
 function showCommentMessage(elementID, type, message, timeLimit) {

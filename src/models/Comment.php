@@ -146,13 +146,16 @@ class Comment extends Eloquent {
 		} else {
 
 			//ensure user has not posted a comment too soon after another one
-			if (! OpenComments::admin()) {
+			if (!$admin) {
 				$commentWaitTime = Config::get('open-comments::commentWaitTime');
 				if ($commentWaitTime) {
-					$lastComment = Cookie::get('lastComment');
-					if ($lastComment != "" && (time() - $lastComment) > $commentWaitTime) {
-						$results['message'] = Lang::get('open-comments::messages.errorWaitTime', array('number' => Config::get('open-comments::commentWaitTime')));
-						return $results;
+					$lastComment = static::where('user_id', '=', $userID)->orderBy('id', 'desc')->first();
+					if (!empty($lastComment)) {
+						$timeToWait = $commentWaitTime - (time() - strtotime($lastComment->created_at));
+						if ($timeToWait > 0) {
+							$results['message'] = Lang::get('open-comments::messages.errorWaitTime', array('number' => $commentWaitTime, 'time' => $timeToWait, 'secondPlural' => 'second'.($commentWaitTime == 1 ? '' : 's')));
+							return $results;
+						}
 					}
 				}
 			}

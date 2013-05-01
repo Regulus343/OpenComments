@@ -53,11 +53,12 @@
 	<div class="message info hidden"></div>
 </div>
 
-{{-- Ajax Loading Image --}}
-<div class="loading" id="loading-comments"></div>
-
 {{-- Top Pagination --}}
 <ul class="comments-pagination hidden"></ul>
+<input type="hidden" name="page" id="comments-page" value="" />
+
+{{-- Ajax Loading Image --}}
+<div class="loading" id="loading-comments"></div>
 
 {{-- Comments List --}}
 <ul id="comments" class="hidden"></ul>

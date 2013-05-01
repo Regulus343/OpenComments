@@ -31,9 +31,10 @@ class CommentsController extends BaseController {
 	{
 		$contentID   = Input::get('content_id');
 		$contentType = Input::get('content_type');
-		$page        = Input::get('page');
+		$page        = (int) Input::get('page');
+		if (!$page) $page = 1;
 
-		$comments    = Comment::compileList($contentID, $contentType, 1);
+		$comments    = Comment::compileList($contentID, $contentType, $page);
 
 		//get the total number of comments
 		$totalComments = Comment::where('content_id', '=', $contentID)->where('content_type', '=', $contentType);
@@ -47,9 +48,13 @@ class CommentsController extends BaseController {
 		//add a message
 		$message = Lang::get('open-comments::messages.noComments');
 		if (count($comments) > 0) {
-			$commentStr = Lang::get('open-comments::messages.comment');
-			if (count($comments) != 1) $commentStr = Str::plural($commentStr);
-			$message = Lang::get('open-comments::messages.numberComments', array('number' => count($comments), 'item' => $commentStr));
+			$start = $page * $commentsPerPage - $commentsPerPage + 1;
+			$end   = $start + $commentsPerPage - 1;
+			if ($end > $totalComments) $end = $totalComments;
+
+			$commentPlural = Lang::get('open-comments::messages.comment').($totalComments == 1 ? '' : 's');
+
+			$message = Lang::get('open-comments::messages.numberComments', array('start' => $start, 'end' => $end, 'total' => $totalComments, 'commentPlural' => $commentPlural));
 		}
 
 		$results = array(
