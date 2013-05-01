@@ -2,6 +2,8 @@
 
 input.grey, textarea.grey, select.grey { color: #777; }
 
+div#loading-comments { clear: both; margin: 18px auto; width: 32px; height: 32px; background: url('../img/loader.gif') no-repeat; }
+
 ul#comments, ul#posts { clear: both; margin: 0; list-style: none; }
 
 ul#comments li, ul#posts li {

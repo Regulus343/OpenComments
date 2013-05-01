@@ -151,7 +151,7 @@ return array(
 	| area to allow the user to page through all comments.
 	|
 	*/
-	'commentsPerPage' => 15,
+	'commentsPerPage' => 30,
 
 	/*
 	|--------------------------------------------------------------------------

@@ -222,8 +222,8 @@ function scrollToElement(element) {
 }
 
 function loadComments() {
-	$('#loading-comments').fadeIn('fast');
-	$('#comments').fadeOut('fast');
+	$('#loading-comments').css('height', $('#comments').height()).fadeIn('fast');
+	$('#comments').hide();
 
 	clearTimeout(editCommentCountdown);
 
@@ -258,8 +258,8 @@ function loadComments() {
 
 				hideCommentMessage('#add-comment', 'success');
 
+				$('#comments').html(html).removeClass('hidden').show();
 				$('#loading-comments').hide();
-				$('#comments').html(html).removeClass('hidden').slideDown('fast');
 			} else {
 				$('#loading-comments').fadeOut('fast');
 			}
@@ -346,6 +346,10 @@ function setupCommentsPagination() {
 			$('ul.comments-pagination li').removeClass('selected');
 			$(this).parents('li').addClass('selected');
 			$('#comments-page').val($(this).attr('rel'));
+
+			if ($(this).parents('ul').attr('id') == "comments-pagination-top") {
+				setTimeout("scrollToElement('#"+$(this).parents('ul').attr('id')+"');", 250);
+			}
 
 			loadComments();
 		});

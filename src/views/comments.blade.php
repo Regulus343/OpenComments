@@ -54,7 +54,7 @@
 </div>
 
 {{-- Top Pagination --}}
-<ul class="comments-pagination hidden"></ul>
+<ul class="comments-pagination hidden" id="comments-pagination-top"></ul>
 <input type="hidden" name="page" id="comments-page" value="" />
 
 {{-- Ajax Loading Image --}}
