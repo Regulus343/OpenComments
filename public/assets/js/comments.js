@@ -295,6 +295,7 @@ function loadComments() {
 
 function buildCommentsPagination(totalPages, currentPage) {
 	var html = "";
+	if (totalPages == 1) return html;
 	if (currentPage == null || currentPage == "") currentPage = 1;
 	if (totalPages > 5) {
 		var startPage = currentPage - 4;
