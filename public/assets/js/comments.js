@@ -297,15 +297,18 @@ function buildCommentsPagination(totalPages, currentPage) {
 	var html = "";
 	if (currentPage == null || currentPage == "") currentPage = 1;
 	if (totalPages > 5) {
-		var startPage = currentPage - 5;
+		var startPage = currentPage - 4;
 		if (startPage > 1) {
-			html += '<li><a href="" rel="1">1x</a></li>';
-			html += '<li><a href="" rel="'+Math.round(startPage / 2)+'">...</a></li>';
+			var halfwayPage = 1 + Math.floor(startPage / 2);
+			html += '<li><a href="" rel="1">1</a></li>';
+			if (halfwayPage > 2) {
+				html += '<li><a href="" rel="'+halfwayPage+'">...</a></li>';
+			}
 		} else {
 			startPage = 1;
 		}
 
-		var endPage   = currentPage + 5;
+		var endPage   = currentPage + 4;
 		if (endPage > totalPages) endPage = totalPages;
 
 		for (p = startPage; p <= endPage; p++) {
@@ -317,7 +320,10 @@ function buildCommentsPagination(totalPages, currentPage) {
 			html += '<a href="" rel="'+p+'">'+p+'</a></li>';
 		}
 		if (endPage < totalPages) {
-			html += '<li><a href="" rel="'+Math.round((totalPages - endPage) / 2)+'">...</a></li>';
+			var halfwayPage = endPage + Math.round((totalPages - endPage) / 2);
+			if (halfwayPage < totalPages) {
+				html += '<li><a href="" rel="'+halfwayPage+'">...</a></li>';
+			}
 			html += '<li><a href="" rel="'+totalPages+'">'+totalPages+'</a></li>';
 		}
 	} else {
@@ -339,7 +345,7 @@ function setupCommentsPagination() {
 			e.preventDefault();
 			$('ul.comments-pagination li').removeClass('selected');
 			$(this).parents('li').addClass('selected');
-			$('#comments-page').val($(this).text().trim());
+			$('#comments-page').val($(this).attr('rel'));
 
 			loadComments();
 		});
