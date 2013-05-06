@@ -434,7 +434,7 @@ function setupCommentActions() {
 		var label = $(this).text().trim();
 
 		if (label == commentLabels.cancelReply && ! $(this).hasClass('reply-to-parent')) {
-			$(this).text(commentLabels.reply);
+			$(this).children('span').text(commentLabels.reply);
 			$('#reply'+commentID).slideUp(commentSlideTime);
 		} else if (label == commentLabels.reply || label == commentLabels.replyToParent) {
 			$('.add-reply').slideUp(commentSlideTime);
@@ -442,7 +442,7 @@ function setupCommentActions() {
 			resetReplyButtonText();
 
 			if (label == commentLabels.reply) {
-				$(this).text(commentLabels.cancelReply);
+				$(this).children('span').text(commentLabels.cancelReply);
 			} else {
 				$('#comment'+commentID+' .button-reply').text(commentLabels.cancelReply);
 			}
@@ -460,14 +460,14 @@ function setupCommentActions() {
 		var label     = $(this).text().trim();
 
 		if (label == commentLabels.cancelEdit) {
-			$(this).text(commentLabels.edit);
+			$(this).children('span').text(commentLabels.edit);
 
 			$('#comment'+commentID+' .edit-comment').slideUp(commentSlideTime);
 		} else {
-			$('#comments .button-edit').text(commentLabels.edit);
+			$('#comments .button-edit span').text(commentLabels.edit);
 			$('#comments .edit-comment').slideUp(commentSlideTime);
 
-			$(this).text(commentLabels.cancelEdit);
+			$(this).children('span').text(commentLabels.cancelEdit);
 
 			//set edit comment text field to comment text
 			var text = $('#comment'+commentID+' .comment .text').html();
@@ -533,9 +533,15 @@ function setupCommentActions() {
 					if (result.resultType == "Success") {
 						if (result.approved) {
 							$('#comment'+commentID).removeClass('unapproved');
+							$('#comment'+commentID+' .button-approve .icon')
+								.removeClass('icon-plus-sign')
+								.addClass('icon-minus-sign');
 							$('#comment'+commentID+' .button-approve').text(commentLabels.unapprove);
 						} else {
 							$('#comment'+commentID).addClass('unapproved');
+							$('#comment'+commentID+' .button-approve .icon')
+								.removeClass('icon-minus-sign')
+								.addClass('icon-plus-sign');
 							$('#comment'+commentID+' .button-approve').text(commentLabels.approve);
 						}
 						showCommentMessage('#comment'+commentID+' .top-messages', 'success', result.message, true);

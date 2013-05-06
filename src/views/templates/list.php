@@ -52,14 +52,14 @@
 					{{#if edit}}
 
 						<li class="action-delete">
-							<a href="" class="button button-delete button-delete-comment" rel="{{id}}">
-								<?php echo Lang::get('open-comments::labels.delete'); ?>
+							<a href="" class="btn button button-delete button-delete-comment" rel="{{id}}">
+								<div class="icon icon-remove"></div><span><?php echo Lang::get('open-comments::labels.delete'); ?></span>
 							</a>
 						</li>
 
 						<li class="action-edit">
-							<a href="" class="button button-edit button-edit-comment" rel="{{id}}">
-								<?php echo Lang::get('open-comments::labels.edit'); ?>
+							<a href="" class="btn button button-edit button-edit-comment" rel="{{id}}">
+								<div class="icon icon-edit"></div><span><?php echo Lang::get('open-comments::labels.edit'); ?></span>
 							</a>
 						</li>
 
@@ -68,11 +68,11 @@
 					{{#if approve}}
 
 						<li class="action-approve">
-							<a href="" class="button button-approve button-approve-comment" rel="{{id}}">
+							<a href="" class="btn button button-approve button-approve-comment" rel="{{id}}">
 								{{#unless approved}}
-									<?php echo Lang::get('open-comments::labels.approve'); ?>
+									<div class="icon icon-plus-sign"></div><span><?php echo Lang::get('open-comments::labels.approve'); ?></span>
 								{{else}}
-									<?php echo Lang::get('open-comments::labels.unapprove'); ?>
+									<div class="icon icon-minus-sign"></div><span><?php echo Lang::get('open-comments::labels.unapprove'); ?></span>
 								{{/unless}}
 							</a>
 						</li>
@@ -82,16 +82,16 @@
 					{{#if parent}}
 
 						<li class="action-reply">
-							<a href="" class="button button-reply button-reply-comment" rel="{{id}}">
-								<?php echo Lang::get('open-comments::labels.reply'); ?>
+							<a href="" class="btn button button-reply button-reply-comment" rel="{{id}}">
+								<div class="icon icon-share-alt"></div><span><?php echo Lang::get('open-comments::labels.reply'); ?></span>
 							</a>
 						</li>
 
 					{{else}}
 
 						<li class="action-reply">
-							<a href="" class="button button-reply button-reply-comment reply-to-parent" rel="{{parent_id}}">
-								<?php echo Lang::get('open-comments::labels.replyToParent'); ?>
+							<a href="" class="btn button button-reply button-reply-comment reply-to-parent" rel="{{parent_id}}">
+								<div class="icon icon-share-alt"></div><span><?php echo Lang::get('open-comments::labels.replyToParent'); ?></span>
 							</a>
 						</li>
 

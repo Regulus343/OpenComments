@@ -2,7 +2,14 @@
 
 input.grey, textarea.grey, select.grey { color: #777; }
 
-div#loading-comments { clear: both; margin: 18px auto; width: 32px; height: 32px; background: url('../img/loader.gif') no-repeat; }
+div#loading-comments {
+	clear: both;
+	margin: 18px auto;
+	width: 32px;
+	height: 32px;
+	min-height: 32px;
+	background: url('../img/loader.gif') no-repeat;
+}
 
 ul#comments, ul#posts { clear: both; margin: 0; list-style: none; }
 
@@ -166,7 +173,12 @@ ul#comments li div.date-posted, ul#posts li div.date-posted {
 	position: absolute; right: 12px; bottom: -10px; color: #777; font-size: 11px; text-shadow: 0 1px 3px #000;
 }
 
-ul#comments li h1, ul#posts li h1 { margin-bottom: 4px; padding-left: 0; background: none; font-size: 16px; }
+ul#comments li h1, ul#posts li h1 {
+	margin-bottom: 4px; padding-left: 0;
+	background: none;
+	font-size: 16px;
+	line-height: auto;
+}
 
 ul#comments li li, ul#posts li li, ul#comments li li:hover, ul#posts li li:hover {
 	background: none;
@@ -184,7 +196,7 @@ ul#comments li ul.actions li, ul#posts li ul.actions li {
 	box-shadow: none;
 }
 ul#comments li ul.actions a.button, ul#posts li ul.actions a.button {
-	padding: 2px 7px;
+	padding: 5px 7px;
 	max-width: 600px;
 	font-size: 12px;
 }
