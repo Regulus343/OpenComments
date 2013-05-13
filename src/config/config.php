@@ -89,7 +89,7 @@ return array(
 	| It is recommended that you declare a list of allowed content types with
 	| their corresponding tables to prevent users from getting invalid
 	| comments in your database. In the below example, "BlogArticle" is the
-	| content type and "blog_entries" is the database table:
+	| content type and "blog_articles" is the database table:
 	|
 	|     array('BlogArticle' => 'blog_articles')
 	|
