@@ -102,7 +102,7 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	| If true, this will save the total number of comments to a "comments"
-	| field in the content type / table pairs declared in
+	| field in the content type (model name) / table pairs declared in
 	| Allowed Content Types above.
 	|
 	*/
@@ -113,7 +113,7 @@ return array(
 	| Comment Edit Limit (in seconds)
 	|--------------------------------------------------------------------------
 	|
-	| The comment editing limit in secionds. By default, users may edit or
+	| The comment editing limit in seconds. By default, users may edit or
 	| delete their comment for 180 seconds after initial post.
 	|
 	*/
