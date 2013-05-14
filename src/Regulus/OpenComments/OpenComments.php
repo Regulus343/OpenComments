@@ -1,11 +1,11 @@
 <?php namespace Regulus\OpenComments;
 
 /*----------------------------------------------------------------------------------------------------------
-	OpenForum
+	OpenComments
 		A light, effective user comments composer package that is easy to configure and implement.
 
 		created by Cody Jassman
-		last updated on March 27, 2013
+		last updated on May 27, 2013
 ----------------------------------------------------------------------------------------------------------*/
 
 use Illuminate\Support\Facades\Config;
