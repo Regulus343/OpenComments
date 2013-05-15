@@ -112,8 +112,8 @@ class OpenComments {
 
 		$comment = Comment::find($id);
 		if (!empty($comment)) {
-			$userID = OpenComments::userID();
-			$admin  = OpenComments::admin();
+			$userID = static::userID();
+			$admin  = static::admin();
 
 			if ($admin || ($userID == $comment->user_id && strtotime($comment->created_at) >= strtotime('-'.Config::get('open-comments::commentWaitTime').' seconds'))) {
 				if ($admin) {
@@ -159,7 +159,7 @@ class OpenComments {
 			'approved'   => false,
 		);
 
-		$admin  = OpenComments::admin();
+		$admin  = static::admin();
 		if (!$admin) return $results;
 
 		$comment = Comment::find($id);
