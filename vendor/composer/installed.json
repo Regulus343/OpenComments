@@ -7,12 +7,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/support.git",
-            "reference": "3416ba8aa0ceb44e80a2c53d51c8eac11716b3eb"
+            "reference": "2d5df48bc75ced96fbd71821a1ea39d317063022"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/support/zipball/3416ba8aa0ceb44e80a2c53d51c8eac11716b3eb",
-            "reference": "3416ba8aa0ceb44e80a2c53d51c8eac11716b3eb",
+            "url": "https://api.github.com/repos/illuminate/support/zipball/2d5df48bc75ced96fbd71821a1ea39d317063022",
+            "reference": "2d5df48bc75ced96fbd71821a1ea39d317063022",
             "shasum": ""
         },
         "require": {
@@ -23,7 +23,7 @@
             "patchwork/utf8": "1.1.*",
             "phpunit/phpunit": "3.7.*"
         },
-        "time": "2013-05-12 01:10:00",
+        "time": "2013-05-16 23:11:19",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -123,5 +123,48 @@
             }
         ],
         "description": "A composer package that assigns section names & titles to pages and simplifies creation of breadcrumb trails and is useful for other components that require page identifying information such as menus that highlight the current location."
+    },
+    {
+        "name": "regulus/tetra-text",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Regulus343/TetraText.git",
+            "reference": "ac89dc23e344a03c9c2b93b8f8aea6a5000c0617"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Regulus343/TetraText/zipball/ac89dc23e344a03c9c2b93b8f8aea6a5000c0617",
+            "reference": "ac89dc23e344a03c9c2b93b8f8aea6a5000c0617",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "4.0.x",
+            "nick4fake/htmlpurifier": "dev-master",
+            "php": ">=5.3.0"
+        },
+        "time": "2013-05-18 22:05:51",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "src/migrations"
+            ],
+            "psr-0": {
+                "Regulus\\TetraText": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Cody Jassman",
+                "email": "me@codyjassman.com"
+            }
+        ],
+        "description": "A small text/string formatting composer package that formats phone numbers, numeric values, money values and more."
     }
 ]
