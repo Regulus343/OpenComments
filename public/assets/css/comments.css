@@ -11,9 +11,9 @@ div#loading-comments {
 	background: url('../img/loader.gif') no-repeat;
 }
 
-ul#comments, ul#posts { clear: both; margin: 0; list-style: none; }
+ul#comments { clear: both; margin: 0; list-style: none; }
 
-ul#comments li, ul#posts li {
+ul#comments li {
 	position: relative;
 	clear: both;
 	margin: 0 0 12px 0;
@@ -41,7 +41,7 @@ ul#comments li, ul#posts li {
 
 	box-shadow: -3px 0 8px #080808;
 }
-ul#comments li:hover, ul#posts li:hover {
+ul#comments li:hover {
 	background-color: #222;
 
 	background-image: -ms-linear-gradient(top, #222 0, #090909 160px); /* IE */
@@ -56,7 +56,7 @@ ul#comments li:hover, ul#posts li:hover {
 	border-color: #ccc;
 }
 
-ul#comments li.active-user, ul#posts li.active-user {
+ul#comments li.active-user {
 	background-color: #333;
 
 	background-image: -ms-linear-gradient(top, #333 0, #111 160px); /* IE */
@@ -73,19 +73,19 @@ ul#comments li.active-user, ul#posts li.active-user {
 	box-shadow: -3px 0 8px #000;
 }
 
-ul#comments li.editable, ul#posts li.editable {
+ul#comments li.editable {
 	border-color: #f5eb11;
 }
 
-ul#comments li.unapproved, ul#posts li.unapproved {
+ul#comments li.unapproved {
 	border: 1px dashed #555;
 }
 
-ul#comments li.deleted, ul#posts li.deleted {
+ul#comments li.deleted {
 	border-color: #c00;
 }
 
-ul#comments li div.info, ul#posts li div.info {
+ul#comments li div.info {
 	position: absolute;
 	top: 12px; left: 8px;
 	margin: 0 12px 0 0;
@@ -95,7 +95,7 @@ ul#comments li div.info, ul#posts li div.info {
 	border-right: 1px solid #333;
 }
 
-ul#comments li div.info ul.info, ul#posts li div.info ul.info {
+ul#comments li div.info ul.info {
 	margin: 0 3px 7px 0;
 	padding: 4px 0 4px 4px;
 	width: 170px;
@@ -104,7 +104,7 @@ ul#comments li div.info ul.info, ul#posts li div.info ul.info {
 	box-shadow: none;
 }
 
-ul#comments li div.info ul.info li, ul#posts li div.info ul.info li {
+ul#comments li div.info ul.info li {
 	display: block;
 	margin-bottom: 2px;
 	height: 14px;
@@ -114,33 +114,33 @@ ul#comments li div.info ul.info li, ul#posts li div.info ul.info li {
 	font-size: 11px;
 	box-shadow: none;
 }
-ul#comments li div.info ul.info li *, ul#posts li div.info ul.info li * {
+ul#comments li div.info ul.info li * {
 	line-height: auto;
 }
 
-ul#comments li div.info ul.info li label, ul#posts li div.info ul.info li label {
+ul#comments li div.info ul.info li label {
 	display: inline-block;
 	width: 76px;
 }
 
-ul#comments li a.display-pic, ul#posts li a.display-pic {
+ul#comments li a.display-pic {
 	clear: left;
 	float: none;
 	display: block;
 	margin: 0 16px 0 0;
 }
 
-ul#comments li a.display-pic img, ul#posts li a.display-pic img {
+ul#comments li a.display-pic img {
 	width: 80px;
 	border: 1px solid #666;
 	-moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px;
 }
 
-ul#comments li a.display-pic:hover img, ul#posts li a.display-pic:hover img {
+ul#comments li a.display-pic:hover img {
 	border-color: #888;
 }
 
-ul#comments li div.comment, ul#posts li div.content {
+ul#comments li div.comment {
 	position: relative;
 	float: left;
 	margin: 0 0 16px 190px;
@@ -153,7 +153,7 @@ ul#comments li div.comment, ul#posts li div.content {
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 }
-ul#comments li div.comment div.text, ul#posts li div.content div.text {
+ul#comments li div.comment div.text {
 	margin: 16px 12px;
 	min-height: 80px;
 	max-height: 760px;
@@ -169,41 +169,41 @@ ul#comments li div.comment li {
 }
 
 ul#comments li.sub div.comment { width: 616px; }
-ul#comments li div.date-posted, ul#posts li div.date-posted {
+ul#comments li div.date-posted {
 	position: absolute; right: 12px; bottom: -10px; color: #777; font-size: 11px; text-shadow: 0 1px 3px #000;
 }
 
-ul#comments li h1, ul#posts li h1 {
+ul#comments li h1 {
 	margin-bottom: 4px; padding-left: 0;
 	background: none;
 	font-size: 16px;
 	line-height: auto;
 }
 
-ul#comments li li, ul#posts li li, ul#comments li li:hover, ul#posts li li:hover {
+ul#comments li li, ul#comments li li:hover {
 	background: none;
 	border: none;
 }
 
-ul#comments li div.comment ul, ul#comments li div.comment ol, ul#posts li div.content ul, ul#posts li div.content ol { margin-left: 24px; }
-ul#comments li div.comment ul, ul#posts li div.content ul { list-style-type: disc; }
+ul#comments li div.comment ul, ul#comments li div.comment ol { margin-left: 24px; }
+ul#comments li div.comment ul { list-style-type: disc; }
 
-ul#comments li ul.actions, ul#posts li ul.actions { margin: 0; float: right; max-width: 600px; list-style: none; }
-ul#comments li ul.actions li, ul#posts li ul.actions li {
+ul#comments li ul.actions { margin: 0; float: right; max-width: 600px; list-style: none; }
+ul#comments li ul.actions li {
 	display: inline-block;
 	margin: 0 !important;
 	padding: 0 0 0 2px;
 	box-shadow: none;
 }
-ul#comments li ul.actions a.button, ul#posts li ul.actions a.button {
+ul#comments li ul.actions a.button {
 	padding: 5px 7px;
 	max-width: 600px;
 	font-size: 12px;
 }
 
-div.add-comment, div.add-post { margin: 18px 0; padding: 10px; border-top: 1px solid #444; }
-div.add-comment p, div.add-post p { margin: 0; }
-div.add-comment p.login, div.add-post p.login { font-style: italic; text-align: right; }
+div.add-comment { margin: 18px 0; padding: 10px; border-top: 1px solid #444; }
+div.add-comment p { margin: 0; }
+div.add-comment p.login { font-style: italic; text-align: right; }
 
 form.form-comment textarea { padding: 12px; width: 640px; height: 160px; }
 
@@ -214,12 +214,12 @@ ul#comments li form.form-comment textarea { width: 544px; }
 ul#comments li div.edit-comment form.form-comment textarea { width: 664px; }
 ul#comments li.sub div.edit-comment form.form-comment textarea { width: 570px; }
 
-ul#comments li div.add-comment, ul#posts li div.add-post { clear: left; margin: 12px 0 0 190px; }
-ul#comments li.reply div.add-comment, ul#posts li.reply div.add-post { margin-top: 0; border-top: none; }
+ul#comments li div.add-comment { clear: left; margin: 12px 0 0 190px; }
+ul#comments li.reply div.add-comment { margin-top: 0; border-top: none; }
 
 ul.wysihtml5-toolbar { clear: both; }
 
-ul#comments li ul.wysihtml5-toolbar > li, ul#posts li ul.wysihtml5-toolbar > li {
+ul#comments li ul.wysihtml5-toolbar > li {
 	display: list-item;
 	clear: none;
 	float: left;
@@ -227,8 +227,8 @@ ul#comments li ul.wysihtml5-toolbar > li, ul#posts li ul.wysihtml5-toolbar > li 
 	margin: 0 5px 10px 0;
 }
 
-ul#comments li .message, ul#posts li .message { clear: both; margin: 12px 0 12px 190px; }
-ul#comments li .edit-comment .message, ul#posts li .edit-comment .message { margin-left: 0; }
+ul#comments li .message { clear: both; margin: 12px 0 12px 190px; }
+ul#comments li .edit-comment .message { margin-left: 0; }
 
 ul#comments li div.edit-countdown { clear: left; padding: 0 2px 10px 2px; font-size: 14px; color: #f5eb11; text-align: right; }
 ul#comments li div.edit-countdown span.number { font-weight: bold; }

@@ -20,7 +20,7 @@ return array(
 	'confirmDelete'           => 'Are you sure you want to delete this comment? This action cannot be undone.',
 	'confirmDeleteTitle'      => 'Delete Comment',
 
-	'confirmUndelete'         => 'Are you sure you want to undelete this comment? This action cannot be undone.',
+	'confirmUndelete'         => 'Are you sure you want to undelete this comment?',
 	'confirmUndeleteTitle'    => 'Undelete Comment',
 
 	'confirmApprove'          => 'Are you sure you want to approve this comment?',
