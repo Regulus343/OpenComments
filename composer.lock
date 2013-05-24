@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "2d5df48bc75ced96fbd71821a1ea39d317063022"
+                "reference": "e09f68ae78aab398fd3c8e8f814df89b03c2a817"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/2d5df48bc75ced96fbd71821a1ea39d317063022",
-                "reference": "2d5df48bc75ced96fbd71821a1ea39d317063022",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/e09f68ae78aab398fd3c8e8f814df89b03c2a817",
+                "reference": "e09f68ae78aab398fd3c8e8f814df89b03c2a817",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                 }
             ],
             "description": "Various utilities and support functions.",
-            "time": "2013-05-16 23:11:19"
+            "time": "2013-05-19 03:05:01"
         },
         {
             "name": "nick4fake/htmlpurifier",
@@ -90,12 +90,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Regulus343/SolidSite.git",
-                "reference": "16ba53c485a67a4b0cf6bdc9c6a8029e400653d4"
+                "reference": "1030e196bc69e3be6762b9485722f12488def98a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Regulus343/SolidSite/zipball/16ba53c485a67a4b0cf6bdc9c6a8029e400653d4",
-                "reference": "16ba53c485a67a4b0cf6bdc9c6a8029e400653d4",
+                "url": "https://api.github.com/repos/Regulus343/SolidSite/zipball/1030e196bc69e3be6762b9485722f12488def98a",
+                "reference": "1030e196bc69e3be6762b9485722f12488def98a",
                 "shasum": ""
             },
             "require": {
@@ -122,7 +122,7 @@
                 }
             ],
             "description": "A composer package that assigns section names & titles to pages and simplifies creation of breadcrumb trails and is useful for other components that require page identifying information such as menus that highlight the current location.",
-            "time": "2013-04-01 21:41:55"
+            "time": "2013-05-24 03:31:07"
         },
         {
             "name": "regulus/tetra-text",
@@ -130,12 +130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Regulus343/TetraText.git",
-                "reference": "ac89dc23e344a03c9c2b93b8f8aea6a5000c0617"
+                "reference": "b298e5b46be9518f92c4dbf12af9b1eab1f7be08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Regulus343/TetraText/zipball/ac89dc23e344a03c9c2b93b8f8aea6a5000c0617",
-                "reference": "ac89dc23e344a03c9c2b93b8f8aea6a5000c0617",
+                "url": "https://api.github.com/repos/Regulus343/TetraText/zipball/b298e5b46be9518f92c4dbf12af9b1eab1f7be08",
+                "reference": "b298e5b46be9518f92c4dbf12af9b1eab1f7be08",
                 "shasum": ""
             },
             "require": {
@@ -163,7 +163,7 @@
                 }
             ],
             "description": "A small text/string formatting composer package that formats phone numbers, numeric values, money values and more.",
-            "time": "2013-05-18 22:05:51"
+            "time": "2013-05-24 00:55:13"
         }
     ],
     "packages-dev": [
