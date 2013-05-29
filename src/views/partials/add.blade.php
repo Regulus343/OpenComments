@@ -23,6 +23,7 @@
 
 		{{-- Add/Edit Comment Form --}}
 		{{ Form::open('comments/create', 'post', array('class' => 'form-comment')) }}
+
 			<label for="comment-new"><?php echo Lang::get('open-comments::labels.addComment') ?>:</label>
 			<textarea name="comment" class="field-comment wysiwyg" id="comment-new" placeholder="<?php echo Lang::get('open-comments::labels.addCommentPlaceholder') ?>"></textarea>
 
@@ -35,6 +36,7 @@
 				<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::labels.addComment') ?>" />
 				<div class="clear"></div>
 			</div>
+
 		{{ Form::close() }}
 
 	</div><!-- /add-comment -->

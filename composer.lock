@@ -130,12 +130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Regulus343/TetraText.git",
-                "reference": "b298e5b46be9518f92c4dbf12af9b1eab1f7be08"
+                "reference": "52ae18b959d8dd7344e58b0024fcdd7efa9dcec8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Regulus343/TetraText/zipball/b298e5b46be9518f92c4dbf12af9b1eab1f7be08",
-                "reference": "b298e5b46be9518f92c4dbf12af9b1eab1f7be08",
+                "url": "https://api.github.com/repos/Regulus343/TetraText/zipball/52ae18b959d8dd7344e58b0024fcdd7efa9dcec8",
+                "reference": "52ae18b959d8dd7344e58b0024fcdd7efa9dcec8",
                 "shasum": ""
             },
             "require": {
@@ -163,7 +163,7 @@
                 }
             ],
             "description": "A small text/string formatting composer package that formats phone numbers, numeric values, money values and more.",
-            "time": "2013-05-24 00:55:13"
+            "time": "2013-05-24 04:01:30"
         }
     ],
     "packages-dev": [

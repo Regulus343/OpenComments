@@ -80,8 +80,8 @@ class Comment extends Eloquent {
 		$contentType = trim(Input::get('content_type'));
 		$id          = (int) trim(Input::get('comment_id'));
 		$parentID    = (int) trim(Input::get('parent_id'));
-		$editLimit   = date('Y-m-d H:i:s', strtotime('-'.Config::get('open-comments::editLimit').' minutes'));
 		$commentText = trim(Input::get('comment'));
+		$editLimit   = date('Y-m-d H:i:s', strtotime('-'.Config::get('open-comments::editLimit').' minutes'));
 
 		//if allowedContentTypes config is set, require the content type to be specified and the item to exist in the database
 		$allowedContentTypes = Config::get('open-comments::allowedContentTypes');
@@ -127,16 +127,16 @@ class Comment extends Eloquent {
 			//if editing, ensure user has sufficient privileges to edit
 			if (!$admin) {
 				$commentEditable = Comment::where('id', '=', $id)
-											->where('user_id', '=', OpenComments::userID())
-											->where('created_at', '>=', $editLimit)
-											->count();
+										->where('user_id', '=', OpenComments::userID())
+										->where('created_at', '>=', $editLimit)
+										->count();
 				if (!$commentEditable) {
 					$results['message'] = Lang::get('open-comments::messages.errorUneditable');
 					return $results;
 				}
 			}
 
-			if (OpenComments::admin()) {
+			if ($admin) {
 				$comment = static::find($id);
 			} else {
 				$comment = static::where('id', '=', $id)->where('user_id', '=', $userID)->first();
