@@ -19,3 +19,6 @@ Route::filter('ajax', function()
 {
 	if (!Request::ajax()) exit;
 });
+
+/* Set Ajax Filter */
+Route::when('comments/*', 'ajax');

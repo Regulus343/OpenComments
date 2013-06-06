@@ -15,6 +15,3 @@ use Illuminate\Support\Facades\Route;
 
 /* Map Controller */
 Route::controller('comments', 'Regulus\OpenComments\CommentsController');
-
-/* Set Ajax Filter */
-Route::when('comments/*', 'ajax');

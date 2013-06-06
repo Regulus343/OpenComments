@@ -37,16 +37,6 @@ class Comment extends Eloquent {
 	public static $commentOrder = false;
 
 	/**
-	 * Can be used to fetch the content that the comments are attached to.
-	 *
-	 * @return object
-	 */
-	public function content()
-	{
-		return $this->morphTo();
-	}
-
-	/**
 	 * Gets the creator of the comment.
 	 *
 	 * @return object
@@ -54,6 +44,16 @@ class Comment extends Eloquent {
 	public function creator()
 	{
 		return $this->belongsTo(Config::get('auth.model'), 'user_id');
+	}
+
+	/**
+	 * Can be used to fetch the content that the comments are attached to.
+	 *
+	 * @return object
+	 */
+	public function content()
+	{
+		return $this->morphTo();
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Comment extends Eloquent {
 			//if editing, ensure user has sufficient privileges to edit
 			if (!$admin) {
 				$commentEditable = Comment::where('id', '=', $id)
-										->where('user_id', '=', OpenComments::userID())
+										->where('user_id', '=', $userID)
 										->where('created_at', '>=', $editLimit)
 										->count();
 				if (!$commentEditable) {
@@ -145,7 +145,6 @@ class Comment extends Eloquent {
 			if (empty($comment)) return $results;
 
 		} else {
-
 			//ensure user has not posted a comment too soon after another one
 			if (!$admin) {
 				$commentWaitTime = Config::get('open-comments::commentWaitTime');
@@ -160,9 +159,10 @@ class Comment extends Eloquent {
 					}
 				}
 			}
+		}
 
+		if ($results['action'] == "Create") {
 			$comment = new static;
-
 			$comment->user_id = $userID;
 
 			$autoApproval = Config::get('open-comments::commentAutoApproval');
@@ -170,14 +170,13 @@ class Comment extends Eloquent {
 				$comment->approved    = true;
 				$comment->approved_at = date('Y-m-d H:i:s');
 			}
-		}
 
-		if ($results['action'] == "Create") {
 			$comment->content_id   = $contentID;
 			$comment->content_type = $contentType;
 			$comment->parent_id    = $parentID;
 			$comment->ip_address   = Request::getClientIp();
 		}
+
 		$comment->comment = $commentText;
 		$comment->save();
 
@@ -324,7 +323,7 @@ class Comment extends Eloquent {
 			if (Session::get('lastComment') != $commentArray['id'] || $admin)
 				$commentArray['edit_time'] = 0;
 
-			if ($commentArray['edit_time'] OR $admin) {
+			if ($commentArray['edit_time'] || $admin) {
 				$commentArray['edit'] = true;
 			} else {
 				$commentArray['edit'] = false;
@@ -333,7 +332,7 @@ class Comment extends Eloquent {
 			$commentArray['approve']  = ! $autoApproval;
 			$commentArray['approved'] = (bool) $commentArray['approved'];
 
-			$commentArray['deleted'] = (bool) $commentArray['deleted'];
+			$commentArray['deleted']  = (bool) $commentArray['deleted'];
 
 			if ($commentArray['user_id'] == $activeUser['id']) {
 				$commentArray['active_user_post'] = true;

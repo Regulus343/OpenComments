@@ -1,10 +1,10 @@
 var comments;
 var commentMessage;
-var commentMessageTimeLimit = 6000;
 var commentMessageTimeout;
-var commentScroll = 0;
-var commentScrollTime = 500;
-var commentSlideTime = 250;
+var commentMessageTimeLimit = 6000;
+var commentScroll           = 0;
+var commentScrollTime       = 500;
+var commentSlideTime        = 250;
 
 function scrollToElement(element) {
 	$('html, body').animate({ scrollTop: $(element).offset().top - 7 }, commentScrollTime);
@@ -370,7 +370,6 @@ function commentCountdown(element) {
 			$(element).text(newCount);
 		} else {
 			var singularText = $(element).parents('.edit-countdown').html().replace('seconds', 'second').replace((newCount + 1), newCount);
-			console.log(singularText);
 			$(element).parents('.edit-countdown').html(singularText);
 		}
 		editCommentCountdown = setTimeout("commentCountdown('"+element+"')", 1000);
