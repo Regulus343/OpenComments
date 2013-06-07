@@ -1,7 +1,7 @@
 <script id="comments-template" type="text/x-handlebars-template">
 	{{#each comments}}
 
-		<li id="comment{{id}}" class="{{#if active_user_post}}active-user{{/if}}{{#unless parent}} sub{{/unless}}{{#if edit_time}} editable{{/if}}{{#unless approved}} unapproved{{/unless}}{{#if deleted}} deleted{{/if}}" data-parent-id="{{parent_id}}">
+		<li id="comment{{id}}" class="{{#if active_user_comment}}active-user{{/if}}{{#unless parent}} sub{{/unless}}{{#if edit_time}} editable{{/if}}{{#unless approved}} unapproved{{/unless}}{{#if deleted}} deleted{{/if}}" data-parent-id="{{parent_id}}">
 
 			<!-- Messages -->
 			<div class="top-messages">
@@ -18,8 +18,13 @@
 			<div class="info">
 				<h1><a href="" class="profile-popup" rel="{{user_id}}">{{user}}</a></h1>
 				<ul class="info">
-					<li><label>Role:</label> <span>{{user_role}}</span></li>
-					<li><label>Member Since:</label> <span>{{user_since}}</span></li>
+					<li>
+						<label>Role:</label>
+						<span>{{user_role}}</span>
+					</li><li>
+						<label>Member Since:</label>
+						<span>{{user_since}}</span>
+					</li>
 				</ul>
 
 				<a href="" class="display-pic profile-popup" rel="{{user_id}}"><img src="{{user_image}}" alt="" /></a>
@@ -45,7 +50,7 @@
 			{{#if logged_in}}
 
 				{{#if edit_time}}
-					<div class="edit-countdown">You may edit or delete your comment for <span class="number">{{edit_time}}</span> more seconds</div>
+					<div class="edit-countdown">{{{edit_countdown}}}</div>
 				{{/if}}
 
 				<ul class="actions">
@@ -53,13 +58,13 @@
 
 						<li class="action-delete">
 							<a href="" class="btn button button-delete button-delete-comment" rel="{{id}}">
-								<div class="icon icon-remove"></div><span><?php echo Lang::get('open-comments::labels.delete'); ?></span>
+								<div class="icon icon-remove"></div><span><?=Lang::get('open-comments::labels.delete')?></span>
 							</a>
 						</li>
 
 						<li class="action-edit">
 							<a href="" class="btn button button-edit button-edit-comment" rel="{{id}}">
-								<div class="icon icon-edit"></div><span><?php echo Lang::get('open-comments::labels.edit'); ?></span>
+								<div class="icon icon-edit"></div><span><?=Lang::get('open-comments::labels.edit')?></span>
 							</a>
 						</li>
 
@@ -70,9 +75,9 @@
 						<li class="action-approve">
 							<a href="" class="btn button button-approve button-approve-comment" rel="{{id}}">
 								{{#unless approved}}
-									<div class="icon icon-plus-sign"></div><span><?php echo Lang::get('open-comments::labels.approve'); ?></span>
+									<div class="icon icon-plus-sign"></div><span><?=Lang::get('open-comments::labels.approve')?></span>
 								{{else}}
-									<div class="icon icon-minus-sign"></div><span><?php echo Lang::get('open-comments::labels.unapprove'); ?></span>
+									<div class="icon icon-minus-sign"></div><span><?=Lang::get('open-comments::labels.unapprove')?></span>
 								{{/unless}}
 							</a>
 						</li>
@@ -83,7 +88,7 @@
 
 						<li class="action-reply">
 							<a href="" class="btn button button-reply button-reply-comment" rel="{{id}}">
-								<div class="icon icon-share-alt"></div><span><?php echo Lang::get('open-comments::labels.reply'); ?></span>
+								<div class="icon icon-share-alt"></div><span><?=Lang::get('open-comments::labels.reply')?></span>
 							</a>
 						</li>
 
@@ -91,7 +96,7 @@
 
 						<li class="action-reply">
 							<a href="" class="btn button button-reply button-reply-comment reply-to-parent" rel="{{parent_id}}">
-								<div class="icon icon-share-alt"></div><span><?php echo Lang::get('open-comments::labels.replyToParent'); ?></span>
+								<div class="icon icon-share-alt"></div><span><?=Lang::get('open-comments::labels.replyToParent')?></span>
 							</a>
 						</li>
 
@@ -115,8 +120,9 @@
 					<div class="message info hidden"></div>
 
 					<!-- Comment Form - Edit -->
-					<?php echo Form::open('comments/create', 'post', array('class' => 'form-comment')); ?>
-						<label for="comment-edit{{id}}"><?php echo Lang::get('open-comments::labels.editComment') ?>:</label>
+					<?=Form::open('comments/create', 'post', array('class' => 'form-comment'))?>
+
+						<label for="comment-edit{{id}}"><?=Lang::get('open-comments::labels.editComment')?>:</label>
 						<textarea name="comment" class="field-comment wysiwyg" id="comment-edit{{id}}">{{comment}}</textarea>
 
 						<input type="hidden" name="content_type" class="content-type" value="{{content_type}}" />
@@ -124,9 +130,9 @@
 						<input type="hidden" name="comment_id" class="comment-id" value="{{id}}" />
 						<input type="hidden" name="parent_id" class="parent-id" value="" />
 
-						<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::labels.editComment') ?>" />
+						<input type="submit" name="add_comment" class="left" value="<?=Lang::get('open-comments::labels.editComment')?>" />
 
-					<?php echo Form::close(); ?>
+					<?=Form::close()?>
 
 				</div><!-- /add-comment -->
 
@@ -161,8 +167,9 @@
 				<div class="message info hidden"></div>
 
 				<!-- Comment Form - Reply -->
-				<?php echo Form::open('comments/create', 'post', array('class' => 'form-comment')); ?>
-					<label for="comment{{id}}"><?php echo Lang::get('open-comments::labels.addReply') ?>:</label>
+				<?=Form::open('comments/create', 'post', array('class' => 'form-comment'))?>
+
+					<label for="comment{{id}}"><?=Lang::get('open-comments::labels.addReply')?>:</label>
 					<textarea name="comment" class="field-comment wysiwyg" id="comment{{id}}"></textarea>
 
 					<input type="hidden" name="content_type" class="content-type" value="{{content_type}}" />
@@ -170,9 +177,9 @@
 					<input type="hidden" name="comment_id" class="comment-id" value="" />
 					<input type="hidden" name="parent_id" class="parent-id" value="{{id}}" />
 
-					<input type="submit" name="add_comment" class="left" value="<?php echo Lang::get('open-comments::labels.addReply') ?>" />
+					<input type="submit" name="add_comment" class="left" value="<?=Lang::get('open-comments::labels.addReply')?>" />
 
-				<?php echo Form::close(); ?>
+				<?=Form::close();?>
 
 				<div class="clear"></div>
 			</li>

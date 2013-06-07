@@ -220,6 +220,7 @@ class Comment extends Eloquent {
 	 *
 	 * @param  integer  $contentID
 	 * @param  string   $contentType
+	 * @param  mixed    $page
 	 * @return mixed
 	 */
 	public static function compileList($contentID, $contentType, $page = false)
@@ -237,12 +238,12 @@ class Comment extends Eloquent {
 
 		$admin = OpenComments::admin();
 		if (!$admin) {
-			$comments = $comments
+			$comments
 				->where('approved', '=', true)
 				->where('deleted', '=', false);
 		}
 
-		$comments = $comments
+		$comments
 			->orderBy('order_id', static::$commentOrder)
 			->orderBy('parent_id')
 			->orderBy('id', static::$commentOrder);
@@ -315,6 +316,11 @@ class Comment extends Eloquent {
 				$commentArray['reply'] = false;
 			}
 
+			$commentArray['approve']  = ! $autoApproval;
+			$commentArray['approved'] = (bool) $commentArray['approved'];
+
+			$commentArray['deleted']  = (bool) $commentArray['deleted'];
+
 			$commentArray['edit_time'] = strtotime($comment->created_at) - strtotime('-'.Config::get('open-comments::commentEditLimit').' seconds');
 
 			if ($commentArray['edit_time'] < 0)
@@ -323,22 +329,20 @@ class Comment extends Eloquent {
 			if (Session::get('lastComment') != $commentArray['id'] || $admin)
 				$commentArray['edit_time'] = 0;
 
+			if ((int) $commentArray['user_id'] == (int) $activeUser['id']) {
+				$commentArray['active_user_comment'] = false;
+			} else {
+				$commentArray['active_user_comment'] = false;
+				$commentArray['edit_time']           = 0;
+			}
+
 			if ($commentArray['edit_time'] || $admin) {
 				$commentArray['edit'] = true;
 			} else {
 				$commentArray['edit'] = false;
 			}
 
-			$commentArray['approve']  = ! $autoApproval;
-			$commentArray['approved'] = (bool) $commentArray['approved'];
-
-			$commentArray['deleted']  = (bool) $commentArray['deleted'];
-
-			if ($commentArray['user_id'] == $activeUser['id']) {
-				$commentArray['active_user_post'] = true;
-			} else {
-				$commentArray['active_user_post'] = false;
-			}
+			$commentArray['edit_countdown'] = $commentArray['edit_time'] > 0 ? Lang::get('open-comments::messages.editCountdown', array('seconds' => $commentArray['edit_time'])) : '';
 
 			$commentArray['parent_id'] = (int) $commentArray['parent_id'];
 			$commentArray['parent']    = ! $commentArray['parent_id'] ? true : false;

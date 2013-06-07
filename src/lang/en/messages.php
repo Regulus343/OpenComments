@@ -33,5 +33,6 @@ return array(
 	'numberComments'          => 'Displaying <strong>:start</strong> &ndash; <strong>:end</strong> of <strong>:total</strong> :commentPlural.',
 	'comment'                 => 'comment',
 	'postingComment'          => 'Posting your comment... Please wait a moment.',
+	'editCountdown'           => 'You may edit or delete your comment for <span class="number">:seconds</span> more seconds'
 
 );

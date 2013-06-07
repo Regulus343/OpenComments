@@ -47,12 +47,13 @@ class CommentsController extends BaseController {
 
 		//add a message
 		$message = Lang::get('open-comments::messages.noComments');
-		if (count($comments) > 0) {
+		if ($totalComments > 0) {
 			$start = $page * $commentsPerPage - $commentsPerPage + 1;
 			$end   = $start + $commentsPerPage - 1;
 			if ($end > $totalComments) $end = $totalComments;
 
-			$commentPlural = Lang::get('open-comments::messages.comment').($totalComments == 1 ? '' : 's');
+			$commentPlural = Lang::get('open-comments::messages.comment');
+			if ($totalComments > 1) $commentPlural = Str::plural($commentPlural);
 
 			$message = Lang::get('open-comments::messages.numberComments', array('start' => $start, 'end' => $end, 'total' => $totalComments, 'commentPlural' => $commentPlural));
 		}
