@@ -219,12 +219,14 @@ ul#comments li.reply div.add-comment, ul#posts li.reply div.add-post { margin-to
 
 ul.wysihtml5-toolbar { clear: both; }
 
-ul#comments li ul.wysihtml5-toolbar > li, ul#posts li ul.wysihtml5-toolbar > li {
+ul#comments li ul.wysihtml5-toolbar > li {
 	display: list-item;
 	clear: none;
 	float: left;
+	margin: 0 5px 0px 0;
+	padding: 0;
+	min-height: auto;
 	list-style: none outside none;
-	margin: 0 5px 10px 0;
 }
 
 ul#comments li .message, ul#posts li .message { clear: both; margin: 12px 0 12px 190px; }
