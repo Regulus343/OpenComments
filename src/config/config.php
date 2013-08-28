@@ -8,7 +8,7 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	| The location of your comments views. It is defaulted to "open-comments::" to
-	| use OpenForum's built-in views, but you may point it towards a views
+	| use OpenComments' built-in views, but you may point it towards a views
 	| directory of your own for full view customization.
 	|
 	*/
@@ -21,7 +21,7 @@ return array(
 	|
 	| The name of your authorization class including the namespace and a
 	| leading backslash. This variable along with the "authMethod" variables
-	| allow OpenForum's built-in views to remain authoriztion class agnostic.
+	| allow OpenComments' built-in views to remain authoriztion class agnostic.
 	| The default is "\Illuminate\Support\Facades\Auth" which is Laravel 4's
 	| native authorization class.
 	|
@@ -182,7 +182,7 @@ return array(
 	| Load jQuery
 	|--------------------------------------------------------------------------
 	|
-	| Whether or not to have Open Comments automatically load jQuery.
+	| Whether or not to have OpenComments automatically load jQuery.
 	| Turn this off if your website already loads jQuery.
 	|
 	*/
@@ -193,9 +193,9 @@ return array(
 	| Load Bootstrap
 	|--------------------------------------------------------------------------
 	|
-	| Whether or not to have Open Comments automatically load Twitter Bootsrap.
-	| If set to false, Open Comments will assume you are already loading
-	| Bootstrap CSS and JS files. If true, Open Comments will attempt to load
+	| Whether or not to have OpenComments automatically load Twitter Bootsrap.
+	| If set to false, OpenComments will assume you are already loading
+	| Bootstrap CSS and JS files. If true, OpenComments will attempt to load
 	| "bootstrap.css" and "bootstrap.min.js".
 	|
 	*/
@@ -206,7 +206,7 @@ return array(
 	| Load Boxy
 	|--------------------------------------------------------------------------
 	|
-	| By default, Open Comments makes use of the lightweight javascript
+	| By default, OpenComments makes use of the lightweight javascript
 	| library Boxy for modal windows like comment deleting confirmation.
 	| You may turn off Boxy if you intend to use another modal window script.
 	|
